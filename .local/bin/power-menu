@@ -1,0 +1,20 @@
+#!/bin/bash
+
+shutdown=" Shutdown"
+reboot=" Reboot"
+logout=" Logout"
+
+options="$shutdown\n$reboot\n$logout"
+
+chosen=$(echo "$options" | dmenu -i -sb "#723E31" -p "Power-menu" )
+case $chosen in
+    $shutdown)
+        sudo shutdown -h now
+	;;
+    $reboot)
+        sudo shutdown -r now
+        ;;
+    $logout)
+        pkill -KILL -u $USER
+        ;;
+esac

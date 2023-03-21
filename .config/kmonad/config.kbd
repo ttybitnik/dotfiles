@@ -1,0 +1,84 @@
+(defcfg
+  input  (device-file "/dev/input/by-id/usb-SONiX_USB_DEVICE-event-kbd")
+  output (uinput-sink "KMonad kbd")
+
+  cmp-seq ralt    
+  fallthrough true
+) 
+
+#| --------------------------------------------------------------------------
+                            KMonad: BR abnt-2 100% tempdaslate 
+
+This file contains the `defsrc` configuration for the TypeMatrix 2030 keyboard. You need to enable 106 key mode by pressing Fn+F3. Three keys cannot be remapped: the Fn key, the Num key and the Play/Paupse key. Copy out the 'defsrc' layer to start your own keyboard configuration. Copy out the `deflayer` template to easily start a new layer with matching `transparent` buttons.
+
+(deflayer switch
+  _    _    _    _    _    _    _    _    _    _    _    _    _           _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _      _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _      _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _                          _    _    _    
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _           _         _    _    _    _
+  _    _    _              _              _                   _    _      _    _    _    _         _         
+
+)
+
+(defalias
+  b1 (around '+,') 
+  +'
+  \
+  (fn)
+  ç
+  +~
+  +'
+)
+---------------------------------------------------------------------------- |#
+
+(defsrc
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12        ssrq slck pause
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc  ins  home pgup  nlck kp/  kp*  kp-
+  tab  q    w    e    r    t    y    u    i    o    p    [    [    ret	 del  end  pgdn  kp7  kp8  kp9  kp+
+  caps a    s    d    f    g    h    j    k    l    ;    '    ]                          kp4  kp5  kp6
+  lsft 102d z    x    c    v    b    n    m    ,    .    ;    /    rsft        up        kp1  kp2  kp3  kprt
+  lctl lmet lalt           spc                 ralt           cmp  rctl  left down rght  kp0       kp.
+)
+
+(deflayer base
+  caps f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12        ssrq slck pause
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc  ins  home pgup  nlck kp/  kp*  kp-
+  tab  q    w    e    r    t    y    u    i    o    p    [    [    ret	 del  end  pgdn  kp7  kp8  kp9  kp+
+  @ces a    s    d    f    g    h    j    k    l    ;    '    ]                          kp4  kp5  kp6
+  lsft 102d z    x    c    v 	b    n	  m    ,    .    ;    /    rsft        up        kp1  kp2  kp3  kprt
+  lctl lmet lalt           @dwm                ralt           @swt rctl  left down rght  kp0       kp.
+)
+ 
+(deflayer xfk
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12        ssrq slck pause
+  grv  1    2    3    4    del  6    7    8    9    0    -    =    bspc  ins  home pgup  nlck kp/  kp*  kp-
+  tab  q    w    @db  @df  t    y    @bw  up   @fw  p    [    [    ret	 del  end  pgdn  kp7  kp8  kp9  kp+
+  caps a    ret  bspc f    g    home left down rght end  '    ]                          kp4  kp5  kp6
+  lsft 102d z    x    c    v    b    n    m    ,    .    ;    /    rsft        up        kp1  kp2  kp3  kprt
+  lctl lmet lalt           spc                 ralt           @swt rctl  left down rght  kp0       kp.
+)
+
+(deflayer switch
+  _    @s1  @s2  _    _    _    _    _    _    _    _    _    _           _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _      _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _      _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _                          _    _    _    
+  _    _    _    _    _	   _    _    _    _    _    _    _    _    _           _         _    _    _    _
+  _    _    _              _              _                   @swt _      _    _    _    _         _         
+
+)
+
+
+(defalias
+  dwm (tap-hold 500 spc lmet)
+  swt (layer-toggle switch)
+  ces (tap-hold 500 esc lctl)
+  s1 (layer-switch base)
+  s2 (layer-switch xfk)
+
+  bw (around ctl left)
+  fw (around ctl right)
+  db (around ctl bspc)
+  df (around ctl del)
+)

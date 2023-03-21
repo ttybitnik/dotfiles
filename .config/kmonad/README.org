@@ -1,0 +1,67 @@
+* Kmonad.wolper
+
+Standard path =~/.config/kmonad/=.
+
+** Startup
+
+*** Systemd
+
+Touch  =/etc/systemd/system/kmonad.service= and change the absolute path accordingly to the default user. 
+
+#+BEGIN_SRC bash
+[Unit]
+Description=kmonad keyboard config
+
+[Service]
+Restart=always
+RestartSec=3
+ExecStart=/usr/local/bin/kmonad /home/wolper/.config/kmonad/config.kbd
+Nice=-20
+
+[Install]
+#+END_SRC
+
+Run =systemctl enable kmonad.service=
+
+*** Rc.d
+
+Touch =/etc/init.d/kmonad= and make it executable.
+
+#+begin_src bash
+  #!/bin/bash
+  # chkconfig: 2345 20 80
+  description: Kmonad service for Rc.d
+
+  . /etc/init.d/functions
+
+  start() {
+      kmonad ~/.config/kmonad/config.kbd &
+  }
+
+  stop() {
+      killproc kmonad &
+  }
+
+  case "$1" in 
+      start)
+          start
+          ;;
+      stop)
+          stop
+          ;;
+      restart)
+          stop
+          start
+          ;;
+      status)
+          # no code for status
+          ;;
+      ,*)
+          echo "Usage: $0 {start|stop|status|restart}"
+  esac
+
+  exit 0 
+
+#+end_src
+
+
