@@ -1,0 +1,60 @@
+* Dotfiles.wolper
+
+My scripts and config files. Standard repository path =~/.config/dotfiles/=. Symbolic links pointing from =~=.
+
+*Important*: ensure user's =$PATH= includes  =~/.local/bin=, and =~/.bashrc= includes =~/.bash_aliases=. 
+
+** Scripts
+
+- VPN status and city
+- Network status
+- RAM usage
+- CPU usage
+- Battery status
+- Volume status
+- Volume control
+- Weather status
+- Date and time
+- Qbit kill switch
+- Power menu*
+- Dwm autostart
+
+Repo paths: =.local/bin/=, =.local/share/dwm/=
+
+** Settings
+
+- CLI aliases
+- Xresources
+- Urxvt
+- Tmux
+- Sxhkd
+- Kmonad
+
+Repo paths: =.=, =.config/=
+
+** Automating symbolic links
+
+If you use Emacs, just execute the code block below (=C-c C-c=). Otherwise, save and run it as a shell script. 
+
+#+begin_src shell
+  #!/bin/bash
+
+  mkdir -p ~/.local/ &
+  mkdir -p ~/.local/share/ & 
+  mkdir -p ~/.config/tmux/ &
+  mkdir -p ~/.config/sxhkd/ &
+  mkdir -p ~/.config/kmonad/ &
+
+  sleep 3
+
+  ln -sf ~/.config/dotfiles/.local/bin/ ~/.local/bin &
+  ln -sf ~/.config/dotfiles/.local/share/dwm/ ~/.local/share/dwm &
+  ln -sf ~/.config/dotfiles/.config/tmux/tmux.conf ~/.config/tmux/tmux.conf &
+  ln -sf ~/.config/dotfiles/.config/kmonad/config.kbd ~/.config/kmonad/config.kbd &
+  ln -sf ~/.config/dotfiles/.config/sxhkd/sxhkdrc ~/.config/sxhkd/sxhkdrc &
+  ln -sf ~/.config/dotfiles/.Xresources ~/.Xresources &
+  ln -sf ~/.config/dotfiles/.bash_aliases ~/.bash_aliases &
+  ln -sf ~/.config/dotfiles/.config/urxvt/ ~/.urxvt &
+
+#+end_src
+

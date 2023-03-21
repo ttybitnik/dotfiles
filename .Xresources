@@ -1,0 +1,70 @@
+! Xresources 
+*.foreground: #F8F8F2
+*.background: #282A36
+*.color0:     #000000
+*.color8:     #4D4D4D
+*.color1:     #FF5555
+*.color9:     #FF6E67
+*.color2:     #50FA7B
+*.color10:    #5AF78E
+*.color3:     #F1FA8C
+*.color11:    #F4F99D
+*.color4:     #BD93F9
+*.color12:    #CAA9FA
+*.color5:     #FF79C6
+*.color13:    #FF92D0
+*.color6:     #8BE9FD
+*.color14:    #9AEDFE
+*.color7:     #BFBFBF
+*.color15:    #E6E6E6
+
+! URxvt
+URxvt.transparent:	true
+URxvt.shading:		30
+URxvt.font:		xft:Iosevka Term Extended:size=12
+URxvt.scrollBar:	false
+URxvt.cursorColor:	#723E31 
+URxvt.cursorBlink: 	true
+URxvt.visualBell: 	true
+URxvt.perl-ext-common:	searchable-scrollback,font-size
+
+! DWM colors
+dwm.normfgcolor:	           #bbbbbb 
+dwm.normbgcolor:                   #222222 
+dwm.normbordercolor:               #444444 
+dwm.normfloatcolor:                #db8fd9
+
+dwm.selfgcolor:                    #eeeeee 
+dwm.selbgcolor:                    #723E31 
+dwm.selbordercolor:                #723E31 
+dwm.selfloatcolor:                 #723E31 
+
+dwm.titlenormfgcolor:              #bbbbbb 
+dwm.titlenormbgcolor:              #222222 
+dwm.titlenormbordercolor:          #444444 
+dwm.titlenormfloatcolor:           #db8fd9 
+
+dwm.titleselfgcolor:               #eeeeee 
+dwm.titleselbgcolor:               #723E31 
+dwm.titleselbordercolor:           #723E31 
+dwm.titleselfloatcolor:            #723E31 
+
+dwm.tagsnormfgcolor:               #bbbbbb 
+dwm.tagsnormbgcolor:               #222222 
+dwm.tagsnormbordercolor:           #444444 
+dwm.tagsnormfloatcolor:            #db8fd9 
+
+dwm.tagsselfgcolor:                #eeeeee 
+dwm.tagsselbgcolor:                #723E31 
+dwm.tagsselbordercolor:            #723E31 
+dwm.tagsselfloatcolor:             #723E31 
+
+dwm.hidnormfgcolor:                #723E31 
+dwm.hidselfgcolor:                 #227799 
+dwm.hidnormbgcolor:                #222222 
+dwm.hidselbgcolor:                 #222222 
+
+dwm.urgfgcolor:                    #bbbbbb 
+dwm.urgbgcolor:                    #222222 
+dwm.urgbordercolor:                #ff0000 
+dwm.urgfloatcolor:                 #db8fd9 

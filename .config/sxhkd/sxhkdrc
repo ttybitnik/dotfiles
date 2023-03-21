@@ -1,0 +1,40 @@
+XF86AudioLowerVolume
+	volume-
+
+XF86AudioRaiseVolume
+	volume+
+
+XF86AudioMute
+	pactl set-sink-mute 0 toggle; pkill -RTMIN+5 dwmblocks
+
+XF86AudioPlay
+	playerctl play-pause
+
+XF86AudioStop
+	playerctl stop
+
+XF86AudioNext
+	playerctl next
+
+XF86AudioPrev
+	playerctl previous
+
+#XF86MonBrightnessUp - setup once on laptop
+
+#XF86MonBrightnessDown - setup once on laptop
+
+
+super + g
+      	google-chrome
+
+super + s
+      	spotify
+
+super + e
+      	emacsclient -c -n
+
+super + u
+      	urxvt
+
+super + shift + h
+      	power-menu
