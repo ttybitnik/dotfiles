@@ -1,4 +1,7 @@
-* Dotfiles.wolper
+#+TITLE: Dotfiles.w0lper	
+#+AUTHOR: Vinicius Moraes
+#+EMAIL: vinicius.moraes@eternodevir.com
+#+OPTIONS:   num:nil
 
 My scripts and config files. Standard repository path =~/.config/dotfiles/=. Symbolic links pointing from =~=.
 
