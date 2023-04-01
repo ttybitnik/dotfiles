@@ -1,4 +1,4 @@
-* Kmonad.wolper
+* Kmonad.w0lper
 
 Standard path =~/.config/kmonad/=.
 
