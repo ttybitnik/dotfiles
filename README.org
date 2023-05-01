@@ -5,9 +5,17 @@
 
 This repository contains my personal collection of scripts and configuration files, stored in the standard repository path =~/.config/dotfiles/=, with symbolic links pointing from =~=.
 
+**** Table of contents                                             :TOC_4:
+  - [[#requirements][Requirements]]
+  - [[#scripts][Scripts]]
+  - [[#configurations][Configurations]]
+  - [[#usage][Usage]]
+    - [[#automating-symbolic-links][Automating symbolic links]]
+  - [[#license][License]]
+
 ** Requirements
 
-Before using my dotfiles, please ensure that your user's =$PATH= includes =~/.local/bin/=, and your =~/.bashrc= file includes =~/.bash_aliases=.
+Before using my dotfiles, ensure that user's =$PATH= includes =~/.local/bin/=, and =~/.bashrc= includes =~/.bash_aliases=.
 
 ** Scripts
 
@@ -24,12 +32,11 @@ The following scripts are included in this repository:
 - Date and time
 - Qbit kill switch
 - Power menu*
-
-Additionally, this repository includes an autostart script for *dwm*.
+- Dwm autostart
 
 The scripts are located in the following repository paths: =~/.local/bin/=, =~/.local/share/dwm/=.
 
-** Configuration
+** Configurations
 
 This repository includes configuration files for the following applications:
 
@@ -42,9 +49,10 @@ This repository includes configuration files for the following applications:
 
 The configuration files are located in the following repository paths: =.=, =~/.config/=.
 
-** Automating symbolic links
+** Usage
+*** Automating symbolic links
 
-To automate the process of creating symbolic links from the repository files to their respective locations, you can use the following:
+To automate the process of creating symbolic links from the repository files to their respective locations, use the following script:
 
 #+begin_src shell
   #!/bin/bash
@@ -65,11 +73,12 @@ To automate the process of creating symbolic links from the repository files to 
   ln -sf ~/.config/dotfiles/.Xresources ~/.Xresources &
   ln -sf ~/.config/dotfiles/.bash_aliases ~/.bash_aliases &
   ln -sf ~/.config/dotfiles/.config/urxvt/ ~/.urxvt &
-
 #+end_src
 
-If you use *GNU Emacs*, you can execute the above code block with =C-c C-c=. Otherwise, save and run it as a shell script.
+If you use *GNU Emacs*, you can execute the above code block with =C-c C-c=.
 
 ** License
 
- This project is licensed under the GNU General Public License v3.0 (GPL-3.0), unless an exception is made explicit in context. The GPL is a copyleft license that guarantees the freedom to use, modify, and distribute software. It ensures that users have control over the software they use and promotes collaboration and sharing of knowledge. By requiring that derivative works of GPL-licensed software also be licensed under the GPL, the license ensures that the freedoms it provides are extended to future generations of users and developers. Please see the =LICENSE= file for more information.
+This project is licensed under the GNU General Public License v3.0 (GPL-3.0), unless an exception is made explicit in context. The GPL is a copyleft license that guarantees the freedom to use, modify, and distribute software. It ensures that users have control over the software they use and promotes collaboration and sharing of knowledge. By requiring that derivative works of GPL-licensed software also be licensed under the GPL, the license ensures that the freedoms it provides are extended to future generations of users and developers.
+
+See the =LICENSE= file for more information.
