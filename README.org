@@ -3,11 +3,15 @@
 #+EMAIL: vinicius.moraes@eternodevir.com
 #+OPTIONS:   num:nil
 
-My scripts and config files. Standard repository path =~/.config/dotfiles/=. Symbolic links pointing from =~=.
+This repository contains my personal collection of scripts and configuration files, stored in the standard repository path =~/.config/dotfiles/=, with symbolic links pointing from =~=.
 
-*Important*: ensure user's =$PATH= includes  =~/.local/bin=, and =~/.bashrc= includes =~/.bash_aliases=. 
+** Requirements
+
+Before using my dotfiles, please ensure that your user's =$PATH= includes =~/.local/bin/=, and your =~/.bashrc= file includes =~/.bash_aliases=.
 
 ** Scripts
+
+The following scripts are included in this repository:
 
 - VPN status and city
 - Network status
@@ -20,11 +24,14 @@ My scripts and config files. Standard repository path =~/.config/dotfiles/=. Sym
 - Date and time
 - Qbit kill switch
 - Power menu*
-- Dwm autostart
 
-Repo paths: =.local/bin/=, =.local/share/dwm/=
+Additionally, this repository includes an autostart script for *dwm*.
 
-** Settings
+The scripts are located in the following repository paths: =~/.local/bin/=, =~/.local/share/dwm/=.
+
+** Configuration
+
+This repository includes configuration files for the following applications:
 
 - CLI aliases
 - Xresources
@@ -33,11 +40,11 @@ Repo paths: =.local/bin/=, =.local/share/dwm/=
 - Sxhkd
 - Kmonad
 
-Repo paths: =.=, =.config/=
+The configuration files are located in the following repository paths: =.=, =~/.config/=.
 
 ** Automating symbolic links
 
-If you use Emacs, just execute the code block below (=C-c C-c=). Otherwise, save and run it as a shell script. 
+To automate the process of creating symbolic links from the repository files to their respective locations, you can use the following:
 
 #+begin_src shell
   #!/bin/bash
@@ -61,3 +68,8 @@ If you use Emacs, just execute the code block below (=C-c C-c=). Otherwise, save
 
 #+end_src
 
+If you use *GNU Emacs*, you can execute the above code block with =C-c C-c=. Otherwise, save and run it as a shell script.
+
+** License
+
+ This project is licensed under the GNU General Public License v3.0 (GPL-3.0), unless an exception is made explicit in context. The GPL is a copyleft license that guarantees the freedom to use, modify, and distribute software. It ensures that users have control over the software they use and promotes collaboration and sharing of knowledge. By requiring that derivative works of GPL-licensed software also be licensed under the GPL, the license ensures that the freedoms it provides are extended to future generations of users and developers. Please see the =LICENSE= file for more information.
