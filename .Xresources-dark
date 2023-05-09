@@ -1,0 +1,90 @@
+! Xresources dark
+! hard contrast: *background: #1d2021
+*background: #282828
+! soft contrast: *background: #32302f
+*foreground: #ebdbb2
+! Black + DarkGrey
+*color0:  #282828
+*color8:  #928374
+! DarkRed + Red
+*color1:  #cc241d
+*color9:  #fb4934
+! DarkGreen + Green
+*color2:  #98971a
+*color10: #b8bb26
+! DarkYellow + Yellow
+*color3:  #d79921
+*color11: #fabd2f
+! DarkBlue + Blue
+*color4:  #458588
+*color12: #83a598
+! DarkMagenta + Magenta
+*color5:  #b16286
+*color13: #d3869b
+! DarkCyan + Cyan
+*color6:  #689d6a
+*color14: #8ec07c
+! LightGrey + White
+*color7:  #a89984
+*color15: #ebdbb2
+
+! URxvt
+! URxvt.transparent:	true
+URxvt.shading:		30
+URxvt.font:		xft:Iosevka Term Extended:size=12
+URxvt.scrollBar:	false
+URxvt.cursorColor:	#ebdbb2
+URxvt.cursorBlink: 	true
+URxvt.visualBell: 	true
+URxvt.perl-ext-common:	searchable-scrollback,font-size
+
+! DMENU Colorscheme
+
+! dmenu.background : normal background color
+! dmenu.foreground : normal foreground color
+! dmenu.selbackground : selected background color
+! dmenu.selforeground : selected foreground color
+
+! DWM Colorscheme
+
+! Bar colors
+dwm.normfgcolor: #ebdbb2
+dwm.normbgcolor: #282828
+dwm.normbordercolor: #928374
+dwm.normfloatcolor: #ebdbb2
+dwm.selfgcolor: #fbf1c7
+dwm.selbgcolor: #98971a
+dwm.selbordercolor: #98971a
+dwm.selfloatcolor: #ebdbb2
+
+! Titlebar colors
+dwm.titlenormfgcolor: #ebdbb2
+dwm.titlenormbgcolor: #282828
+dwm.titlenormbordercolor: #928374
+dwm.titlenormfloatcolor: #ebdbb2
+dwm.titleselfgcolor: #fbf1c7
+dwm.titleselbgcolor: #282828
+dwm.titleselbordercolor: #98971a
+dwm.titleselfloatcolor: #ebdbb2
+
+! Tag colors
+dwm.tagsnormfgcolor: #ebdbb2
+dwm.tagsnormbgcolor: #282828
+dwm.tagsnormbordercolor: #928374
+dwm.tagsnormfloatcolor: #ebdbb2
+dwm.tagsselfgcolor: #fbf1c7
+dwm.tagsselbgcolor: #98971a
+dwm.tagsselbordercolor: #98971a
+dwm.tagsselfloatcolor: #ebdbb2
+
+! Hidden tag colors
+dwm.hidnormfgcolor: #928374
+dwm.hidselfgcolor: #fbf1c7
+dwm.hidnormbgcolor: #282828
+dwm.hidselbgcolor: #98971a
+
+! Urgent tag colors
+dwm.urgfgcolor: #fbf1c7
+dwm.urgbgcolor: #cc241d
+dwm.urgbordercolor: #cc241d
+dwm.urgfloatcolor: #cc241d
