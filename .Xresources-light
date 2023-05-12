@@ -31,19 +31,23 @@
 ! URxvt
 ! URxvt.transparent:	true
 URxvt.shading:		30
-URxvt.font:		xft:Iosevka Term Extended:size=11
+URxvt.font:		xft:Iosevka Term Extended:size=11:antialias=true:autohint=true
 URxvt.scrollBar:	false
 URxvt.cursorColor:	#3c3836 
 URxvt.cursorBlink: 	true
 URxvt.visualBell: 	true
 URxvt.perl-ext-common:	searchable-scrollback,font-size,config-reload
 
+! St
+
+St.cursorColor:		#3c3836
+
 ! DMENU Colorscheme
 
-! dmenu.background : normal background color
-! dmenu.foreground : normal foreground color
-! dmenu.selbackground : selected background color
-! dmenu.selforeground : selected foreground color
+dmenu.background :	#3c3836
+dmenu.foreground : 	#ebdbb2
+dmenu.selbackground : 	#89b0c7
+dmenu.selforeground : 	#fbf1c7
 
 ! DWM Colorscheme
 
