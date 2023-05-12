@@ -31,12 +31,12 @@
 ! URxvt
 ! URxvt.transparent:	true
 URxvt.shading:		30
-URxvt.font:		xft:Iosevka Term Extended:size=12
+URxvt.font:		xft:Iosevka Term Extended:size=11
 URxvt.scrollBar:	false
 URxvt.cursorColor:	#3c3836 
 URxvt.cursorBlink: 	true
 URxvt.visualBell: 	true
-URxvt.perl-ext-common:	searchable-scrollback,font-size
+URxvt.perl-ext-common:	searchable-scrollback,font-size,config-reload
 
 ! DMENU Colorscheme
 
@@ -51,10 +51,10 @@ URxvt.perl-ext-common:	searchable-scrollback,font-size
 dwm.normfgcolor: #ebdbb2
 dwm.normbgcolor: #3c3836
 dwm.normbordercolor: #928374
-dwm.normfloatcolor: #ebdbb2
+dwm.normfloatcolor: #928374
 dwm.selfgcolor: #fbf1c7
-dwm.selbgcolor: #d65d0e
-dwm.selbordercolor: #d65d0e
+dwm.selbgcolor: #89b0c7
+dwm.selbordercolor: #89b0c7
 dwm.selfloatcolor: #ebdbb2
 
 ! Titlebar colors
@@ -64,7 +64,7 @@ dwm.titlenormbordercolor: #928374
 dwm.titlenormfloatcolor: #ebdbb2
 dwm.titleselfgcolor: #fbf1c7
 dwm.titleselbgcolor: #3c3836
-dwm.titleselbordercolor: #d65d0e
+dwm.titleselbordercolor: #89b0c7
 dwm.titleselfloatcolor: #ebdbb2
 
 ! Tag colors
@@ -73,15 +73,15 @@ dwm.tagsnormbgcolor: #3c3836
 dwm.tagsnormbordercolor: #928374
 dwm.tagsnormfloatcolor: #ebdbb2
 dwm.tagsselfgcolor: #fbf1c7
-dwm.tagsselbgcolor: #d65d0e
-dwm.tagsselbordercolor: #d65d0e
+dwm.tagsselbgcolor: #89b0c7
+dwm.tagsselbordercolor: #89b0c7
 dwm.tagsselfloatcolor: #ebdbb2
 
 ! Hidden tag colors
 dwm.hidnormfgcolor: #d5c4a1
 dwm.hidselfgcolor: #fbf1c7
 dwm.hidnormbgcolor: #3c3836
-dwm.hidselbgcolor: #d65d0e
+dwm.hidselbgcolor: #89b0c7
 
 ! Urgent tag colors
 dwm.urgfgcolor: #fbf1c7

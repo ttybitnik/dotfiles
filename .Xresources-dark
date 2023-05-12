@@ -31,12 +31,12 @@
 ! URxvt
 ! URxvt.transparent:	true
 URxvt.shading:		30
-URxvt.font:		xft:Iosevka Term Extended:size=12
+URxvt.font:		xft:Iosevka Term Extended:size=11
 URxvt.scrollBar:	false
 URxvt.cursorColor:	#ebdbb2
 URxvt.cursorBlink: 	true
 URxvt.visualBell: 	true
-URxvt.perl-ext-common:	searchable-scrollback,font-size
+URxvt.perl-ext-common:	searchable-scrollback,font-size,config-reload
 
 ! DMENU Colorscheme
 
@@ -51,7 +51,7 @@ URxvt.perl-ext-common:	searchable-scrollback,font-size
 dwm.normfgcolor: #ebdbb2
 dwm.normbgcolor: #282828
 dwm.normbordercolor: #928374
-dwm.normfloatcolor: #ebdbb2
+dwm.normfloatcolor: #928374
 dwm.selfgcolor: #fbf1c7
 dwm.selbgcolor: #98971a
 dwm.selbordercolor: #98971a

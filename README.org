@@ -33,6 +33,8 @@ The following scripts are included in this repository:
 - Qbit kill switch
 - Power menu*
 - Dwm autostart
+- Global dark/light mode switcher
+- Automatic dark/light mode switcher
 
 The scripts are located in the following repository paths: =~/.local/bin/=, =~/.local/share/dwm/=.
 
@@ -46,6 +48,7 @@ This repository includes configuration files for the following applications:
 - Tmux
 - Sxhkd
 - Kmonad
+- Xsettingsd
 
 The configuration files are located in the following repository paths: =.=, =~/.config/=.
 
@@ -57,23 +60,27 @@ To automate the process of creating symbolic links from the repository files to 
 #+begin_src shell
   #!/bin/bash
 
-  mkdir -p ~/.local/ &
-  mkdir -p ~/.local/share/ & 
-  mkdir -p ~/.config/tmux/ &
-  mkdir -p ~/.config/sxhkd/ &
-  mkdir -p ~/.config/kmonad/ &
+  mkdir -p "${HOME}/.local/bin/" &
+  mkdir -p "${HOME}/.local/share/" & 
+  mkdir -p "${HOME}/.config/tmux/" &
+  mkdir -p "${HOME}/.config/sxhkd/" &
+  mkdir -p "${HOME}/.config/kmonad/" &
+  mkdir -p "${HOME}/.config/xsettingsd/" &
 
   sleep 3
 
-  ln -sf ~/.config/dotfiles/.local/bin/ ~/.local/bin &
-  ln -sf ~/.config/dotfiles/.local/share/dwm/ ~/.local/share/dwm &
-  ln -sf ~/.config/dotfiles/.config/tmux/tmux.conf ~/.config/tmux/tmux.conf &
-  ln -sf ~/.config/dotfiles/.config/kmonad/config.kbd ~/.config/kmonad/config.kbd &
-  ln -sf ~/.config/dotfiles/.config/sxhkd/sxhkdrc ~/.config/sxhkd/sxhkdrc &
-  ln -sf ~/.config/dotfiles/.Xresources ~/.Xresources &
-  ln -sf ~/.config/dotfiles/.bash_aliases ~/.bash_aliases &
-  ln -sf ~/.config/dotfiles/.config/urxvt/ ~/.urxvt &
+  ln -sf "${HOME}/.config/dotfiles/.local/bin/" "${HOME}/.local/bin/" &
+  ln -sf "${HOME}/.config/dotfiles/.local/share/dwm/" "${HOME}/.local/share/dwm/" &
+  ln -sf "${HOME}/.config/dotfiles/.config/tmux/tmux.conf" "${HOME}/.config/tmux/tmux.conf" &
+  ln -sf "${HOME}/.config/dotfiles/.config/kmonad/config.kbd" "${HOME}/.config/kmonad/config.kbd" &
+  ln -sf "${HOME}/.config/dotfiles/.config/sxhkd/sxhkdrc" "${HOME}/.config/sxhkd/sxhkdrc" &
+  ln -sf "${HOME}/.config/dotfiles/.config/xsettingsd/xsettingsd-dark.conf" "${HOME}/.config/xsettingsd/xsettingsd.conf" &
+  ln -sf "${HOME}/.config/dotfiles/.Xresources-dark" "${HOME}/.Xresources" &
+  ln -sf "${HOME}/.config/dotfiles/.bash_aliases" "${HOME}/.bash_aliases" &
+  ln -sf "${HOME}/.config/dotfiles/.config/urxvt/" "${HOME}/.urxvt" &
 #+end_src
+
+#+RESULTS:
 
 If you use *GNU Emacs*, you can execute the above code block with =C-c C-c=.
 
