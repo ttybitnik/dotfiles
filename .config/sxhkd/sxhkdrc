@@ -24,8 +24,11 @@ XF86AudioPrev
 #XF86MonBrightnessDown - setup once on laptop
 
 
-super + g
+super + shift + g
       	google-chrome
+
+super + g
+      	firefox-esr
 
 super + s
       	spotify
@@ -33,8 +36,11 @@ super + s
 super + e
       	emacsclient -c -n
 
-super + u
-      	urxvt
+super + d
+      	discord
+
+super + c
+      	calibre
 
 super + shift + h
       	power-menu
