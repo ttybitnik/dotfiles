@@ -34,7 +34,6 @@ The following scripts are included in this repository:
 - Power menu*
 - Dwm autostart
 - Global dark/light mode switcher
-- Automatic dark/light mode switcher
 
 The scripts are located in the following repository paths: =~/.local/bin/=, =~/.local/share/dwm/=.
 
