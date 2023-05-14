@@ -21,21 +21,21 @@ Before using my dotfiles, ensure that user's =$PATH= includes =~/.local/bin/=, a
 
 The following scripts are included in this repository:
 
-- switcher :: global dark/light mode switcher
-- euterpe :: audio and music cli management
-- vpn-bar :: vpn status and city
-- net-bar :: network status
-- ram-bar :: ram usage
-- cpu-bar :: cpu usage
-- battery-bar :: battery status
-- volume-bar :: volume status
-  - volume+ :: volume up
-  - volume- :: volume down
-- weather :: weather status
-- clock-bar :: date and time
-- qbit :: qBittorrent secure launcher
-- power-menu* :: logout screen options
-- autostart :: dwm autostart
+- /switcher/: global dark/light mode switcher
+- /euterpe/: audio and music cli management
+- /vpn-bar/: vpn status and city
+- /net-bar/: network status
+- /ram-bar/: ram usage
+- /cpu-bar/: cpu usage
+- /battery-bar/: battery status
+- /volume-bar/: volume status
+  - /volume+/: volume up
+  - /volume-/: volume down
+- /weather/: weather status
+- /clock-bar/: date and time
+- /qbit/: qBittorrent secure launcher
+- /power-menu/*: logout screen options
+- /autostart/: dwm autostart
 
 The scripts are located in the following repository paths: =~/.local/bin/=, =~/.local/share/dwm/=.
 
