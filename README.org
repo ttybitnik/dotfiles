@@ -34,7 +34,7 @@ The following scripts are included in this repository:
 - /weather/: weather status
 - /clock-bar/: date and time
 - /qbit/: qBittorrent secure launcher
-- /power-menu/*: logout screen options
+- /power-menu/: logout screen options
 - /autostart/: dwm autostart
 
 The scripts are located in the following repository paths: =~/.local/bin/=, =~/.local/share/dwm/=.
