@@ -1,20 +1,19 @@
 #!/bin/bash
 
-shutdown=" Shutdown"
-reboot=" Reboot"
-logout=" Logout"
+options=$(echo -e "\uf08b Logout\n\uf021 Reboot\n\uf011 Shutdown")
+selected=$(echo -e "$options" | dmenu -i -p "Select an option:")
 
-options="$shutdown\n$reboot\n$logout"
-
-chosen=$(echo "$options" | dmenu -i -sb "#723E31" -p "Power-menu" )
-case $chosen in
-    $shutdown)
-        sudo shutdown -h now
-	;;
-    $reboot)
-        sudo shutdown -r now
-        ;;
-    $logout)
-        pkill -KILL -u $USER
-        ;;
+case "$selected" in
+  "\uf08b Logout")
+    pkill dwm
+    ;;
+  "\uf021 Reboot")
+    systemctl reboot
+    ;;
+  "\uf011 Shutdown")
+    systemctl poweroff
+    ;;
+  *)
+    exit 1
+    ;;
 esac
