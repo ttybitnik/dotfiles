@@ -50,8 +50,9 @@ This repository includes configuration files for the following applications:
 - Sxhkd
 - Kmonad
 - Xsettingsd
+- Midnight Commander
 
-The configuration files are located in the following repository paths: =.=, =~/.config/=.
+The configuration files are located in the following repository paths: =.=, =~/.config/=, =~/.local/share/=.
 
 ** Usage
 *** Automating symbolic links
@@ -62,16 +63,18 @@ To automate the process of creating symbolic links from the repository files to 
   #!/bin/bash
 
   mkdir -p "${HOME}/.local/bin/" &
-  mkdir -p "${HOME}/.local/share/" & 
+  mkdir -p "${HOME}/.local/share/" &
   mkdir -p "${HOME}/.config/tmux/" &
   mkdir -p "${HOME}/.config/sxhkd/" &
   mkdir -p "${HOME}/.config/kmonad/" &
   mkdir -p "${HOME}/.config/xsettingsd/" &
+  mkdir -p "${HOME}/.config/mc/" &
 
   sleep 3
 
-  ln -sf "${HOME}/.config/dotfiles/.local/bin/" "${HOME}/.local/bin/" &
-  ln -sf "${HOME}/.config/dotfiles/.local/share/dwm/" "${HOME}/.local/share/dwm/" &
+  ln -sf "${HOME}/.config/dotfiles/.local/bin/" "${HOME}/.local/bin" &
+  ln -sf "${HOME}/.config/dotfiles/.local/share/dwm/" "${HOME}/.local/share/dwm" &
+  ln -sf "${HOME}/.config/dotfiles/.local/share/mc/skins/" "${HOME}/.local/share/mc/skins" &
   ln -sf "${HOME}/.config/dotfiles/.config/tmux/tmux.conf" "${HOME}/.config/tmux/tmux.conf" &
   ln -sf "${HOME}/.config/dotfiles/.config/kmonad/config.kbd" "${HOME}/.config/kmonad/config.kbd" &
   ln -sf "${HOME}/.config/dotfiles/.config/sxhkd/sxhkdrc" "${HOME}/.config/sxhkd/sxhkdrc" &
@@ -79,6 +82,7 @@ To automate the process of creating symbolic links from the repository files to 
   ln -sf "${HOME}/.config/dotfiles/.Xresources-dark" "${HOME}/.Xresources" &
   ln -sf "${HOME}/.config/dotfiles/.bash_aliases" "${HOME}/.bash_aliases" &
   ln -sf "${HOME}/.config/dotfiles/.config/urxvt/" "${HOME}/.urxvt" &
+  ln -sf "${HOME}/.config/dotfiles/.config/mc/ini" "${HOME}/.config/mc/ini" &
 #+end_src
 
 If you use *GNU Emacs*, you can execute the above code block with =C-c C-c=.
