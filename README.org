@@ -64,6 +64,7 @@ To automate the process of creating symbolic links from the repository files to 
 
   mkdir -p "${HOME}/.local/bin/" &
   mkdir -p "${HOME}/.local/share/" &
+  mkdir -p "${HOME}/.local/share/mc/" &
   mkdir -p "${HOME}/.config/tmux/" &
   mkdir -p "${HOME}/.config/sxhkd/" &
   mkdir -p "${HOME}/.config/kmonad/" &
