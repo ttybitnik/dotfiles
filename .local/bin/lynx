@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-# be sure to install the ca-certificates package
+# Thanks to @rwxrob who introduced me to Lynx
+# and shared this wrapper along with his configs
+
+# Be sure to install the ca-certificates package
 
 lynxpath=/usr/bin/lynx
 [[ ! -x $lynxpath ]] && lynxpath=/usr/local/bin/lynx
