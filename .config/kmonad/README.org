@@ -1,4 +1,4 @@
-* Kmonad.w0lper
+* Kmonad.ttybitnik
 
 Standard path =~/.config/kmonad/=.
 

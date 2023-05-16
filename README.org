@@ -1,4 +1,4 @@
-#+TITLE: Dotfiles.w0lper	
+#+TITLE: Dotfiles.ttybitnik
 #+AUTHOR: Vinicius Moraes
 #+EMAIL: vinicius.moraes@eternodevir.com
 #+OPTIONS:   num:nil
@@ -22,7 +22,7 @@ Before using my dotfiles, ensure that user's =$PATH= includes =~/.local/bin/=, a
 The following scripts are included in this repository:
 
 - switcher: /global dark/light mode switcher/
-- euterpe: /audio and music cli management/
+- euterpe: /audio and music management/
 - vpn-bar: /vpn status and city/
 - net-bar: /network status/
 - ram-bar: /ram usage/
