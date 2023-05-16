@@ -15,6 +15,7 @@ alias tk='tmux kill-session'
 alias fcd='cd $(find -type d | fzf)'
 alias femacs='emacs $(find -type f | fzf)'
 alias fpath='find -type f | fzf | sed 's/^..//g' | tr -d '\n' | xclip -selection primary'
+alias ?='lynx-duck'
 
 alias weather='curl wttr.in/Juiz+de+fora | head -n -1'
 . ~/.bash_aliases2
