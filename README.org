@@ -1,4 +1,4 @@
-#+TITLE: Dotfiles.w0lper	
+#+TITLE: Dotfiles.ttybitnik
 #+AUTHOR: Vinicius Moraes
 #+EMAIL: vinicius.moraes@eternodevir.com
 #+OPTIONS:   num:nil
