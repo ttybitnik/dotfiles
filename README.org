@@ -51,6 +51,7 @@ This repository includes configuration files for the following applications:
 - Kmonad
 - Xsettingsd
 - Midnight Commander
+- Lynx
 
 The configuration files are located in the following repository paths: =.=, =~/.config/=, =~/.local/share/=.
 
@@ -76,6 +77,7 @@ To automate the process of creating symbolic links from the repository files to 
   ln -sf "${HOME}/.config/dotfiles/.local/bin/" "${HOME}/.local/bin" &
   ln -sf "${HOME}/.config/dotfiles/.local/share/dwm/" "${HOME}/.local/share/dwm" &
   ln -sf "${HOME}/.config/dotfiles/.local/share/mc/skins/" "${HOME}/.local/share/mc/skins" &
+  ln -sf "${HOME}/.config/dotfiles/.config/lynx/" "${HOME}/.config/lynx" &
   ln -sf "${HOME}/.config/dotfiles/.config/tmux/tmux.conf" "${HOME}/.config/tmux/tmux.conf" &
   ln -sf "${HOME}/.config/dotfiles/.config/kmonad/config.kbd" "${HOME}/.config/kmonad/config.kbd" &
   ln -sf "${HOME}/.config/dotfiles/.config/sxhkd/sxhkdrc" "${HOME}/.config/sxhkd/sxhkdrc" &
