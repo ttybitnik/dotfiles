@@ -1,7 +1,7 @@
 alias lsa='ls -ah'
 alias lla='ls -lah'
 alias mv="mv -i"
-alias rm= "rm -i"
+alias rm="rm -i"
 alias cp="cp -ir"
 alias c='clear'
 alias grep="grep --color"
