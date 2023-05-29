@@ -1,4 +1,11 @@
 #!/bin/bash
 
 vpncity=$(nordvpn status | grep "City" | sed "s/.*: //")
-[ -n "$vpncity" ] && printf " $vpncity" || { printf " Unsafe" && killall qbittorrent > /dev/null 2>&1; }
+if [ -n "$vpncity" ]; then
+  printf " $vpncity"
+else
+  printf " Unsafe"
+  if pgrep -x "qbittorrent" > /dev/null; then
+    killall -q qbittorrent
+  fi
+fi
