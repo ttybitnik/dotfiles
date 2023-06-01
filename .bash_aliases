@@ -4,6 +4,7 @@ alias mv="mv -i"
 alias rm="rm -i"
 alias cp="cp -ir"
 alias c='clear'
+alias tree='tree -I ".gitf"'
 alias grep="grep --color"
 alias chmox='chmod +x'
 
@@ -11,7 +12,7 @@ alias em='emacs'
 alias emacs='emacsclient -c -n'
 alias vi='vim'
 alias view='vi -R'
-alias mpv='devour mpv'
+alias mpv='mpv --no-terminal'
 alias yt='ytfzf --detach -f'
 alias tn='tmux new'
 alias ta='tmux attach'
