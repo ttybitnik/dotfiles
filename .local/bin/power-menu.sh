@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 options=$(echo -e "\uf023 Lock\n\uf08b Logout\n\uf021 Reboot\n\uf011 Shutdown")
 selected=$(echo -e "$options" | dmenu -i -p "Select an option:")

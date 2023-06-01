@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+# File to store the mode state
+state_file="${HOME}/.config/dotfiles/.switcher_state"
+
+# Read the current state from the file
+toggle=$(cat "$state_file" 2>/dev/null)
+
+# If the file doesn't exist or is empty, set the default state to dark
+if [ -z "$toggle" ]; then
+    toggle=dark
+fi
+
+# Function to toggle the state
+switcher_state() {
+    if [ "$toggle" = dark ]; then
+	toggle=light
+	printf "We can easily forgive a child who is afraid of the dark; the real tragedy of life is when men are afraid of the light.\n— Plato\n"
+	ln -sf "${HOME}/.emacs.d/local/switcher-day.el" "${HOME}/.emacs.d/local/switcher.el"
+	ln -sf "${HOME}/.config/dotfiles/.config/foot/switcher-light" "${HOME}/.config/foot/switcher"
+	ln -sf "${HOME}/.config/dotfiles/.config/rofi/switcher-light" "${HOME}/.config/rofi/switcher.rasi"
+	ln -sf "${HOME}/.config/dotfiles/.config/dunst/dunstrc-light" "${HOME}/.config/dunst/dunstrc"
+	ln -sf "${HOME}/.config/dotfiles/.config/sway/switcher-light" "${HOME}/.config/sway/switcher"
+	ln -sf "${HOME}/.config/dotfiles/.config/waybar/switcher-light" "${HOME}/.config/waybar/style.css"
+	swaymsg reload
+	gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
+	emacsclient --eval "(config-reload)"  > /dev/null 2>&1 & 
+	killall -USR1 foot
+	killall dunst && dunst > /dev/null 2>&1 & 
+    elif [ "$toggle" = light ]; then
+	toggle=dark
+	printf "Darkness now rose, as daylight sunk, and brought in low'ring night her shadowy offspring.\n— John Milton\n"
+	ln -sf "${HOME}/.emacs.d/local/switcher-night.el" "${HOME}/.emacs.d/local/switcher.el"
+	ln -sf "${HOME}/.config/dotfiles/.config/foot/switcher-dark" "${HOME}/.config/foot/switcher"
+	ln -sf "${HOME}/.config/dotfiles/.config/rofi/switcher-dark" "${HOME}/.config/rofi/switcher.rasi"
+	ln -sf "${HOME}/.config/dotfiles/.config/dunst/dunstrc-dark" "${HOME}/.config/dunst/dunstrc"
+	ln -sf "${HOME}/.config/dotfiles/.config/sway/switcher-dark" "${HOME}/.config/sway/switcher"
+	ln -sf "${HOME}/.config/dotfiles/.config/waybar/switcher-dark" "${HOME}/.config/waybar/style.css"
+	swaymsg reload
+	gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+	emacsclient --eval "(config-reload)" > /dev/null 2>&1 & 
+	killall -USR1 foot
+	killall dunst && dunst > /dev/null 2>&1  &
+    else
+	printf "The proper configuration files were not found."
+	exit
+    fi
+}
+
+# Toggle the state
+switcher_state
+
+# Save the updated state to the file
+echo "$toggle" > "$state_file"

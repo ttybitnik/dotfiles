@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 battery=$(upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep percentage | sed 's/[^0-9]//g')
 if [ "$battery" -ge 90 ]; then
