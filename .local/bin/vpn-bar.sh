@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 vpncity=$(nordvpn status | grep "City" | sed "s/.*: //")
 if [ -n "$vpncity" ]; then
