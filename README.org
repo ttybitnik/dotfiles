@@ -118,63 +118,50 @@ To automate the process of creating symbolic links from the repository files to 
 #+begin_src shell
   #!/usr/bin/env bash
 
+  CreateSymlink() {
+      source="${HOME}/.config/dotfiles/$1"
+      target="${HOME}/$2"
+
+      mkdir -p "$(dirname "$target")"
+      ln -sf "$source" "$target"
+      echo -e ">> $target \n"
+  }
+
   echo "Please choose an environment:"
-  echo "1. Wayland - Sway"
-  echo "2. Xorg - Dwm"
+  echo "1. Wayland - sway"
+  echo "2. Xorg - dwm"
   read -p "Enter your choice (1 or 2): " choice
 
-  # Wayland symlinks
   if [ "$choice" = "1" ]; then
-      echo "You chose Sway environment."
-      mkdir -p "${HOME}/.config/dunst/" &
-
-      sleep 2
-
-      ln -sf "${HOME}/.config/dotfiles/.config/sway/" "${HOME}/.config/sway" &
-      ln -sf "${HOME}/.config/dotfiles/.config/waybar/" "${HOME}/.config/waybar" &
-      ln -sf "${HOME}/.config/dotfiles/.config/foot/" "${HOME}/.config/foot" &
-      ln -sf "${HOME}/.config/dotfiles/.config/rofi/" "${HOME}/.config/rofi" &
-      ln -sf "${HOME}/.config/dotfiles/.config/dunst/dunstrc-dark" "${HOME}/.config/dunst/dunstrc" &
-      ln -sf "${HOME}/.config/dotfiles/.config/swaylock/" "${HOME}/.config/swaylock" &
-    
-  # Xorg symlinks
+      echo -e "\nSway environment."
+      CreateSymlink ".config/sway" ".config/sway"
+      CreateSymlink ".config/waybar" ".config/waybar"
+      CreateSymlink ".config/foot" ".config/foot"
+      CreateSymlink ".config/rofi" ".config/rofi"
+      CreateSymlink ".config/dunst/dunstrc-dark" ".config/dunst/dunstrc"
+      CreateSymlink ".config/swaylock" ".config/swaylock"
   elif [ "$choice" = "2" ]; then
-      echo "You chose Dwm environment."
-      mkdir -p "${HOME}/.config/sxhkd/" &
-      mkdir -p "${HOME}/.config/kmonad/" &
-      mkdir -p "${HOME}/.config/xsettingsd/" &
-
-      sleep 2
-
-      ln -sf "${HOME}/.config/dotfiles/.local/share/dwm/" "${HOME}/.local/share/dwm" &
-      ln -sf "${HOME}/.config/dotfiles/.config/sxhkd/sxhkdrc" "${HOME}/.config/sxhkd/sxhkdrc" &
-      ln -sf "${HOME}/.config/dotfiles/.config/xsettingsd/xsettingsd-dark.conf" "${HOME}/.config/xsettingsd/xsettingsd.conf" &
-      ln -sf "${HOME}/.config/dotfiles/.Xresources-dark" "${HOME}/.Xresources" &
-      ln -sf "${HOME}/.config/dotfiles/.config/urxvt/" "${HOME}/.urxvt" &
-
+      echo -e "\nDwm environment."
+      CreateSymlink ".local/share/dwm" ".local/share/dwm"
+      CreateSymlink ".config/sxhkd/sxhkdrc" ".config/sxhkd/sxhkdrc"
+      CreateSymlink ".config/xsettingsd/xsettingsd-dark.conf" ".config/xsettingsd/xsettingsd.conf"
+      CreateSymlink ".Xresources-dark" ".Xresources"
+      CreateSymlink ".config/urxvt" ".urxvt"
   else
       echo "Invalid choice. Exiting."
       exit 1
   fi
 
-  # TTY symlinks
-  mkdir -p "${HOME}/.local/bin/" &
-  mkdir -p "${HOME}/.local/share/" &
-  mkdir -p "${HOME}/.local/share/mc/" &
-  mkdir -p "${HOME}/.config/tmux/" &
-  mkdir -p "${HOME}/.config/mc/" &
+  echo -e "\nTTY environment."
+  CreateSymlink ".local/bin" ".local/bin"
+  CreateSymlink ".local/share/mc/skins" ".local/share/mc/skins"
+  CreateSymlink ".config/lynx" ".config/lynx"
+  CreateSymlink ".config/kmonad/config.kbd" ".config/kmonad/config.kbd"
+  CreateSymlink ".config/tmux/tmux.conf" ".config/tmux/tmux.conf"
+  CreateSymlink ".bash_aliases" ".bash_aliases"
+  CreateSymlink ".config/mc/ini" ".config/mc/ini"
 
-  sleep 2
-
-  ln -sf "${HOME}/.config/dotfiles/.local/bin/" "${HOME}/.local/bin" &
-  ln -sf "${HOME}/.config/dotfiles/.local/share/mc/skins/" "${HOME}/.local/share/mc/skins" &
-  ln -sf "${HOME}/.config/dotfiles/.config/lynx/" "${HOME}/.config/lynx" &
-  ln -sf "${HOME}/.config/dotfiles/.config/kmonad/config.kbd" "${HOME}/.config/kmonad/config.kbd" &
-  ln -sf "${HOME}/.config/dotfiles/.config/tmux/tmux.conf" "${HOME}/.config/tmux/tmux.conf" &
-  ln -sf "${HOME}/.config/dotfiles/.bash_aliases" "${HOME}/.bash_aliases" &
-  ln -sf "${HOME}/.config/dotfiles/.config/mc/ini" "${HOME}/.config/mc/ini" &
-
-  echo "Dotfiles symlinks created successfully!"
+  echo "All symlinks created successfully!"
 #+end_src
 
 If you use *GNU Emacs*, you can execute the above code block with =C-c C-c=.
