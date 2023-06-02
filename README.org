@@ -3,6 +3,8 @@
 #+EMAIL: vinicius.moraes@eternodevir.com
 #+OPTIONS:   num:nil
 
+#+html: <p align="center"><img src=".demo-switcher.gif" /></p>
+
 This repository contains my personal collection of scripts and configuration files, stored in the standard repository path =~/.config/dotfiles/=, with symbolic links pointing from =~=.
 
 The description is structured around the custom environments I run, including a *FreeBSD* headless laptop (/TTY environment/), a *Fedora* desktop with Sway (/Wayland environment/), and a *Debian* desktop with Dwm (/Xorg environment/). It is worth noting that the TTY tools are employed across all environments.
