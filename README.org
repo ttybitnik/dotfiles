@@ -3,7 +3,7 @@
 #+EMAIL: vinicius.moraes@eternodevir.com
 #+OPTIONS:   num:nil
 
-#+html: <p align="center"><img src=".demo-switcher.gif" /></p>
+#+html: <p align="center"><img src=".switcher_demo.gif" /></p>
 
 This repository contains my personal collection of scripts and configuration files, stored in the standard repository path =~/.config/dotfiles/=, with symbolic links pointing from =~=.
 
