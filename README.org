@@ -3,7 +3,9 @@
 #+EMAIL: vinicius.moraes@eternodevir.com
 #+OPTIONS:   num:nil
 
-This repository contains my personal collection of scripts and configuration files, stored in the standard repository path =~/.config/dotfiles/=, with symbolic links pointing from =~=. The description is organized based on the custom environments that I run: a *FreeBSD* headless laptop (/TTY environment/); a *Fedora* desktop with Sway (/Wayland environment/); a *Debian* desktop with Dwm (/Xorg environment/). It is worth noting that the TTY tools are employed across all environments.
+This repository contains my personal collection of scripts and configuration files, stored in the standard repository path =~/.config/dotfiles/=, with symbolic links pointing from =~=.
+
+The description is structured around the custom environments I run, including a *FreeBSD* headless laptop (/TTY environment/), a *Fedora* desktop with Sway (/Wayland environment/), and a *Debian* desktop with Dwm (/Xorg environment/). It is worth noting that the TTY tools are employed across all environments.
 
 **** Table of contents                                             :TOC_4:
   - [[#requirements][Requirements]]
@@ -67,6 +69,7 @@ Before using my dotfiles, ensure that user's =$PATH= includes =~/.local/bin/=, a
 The following scripts are included in this repository:
 
 - switcher: /global dark/light mode switcher/
+- omni: /universal update automation/
 - euterpe: /audio and music management/
 - vpn-bar: /vpn status and city/
 - net-bar: /network status/
@@ -77,12 +80,11 @@ The following scripts are included in this repository:
   - volume+: /volume up/
   - volume-: /volume down/
 - media-bar: /media status/
-- weather: /weather status/
 - clock-bar: /date and time/
+- weather: /weather status/
 - qbit: /qBittorrent secure launcher/
 - power-menu: /logout screen options/
 - autostart: /sway/dwm autostart/
-- omni: /universal update automation/
 
 The scripts are located in the following repository paths: =~/.local/bin/=, =~/.local/share/dwm/=.
 
@@ -124,16 +126,16 @@ To automate the process of creating symbolic links from the repository files to 
 
       mkdir -p "$(dirname "$target")"
       ln -sf "$source" "$target"
-      echo -e ">> $target \n"
+      echo ">> $target"
   }
 
-  echo "Please choose an environment:"
+  echo "Choose an environment:"
   echo "1. Wayland - sway"
   echo "2. Xorg - dwm"
   read -p "Enter your choice (1 or 2): " choice
 
   if [ "$choice" = "1" ]; then
-      echo -e "\nSway environment."
+      echo -e "\nSway environment"
       CreateSymlink ".config/sway" ".config/sway"
       CreateSymlink ".config/waybar" ".config/waybar"
       CreateSymlink ".config/foot" ".config/foot"
@@ -141,7 +143,7 @@ To automate the process of creating symbolic links from the repository files to 
       CreateSymlink ".config/dunst/dunstrc-dark" ".config/dunst/dunstrc"
       CreateSymlink ".config/swaylock" ".config/swaylock"
   elif [ "$choice" = "2" ]; then
-      echo -e "\nDwm environment."
+      echo -e "\nDwm environment"
       CreateSymlink ".local/share/dwm" ".local/share/dwm"
       CreateSymlink ".config/sxhkd/sxhkdrc" ".config/sxhkd/sxhkdrc"
       CreateSymlink ".config/xsettingsd/xsettingsd-dark.conf" ".config/xsettingsd/xsettingsd.conf"
@@ -152,7 +154,7 @@ To automate the process of creating symbolic links from the repository files to 
       exit 1
   fi
 
-  echo -e "\nTTY environment."
+  echo -e "\nTTY environment"
   CreateSymlink ".local/bin" ".local/bin"
   CreateSymlink ".local/share/mc/skins" ".local/share/mc/skins"
   CreateSymlink ".config/lynx" ".config/lynx"
@@ -161,7 +163,7 @@ To automate the process of creating symbolic links from the repository files to 
   CreateSymlink ".bash_aliases" ".bash_aliases"
   CreateSymlink ".config/mc/ini" ".config/mc/ini"
 
-  echo "All symlinks created successfully!"
+  echo -e "\nAll symlinks created successfully!"
 #+end_src
 
 If you use *GNU Emacs*, you can execute the above code block with =C-c C-c=.
