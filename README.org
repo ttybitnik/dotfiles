@@ -3,19 +3,64 @@
 #+EMAIL: vinicius.moraes@eternodevir.com
 #+OPTIONS:   num:nil
 
-This repository contains my personal collection of scripts and configuration files, stored in the standard repository path =~/.config/dotfiles/=, with symbolic links pointing from =~=.
+This repository contains my personal collection of scripts and configuration files, stored in the standard repository path =~/.config/dotfiles/=, with symbolic links pointing from =~=. The description is organized based on the custom environments that I run: a *FreeBSD* headless laptop (/TTY environment/); a *Fedora* desktop with Sway (/Wayland environment/); a *Debian* desktop with Dwm (/Xorg environment/). It is worth noting that the TTY tools are employed across all environments.
 
 **** Table of contents                                             :TOC_4:
   - [[#requirements][Requirements]]
+    - [[#suggestions][Suggestions]]
   - [[#scripts][Scripts]]
   - [[#configurations][Configurations]]
   - [[#usage][Usage]]
     - [[#automating-symbolic-links][Automating symbolic links]]
+  - [[#miscellaneous][Miscellaneous]]
+      - [[#ytfzf-and-yt-dlp][Ytfzf and yt-dlp]]
+      - [[#switcher][Switcher]]
+      - [[#emacs-like-key-bindings][Emacs like key bindings]]
+      - [[#tty-environment][TTY environment]]
+      - [[#wayland-environment][Wayland environment]]
+      - [[#xorg-environment][Xorg environment]]
   - [[#license][License]]
 
 ** Requirements
 
 Before using my dotfiles, ensure that user's =$PATH= includes =~/.local/bin/=, and =~/.bashrc= includes =~/.bash_aliases=.
+
+*** Suggestions
+
++ GNU Emacs ([[https://github.com/ttybitnik/emacs][my config]])
++ GNU Image Manipulation Program
++ Imv
++ Mpv
++ Fzf
++ Ytfzf
++ Yt-dlp
++ Nautilus
++ TTY environment
+  + GNU Emacs ([[https://github.com/ttybitnik/emacs][ditto]])
+  + GNU Midnight Commander
+  + GNU Lynx
+  + Tmux
+  + Nmcli
+  + Pulsemixer
+  + Spotify-tui
++ Wayland environment
+  + Foot
+  + Sway
+  + Swaylock
+  + Waybar
+  + Rofi
+  + Dunst
+  + Kanshi
+  + Gammastep
+  + Light
++ Xorg environment
+  + Urxvt
+  + Suckless tools ([[https://github.com/ttybitnik/suckless][my builds]])
+  + Redshift
+  + Nitrogen
+  + Sxhkd
+  + Xclip
+  + Xsettingsd
 
 ** Scripts
 
@@ -31,11 +76,13 @@ The following scripts are included in this repository:
 - volume-bar: /volume status/
   - volume+: /volume up/
   - volume-: /volume down/
+- media-bar: /media status/
 - weather: /weather status/
 - clock-bar: /date and time/
 - qbit: /qBittorrent secure launcher/
 - power-menu: /logout screen options/
-- autostart: /dwm autostart/
+- autostart: /sway/dwm autostart/
+- omni: /universal update automation/
 
 The scripts are located in the following repository paths: =~/.local/bin/=, =~/.local/share/dwm/=.
 
@@ -44,14 +91,22 @@ The scripts are located in the following repository paths: =~/.local/bin/=, =~/.
 This repository includes configuration files for the following applications:
 
 - CLI aliases
-- Xresources
-- Urxvt
 - Tmux
-- Sxhkd
+- GNU Lynx
+- GNU Midnight Commander
 - Kmonad
-- Xsettingsd
-- Midnight Commander
-- Lynx
+- Wayland environment
+  - Foot
+  - Sway
+  - Waybar
+  - Swaylock
+  - Rofi
+  - Dunst
+- Xorg environment
+  - Urxvt
+  - Sxhkd
+  - Xresources
+  - Xsettingsd
 
 The configuration files are located in the following repository paths: =.=, =~/.config/=, =~/.local/share/=.
 
@@ -61,34 +116,120 @@ The configuration files are located in the following repository paths: =.=, =~/.
 To automate the process of creating symbolic links from the repository files to their respective locations, use the following script:
 
 #+begin_src shell
-  #!/bin/bash
+  #!/usr/bin/env bash
 
+  echo "Please choose an environment:"
+  echo "1. Wayland - Sway"
+  echo "2. Xorg - Dwm"
+  read -p "Enter your choice (1 or 2): " choice
+
+  # Wayland symlinks
+  if [ "$choice" = "1" ]; then
+      echo "You chose Sway environment."
+      mkdir -p "${HOME}/.config/dunst/" &
+
+      sleep 2
+
+      ln -sf "${HOME}/.config/dotfiles/.config/sway/" "${HOME}/.config/sway" &
+      ln -sf "${HOME}/.config/dotfiles/.config/waybar/" "${HOME}/.config/waybar" &
+      ln -sf "${HOME}/.config/dotfiles/.config/foot/" "${HOME}/.config/foot" &
+      ln -sf "${HOME}/.config/dotfiles/.config/rofi/" "${HOME}/.config/rofi" &
+      ln -sf "${HOME}/.config/dotfiles/.config/dunst/dunstrc-dark" "${HOME}/.config/dunst/dunstrc" &
+      ln -sf "${HOME}/.config/dotfiles/.config/swaylock/" "${HOME}/.config/swaylock" &
+    
+  # Xorg symlinks
+  elif [ "$choice" = "2" ]; then
+      echo "You chose Dwm environment."
+      mkdir -p "${HOME}/.config/sxhkd/" &
+      mkdir -p "${HOME}/.config/kmonad/" &
+      mkdir -p "${HOME}/.config/xsettingsd/" &
+
+      sleep 2
+
+      ln -sf "${HOME}/.config/dotfiles/.local/share/dwm/" "${HOME}/.local/share/dwm" &
+      ln -sf "${HOME}/.config/dotfiles/.config/sxhkd/sxhkdrc" "${HOME}/.config/sxhkd/sxhkdrc" &
+      ln -sf "${HOME}/.config/dotfiles/.config/xsettingsd/xsettingsd-dark.conf" "${HOME}/.config/xsettingsd/xsettingsd.conf" &
+      ln -sf "${HOME}/.config/dotfiles/.Xresources-dark" "${HOME}/.Xresources" &
+      ln -sf "${HOME}/.config/dotfiles/.config/urxvt/" "${HOME}/.urxvt" &
+
+  else
+      echo "Invalid choice. Exiting."
+      exit 1
+  fi
+
+  # TTY symlinks
   mkdir -p "${HOME}/.local/bin/" &
   mkdir -p "${HOME}/.local/share/" &
   mkdir -p "${HOME}/.local/share/mc/" &
   mkdir -p "${HOME}/.config/tmux/" &
-  mkdir -p "${HOME}/.config/sxhkd/" &
-  mkdir -p "${HOME}/.config/kmonad/" &
-  mkdir -p "${HOME}/.config/xsettingsd/" &
   mkdir -p "${HOME}/.config/mc/" &
 
-  sleep 3
+  sleep 2
 
   ln -sf "${HOME}/.config/dotfiles/.local/bin/" "${HOME}/.local/bin" &
-  ln -sf "${HOME}/.config/dotfiles/.local/share/dwm/" "${HOME}/.local/share/dwm" &
   ln -sf "${HOME}/.config/dotfiles/.local/share/mc/skins/" "${HOME}/.local/share/mc/skins" &
   ln -sf "${HOME}/.config/dotfiles/.config/lynx/" "${HOME}/.config/lynx" &
-  ln -sf "${HOME}/.config/dotfiles/.config/tmux/tmux.conf" "${HOME}/.config/tmux/tmux.conf" &
   ln -sf "${HOME}/.config/dotfiles/.config/kmonad/config.kbd" "${HOME}/.config/kmonad/config.kbd" &
-  ln -sf "${HOME}/.config/dotfiles/.config/sxhkd/sxhkdrc" "${HOME}/.config/sxhkd/sxhkdrc" &
-  ln -sf "${HOME}/.config/dotfiles/.config/xsettingsd/xsettingsd-dark.conf" "${HOME}/.config/xsettingsd/xsettingsd.conf" &
-  ln -sf "${HOME}/.config/dotfiles/.Xresources-dark" "${HOME}/.Xresources" &
+  ln -sf "${HOME}/.config/dotfiles/.config/tmux/tmux.conf" "${HOME}/.config/tmux/tmux.conf" &
   ln -sf "${HOME}/.config/dotfiles/.bash_aliases" "${HOME}/.bash_aliases" &
-  ln -sf "${HOME}/.config/dotfiles/.config/urxvt/" "${HOME}/.urxvt" &
   ln -sf "${HOME}/.config/dotfiles/.config/mc/ini" "${HOME}/.config/mc/ini" &
+
+  echo "Dotfiles symlinks created successfully!"
 #+end_src
 
 If you use *GNU Emacs*, you can execute the above code block with =C-c C-c=.
+
+** Miscellaneous
+
+This section contains additional fine-tuning configurations for the packages and projects that I use in conjunction with my dotfiles.
+
+**** Ytfzf and yt-dlp
+
+To improve the performance of ytfzf, I recommend creating a symbolic link from =/usr/local/bin/yt-dlp= to =/usr/bin/youtube-dl=. This makes *ytfzf* work through *yt-dlp* instead of the hard-coded *youtube-dl*. Additionally, make sure to install =ffmpeg= for the highest video quality.
+
+**** Switcher
+
+To switch between light and dark modes globally, just run =switcher=. This custom script from my [[https://github.com/w0lper/dotfiles][dotfiles]] sends SIGHUP signals to the respective programs, making it easy to adapt to changes in ambient light without having to manually adjust each program's settings.
+
+**** GTK Emacs-like key bindings
+
+To enable Emacs-style key bindings within the GTK-based applications, make the following changes to the =~/.config/gtk-3.0/settings.ini= file:
+
+#+begin_src conf
+~/.config/gtk-3.0/settings.ini
+[Settings]
+gtk-key-theme-name = Emacs
+#+end_src
+
+**** TTY environment
+
+**** Wayland environment
+
+***** Gammastep
+
+To adjust the color temperature of the display based on the time of day, edit the location command in the =autostart= script.
+
+**** Xorg environment
+
+***** Mouse speed
+
+To adjust the mouse speed in Xorg, create the file =/etc/X11/xorg.conf.d/50-mouse-acceleration.conf= with the following content:
+
+#+begin_src conf
+Section "InputClass"
+	Identifier "My Mouse"
+	Driver "libinput"
+	MatchIsPointer "yes"
+	Option "AccelProfile" "flat"
+	Option "AccelSpeed" "0"
+EndSection
+#+end_src
+
+After saving the file, restart Xorg.
+
+***** Redshift
+
+To adjust the color temperature of the display based on the time of day, edit the location command in the =autostart= script.
 
 ** License
 
