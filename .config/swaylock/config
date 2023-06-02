@@ -1,0 +1,35 @@
+# Main options
+image=$HOME/Pictures/Rio4bw.jpg
+scaling=fill
+# no-unlock-indicator
+ignore-empty-password
+disable-caps-lock-text
+color=32302f
+indicator-radius=40
+indicator-thickness=8
+indicator-x-position=900
+indicator-y-position=540
+inside-color=98971a
+ring-color=98971a
+line-color=98971a
+text-color=98971a
+separator-color=98971a
+key-hl-color=98971a
+
+# Clear-related options
+inside-clear-color=cc241d
+ring-clear-color=cc241d
+line-clear-color=cc241d
+text-clear-color=cc241d
+
+# Wrong-related options
+inside-wrong-color=cc241d
+ring-wrong-color=cc241d
+line-wrong-color=cc241d
+text-wrong-color=cc241d
+
+# Ver-related options
+inside-ver-color=98971a
+ring-ver-color=98971a
+line-ver-color=98971a
+text-ver-color=98971a

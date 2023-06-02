@@ -1,0 +1,37 @@
+[global]
+    format = "<b>%s</b>\n%b"
+    sort = yes
+    indicate_hidden = yes
+    alignment = center
+    word_wrap = yes
+    ignore_newline = no
+    transparency = 0
+    monitor = 0
+    follow = mouse
+    sticky_history = yes
+    line_height = 0
+    separator_height = 2
+    padding = 8
+    horizontal_padding = 8
+    origin = top-right
+    offset = 30x30
+    separator_color = "#7c6f64"
+    
+[urgency_low]
+    background = "#665c54"
+    foreground = "#eddbb2"
+    frame_color = "#7c6f64"
+    timeout = 5
+
+[urgency_normal]
+    background = "#665c54"
+    foreground = "#eddbb2"
+    frame_color = "#7c6f64"
+    timeout = 20
+
+[urgency_critical]
+    background = "#665c54"
+    foreground = "#eddbb2"
+    frame_color = "#cc241d"
+    timeout = 0
+    

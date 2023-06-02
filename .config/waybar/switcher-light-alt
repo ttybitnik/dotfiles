@@ -1,0 +1,113 @@
+* {
+    /* `otf-font-awesome` is required to be installed for icons */
+    font-family: "Iosevka Medium Extended", "Font Awesome 5 Free Regular";
+    font-size: 13px;
+}
+
+#window {
+    color: #282828;
+}
+
+window#waybar {
+    background-color: #d5c4a1;
+    /* Optional layout, uncomment the lines below */
+    /* background-color: transparent; */
+    /* border-radius: 5px 5px 5px 5px; */
+}
+
+window#waybar.empty {
+    background-color: #d5c4a1;
+    /* background-color: transparent; */
+    /* border-radius: 5px 5px 5px 5px; */
+}
+
+window#waybar.empty .modules-center {
+    background-color: #d5c4a1;
+    /* background-color: transparent; */
+    /* border-radius: 5px 5px 5px 5px; */
+}
+
+window#waybar.solo {
+    background-color: #d5c4a1;
+    /* background-color: transparent; */
+    /* border-radius: 5px 5px 5px 5px; */
+}
+
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+window#waybar.termite {
+    background-color: #3F3F3F;
+}
+
+window#waybar.chromium {
+    /* background-color: #000000; */
+    border: none;
+}
+
+button {
+    /* Use box-shadow instead of border so the text isn't offset */
+    box-shadow: inset 0 -3px transparent;
+    /* Avoid rounded borders under each button name */
+    border: none;
+    border-radius: 0;
+}
+
+button:hover {
+    background: inherit; /* Do NOT remove */
+}
+
+#workspaces button {
+    padding: 0 2px;
+    background-color: transparent;
+    color: #3c3836;
+}
+
+#workspaces button.focused {
+    color: #282828;
+}
+
+
+#workspaces button.urgent {
+    color: #cc241d;
+}
+
+#mode {
+    color: #89b0c7;
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #workspaces {
+    margin-right: 0;
+}
+
+
+
+/* Modules rounded corners */ 
+.modules-left {
+    background: #d5c4a1;
+    color: #3c3836;
+    border-radius: 0px 0px 5px 5px;
+    padding: 0 4px;
+}
+
+.modules-center {
+    background-color: #d5c4a1;
+    color: #3c3836;
+    border-radius: 0px 0px 5px 5px;
+    padding: 0 10px;
+    margin: 0 4px;
+}
+.modules-right {
+    background: #d5c4a1;
+    color: #3c3836;
+    border-radius: 0px 0px 5px 5px;
+    padding: 0 4px; /* Alternate layout: 0 10px; */
+}
