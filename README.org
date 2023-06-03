@@ -16,10 +16,12 @@ The description is structured around the custom environments I run, including a 
   - [[#configurations][Configurations]]
   - [[#usage][Usage]]
     - [[#automating-symbolic-links][Automating symbolic links]]
+    - [[#switcher][Switcher]]
+    - [[#omni][Omni]]
+    - [[#euterpe][Euterpe]]
   - [[#miscellaneous][Miscellaneous]]
       - [[#ytfzf-and-yt-dlp][Ytfzf and yt-dlp]]
-      - [[#switcher][Switcher]]
-      - [[#emacs-like-key-bindings][Emacs like key bindings]]
+      - [[#gtk-emacs-like-key-bindings][GTK Emacs-like key bindings]]
       - [[#tty-environment][TTY environment]]
       - [[#wayland-environment][Wayland environment]]
       - [[#xorg-environment][Xorg environment]]
@@ -31,40 +33,10 @@ Before using my dotfiles, ensure that user's =$PATH= includes =~/.local/bin/=, a
 
 *** Suggestions
 
-+ GNU Emacs ([[https://github.com/ttybitnik/emacs][my config]])
-+ GNU Image Manipulation Program
-+ Imv
-+ Mpv
-+ Fzf
-+ Ytfzf
-+ Yt-dlp
-+ Nautilus
-+ TTY environment
-  + GNU Emacs ([[https://github.com/ttybitnik/emacs][ditto]])
-  + GNU Midnight Commander
-  + GNU Lynx
-  + Tmux
-  + Nmcli
-  + Pulsemixer
-  + Spotify-tui
-+ Wayland environment
-  + Foot
-  + Sway
-  + Swaylock
-  + Waybar
-  + Rofi
-  + Dunst
-  + Kanshi
-  + Gammastep
-  + Light
-+ Xorg environment
-  + Urxvt
-  + Suckless tools ([[https://github.com/ttybitnik/suckless][my builds]])
-  + Redshift
-  + Nitrogen
-  + Sxhkd
-  + Xclip
-  + Xsettingsd
+| General             | GNU Emacs ([[https://github.com/ttybitnik/emacs][my config]]), GNU Image Manipulation Program, Ffmpeg, Pandoc, Imv, Fzf, Ytfzf, Yt-dlp, Shotcut, Mpv, Nautilus |
+| TTY Environment     | GNU Emacs (ditto), GNU Midnight Commander, GNU Lynx, Tmux, Git, Htop, Tree, Nmcli, Pulsemixer, Spotify-tui             |
+| Wayland Environment | Foot, Sway, Swaylock, Waybar, Rofi, Dunst, Kanshi, Gammastep, Light                                                    |
+| Xorg Environment    | Urxvt, Suckless tools ([[https://github.com/ttybitnik/suckless][my builds]]), Redshift, Nitrogen, Sxhkd, Xclip, Xsettingsd                                        |
 
 ** Scripts
 
@@ -94,7 +66,7 @@ The scripts are located in the following repository paths: =~/.local/bin/=, =~/.
 
 This repository includes configuration files for the following applications:
 
-- CLI aliases
+- Bash 
 - Tmux
 - GNU Lynx
 - GNU Midnight Commander
@@ -170,6 +142,18 @@ To automate the process of creating symbolic links from the repository files to 
 
 If you use *GNU Emacs*, you can execute the above code block with =C-c C-c=.
 
+*** Switcher
+
+To switch between light and dark modes globally, just run =switcher=. This custom script sends SIGHUP signals to the respective programs, making it easy to adapt to changes in ambient light without having to manually adjust each program's settings.
+
+*** Omni
+
+To automate system updates, run =omni=. This script checks for the availability of various package managers and executes the corresponding update commands. It ensures that every manger present in the enviroment update its packages. 
+
+*** Euterpe
+
+To streamline the music experience, just run =euterpe=. This script leverages tmux to attach to a session with windows related to managing system sound and media.
+
 ** Miscellaneous
 
 This section contains additional fine-tuning configurations for the packages and projects that I use in conjunction with my dotfiles.
@@ -177,10 +161,6 @@ This section contains additional fine-tuning configurations for the packages and
 **** Ytfzf and yt-dlp
 
 To improve the performance of ytfzf, I recommend creating a symbolic link from =/usr/local/bin/yt-dlp= to =/usr/bin/youtube-dl=. This makes *ytfzf* work through *yt-dlp* instead of the hard-coded *youtube-dl*. Additionally, make sure to install =ffmpeg= for the highest video quality.
-
-**** Switcher
-
-To switch between light and dark modes globally, just run =switcher=. This custom script from my [[https://github.com/w0lper/dotfiles][dotfiles]] sends SIGHUP signals to the respective programs, making it easy to adapt to changes in ambient light without having to manually adjust each program's settings.
 
 **** GTK Emacs-like key bindings
 
