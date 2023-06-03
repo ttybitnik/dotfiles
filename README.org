@@ -31,40 +31,10 @@ Before using my dotfiles, ensure that user's =$PATH= includes =~/.local/bin/=, a
 
 *** Suggestions
 
-+ GNU Emacs ([[https://github.com/ttybitnik/emacs][my config]])
-+ GNU Image Manipulation Program
-+ Imv
-+ Mpv
-+ Fzf
-+ Ytfzf
-+ Yt-dlp
-+ Nautilus
-+ TTY environment
-  + GNU Emacs ([[https://github.com/ttybitnik/emacs][ditto]])
-  + GNU Midnight Commander
-  + GNU Lynx
-  + Tmux
-  + Nmcli
-  + Pulsemixer
-  + Spotify-tui
-+ Wayland environment
-  + Foot
-  + Sway
-  + Swaylock
-  + Waybar
-  + Rofi
-  + Dunst
-  + Kanshi
-  + Gammastep
-  + Light
-+ Xorg environment
-  + Urxvt
-  + Suckless tools ([[https://github.com/ttybitnik/suckless][my builds]])
-  + Redshift
-  + Nitrogen
-  + Sxhkd
-  + Xclip
-  + Xsettingsd
+| General             | GNU Emacs ([[https://github.com/ttybitnik/emacs][my config]]), GNU Image Manipulation Program, Ffmpeg, Pandoc, Imv, Fzf, Ytfzf, Yt-dlp, Shotcut, Mpv, Nautilus |
+| TTY Environment     | GNU Emacs (ditto), GNU Midnight Commander, GNU Lynx, Tmux, Git, Htop, Tree, Nmcli, Pulsemixer, Spotify-tui             |
+| Wayland Environment | Foot, Sway, Swaylock, Waybar, Rofi, Dunst, Kanshi, Gammastep, Light                                                    |
+| Xorg Environment    | Urxvt, Suckless tools ([[https://github.com/ttybitnik/suckless][my builds]]), Redshift, Nitrogen, Sxhkd, Xclip, Xsettingsd                                        |
 
 ** Scripts
 
@@ -94,7 +64,7 @@ The scripts are located in the following repository paths: =~/.local/bin/=, =~/.
 
 This repository includes configuration files for the following applications:
 
-- CLI aliases
+- Bash 
 - Tmux
 - GNU Lynx
 - GNU Midnight Commander
