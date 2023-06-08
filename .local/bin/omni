@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
 
-# Thanks to @branneman for sharing
-# these functions idea
+# Update software on a variety of OS and managers.
+#   Thanks to @branneman for sharing
+#   these functions idea.
 
-# If fail exit immediately
+# Exit immediately if any command fails
 set -e
 
-# Functions
+# Check if the manager is installed
+# and run the appropriate command.
 run() {
   printf "\n>> $1 \n\n"
   $1
 }
 
-runIfExists() {
+run_if_exists() {
   if [ -x "$(command -v $1)" ]; then
     run "$2"
   fi
@@ -23,36 +25,36 @@ sudo true
 
 ### Distros
 # Arch
-runIfExists "pacman" "sudo pacman -Syu"
+run_if_exists "pacman" "sudo pacman -Syu"
 
 # Debian
-runIfExists "apt" "sudo apt update"
-runIfExists "apt" "sudo apt upgrade -y"
+run_if_exists "apt" "sudo apt update"
+run_if_exists "apt" "sudo apt upgrade -y"
 
 # Fedora
-runIfExists "dnf" "sudo dnf update -y"
+run_if_exists "dnf" "sudo dnf update -y"
 
 # FreeBSD
-runIfExists "pkg" "sudo pkg update"
-runIfExists "pkg" "sudo pkg upgrade -y"
+run_if_exists "pkg" "sudo pkg update"
+run_if_exists "pkg" "sudo pkg upgrade -y"
 
 # Slackware
-runIfExists "slackpkg" "sudo slackpkg update"
-runIfExists "slackpkg" "sudo slackpkg upgrade-all"
-runIfExists "sbocheck" "sudo sbocheck"
-runIfExists "sbocheck" "sudo sboupgrade --all"
+run_if_exists "slackpkg" "sudo slackpkg update"
+run_if_exists "slackpkg" "sudo slackpkg upgrade-all"
+run_if_exists "sbocheck" "sudo sbocheck"
+run_if_exists "sbocheck" "sudo sboupgrade --all"
 
 # MacOS
-runIfExists "brew" "brew update"
-runIfExists "brew" "brew upgrade"
+run_if_exists "brew" "brew update"
+run_if_exists "brew" "brew upgrade"
 
 # Windows
-runIfExists "winget" "winget upgrade --all"
+run_if_exists "winget" "winget upgrade --all"
 
-## Package managers
+### Package managers
 # Flatpak
-runIfExists "flatpak" "flatpak update -y"
+run_if_exists "flatpak" "flatpak update -y"
 
 # Python
-runIfExists "pip" "pip install --upgrade pip"
-runIfExists "pip" "pip list --outdated | awk '{print $1}' | xargs -n1 pip install -U"
+run_if_exists "pip" "pip install --upgrade pip"
+run_if_exists "pip" "pip list --outdated | awk '{print $1}' | xargs -n1 pip install -U"

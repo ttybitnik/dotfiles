@@ -143,22 +143,22 @@
 	    "default": "🎜"
 	},
 	"escape": true,
-	"exec": "$HOME/.local/bin/media-bar --player spotify 2> /dev/null"
+	"exec": "$HOME/.local/bin/media_bar --player spotify 2> /dev/null"
     },
     "custom/vpn": {
 	"interval": 1,
-	"exec": "$HOME/.local/bin/vpn-bar"
+	"exec": "$HOME/.local/bin/vpn_bar"
     },
     "custom/net": {
 	"min-length": 15,
 	"interval": 1,
-	"exec": "$HOME/.local/bin/net-bar"
+	"exec": "$HOME/.local/bin/net_bar"
 	
     },
     "custom/weather": {
 	"min-length": 7,
 	"format": " {}",
 	"interval": 3600,
-	"exec": "$HOME/.local/bin/weather-bar",
+	"exec": "$HOME/.local/bin/weather_bar",
     }
 }

@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
+# Display the vpn status.
+
 vpncity=$(nordvpn status | grep "City" | sed "s/.*: //")
-if [ -n "$vpncity" ]; then
+if [[ -n "$vpncity" ]]; then
   printf " $vpncity"
 else
   printf " Unsafe"

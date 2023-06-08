@@ -7,7 +7,7 @@ xsettingsd &
 nitrogen --restore &
 dwmblocks &
 sxhkd &
-/usr/bin/emacs &
+\emacs &
 redshift -l -23.55:-46.63 &
 sleep 5
 urxvt -e tmux &

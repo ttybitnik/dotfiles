@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
 
+# Set the calibre to dark.
+# TODO (ttybitnik): Move it to bashrc later
+
 env CALIBRE_USE_DARK_PALETTE=1 calibre
