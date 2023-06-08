@@ -45,19 +45,19 @@ The following scripts are included in this repository:
 - switcher: /global dark/light mode switcher/
 - omni: /universal update automation/
 - euterpe: /audio and music management/
-- vpn-bar: /vpn status and city/
-- net-bar: /network status/
-- ram-bar: /ram usage/
-- cpu-bar: /cpu usage/
-- battery-bar: /battery status/
-- volume-bar: /volume status/
-  - volume+: /volume up/
-  - volume-: /volume down/
-- media-bar: /media status/
-- clock-bar: /date and time/
+- vpn_bar: /vpn status and city/
+- net_bar: /network status/
+- ram_bar: /ram usage/
+- cpu_bar: /cpu usage/
+- battery_bar: /battery status/
+- volume_bar: /volume status/
+  - volume_up: /raise volume/
+  - volume_down: /lower volume/
+- media_bar: /media status/
+- clock_bar: /date and time/
 - weather: /weather status/
 - qbit: /qBittorrent secure launcher/
-- power-menu: /logout screen options/
+- power_menu: /logout screen options/
 - autostart: /sway/dwm autostart/
 
 The scripts are located in the following repository paths: =~/.local/bin/=, =~/.local/share/dwm/=.
@@ -94,7 +94,10 @@ To automate the process of creating symbolic links from the repository files to 
 #+begin_src shell
   #!/usr/bin/env bash
 
-  CreateSymlink() {
+  # Automate the creation of symlinks for the dotfiles.
+  # This can overwrite previous config files.
+
+  create_symlink() {
       source="${HOME}/.config/dotfiles/$1"
       target="${HOME}/$2"
 
@@ -110,32 +113,32 @@ To automate the process of creating symbolic links from the repository files to 
 
   if [ "$choice" = "1" ]; then
       echo -e "\nSway environment"
-      CreateSymlink ".config/sway" ".config/sway"
-      CreateSymlink ".config/waybar" ".config/waybar"
-      CreateSymlink ".config/foot" ".config/foot"
-      CreateSymlink ".config/rofi" ".config/rofi"
-      CreateSymlink ".config/dunst/dunstrc-dark" ".config/dunst/dunstrc"
-      CreateSymlink ".config/swaylock" ".config/swaylock"
+      create_symlink ".config/sway" ".config/sway"
+      create_symlink ".config/waybar" ".config/waybar"
+      create_symlink ".config/foot" ".config/foot"
+      create_symlink ".config/rofi" ".config/rofi"
+      create_symlink ".config/dunst/dunstrc-dark" ".config/dunst/dunstrc"
+      create_symlink ".config/swaylock" ".config/swaylock"
   elif [ "$choice" = "2" ]; then
       echo -e "\nDwm environment"
-      CreateSymlink ".local/share/dwm" ".local/share/dwm"
-      CreateSymlink ".config/sxhkd/sxhkdrc" ".config/sxhkd/sxhkdrc"
-      CreateSymlink ".config/xsettingsd/xsettingsd-dark.conf" ".config/xsettingsd/xsettingsd.conf"
-      CreateSymlink ".Xresources-dark" ".Xresources"
-      CreateSymlink ".config/urxvt" ".urxvt"
+      create_symlink ".local/share/dwm" ".local/share/dwm"
+      create_symlink ".config/sxhkd/sxhkdrc" ".config/sxhkd/sxhkdrc"
+      create_symlink ".config/xsettingsd/xsettingsd-dark.conf" ".config/xsettingsd/xsettingsd.conf"
+      create_symlink ".Xresources-dark" ".Xresources"
+      create_symlink ".config/urxvt" ".urxvt"
   else
       echo "Invalid choice. Exiting."
       exit 1
   fi
 
   echo -e "\nTTY environment"
-  CreateSymlink ".local/bin" ".local/bin"
-  CreateSymlink ".local/share/mc/skins" ".local/share/mc/skins"
-  CreateSymlink ".config/lynx" ".config/lynx"
-  CreateSymlink ".config/kmonad/config.kbd" ".config/kmonad/config.kbd"
-  CreateSymlink ".config/tmux/tmux.conf" ".config/tmux/tmux.conf"
-  CreateSymlink ".bash_aliases" ".bash_aliases"
-  CreateSymlink ".config/mc/ini" ".config/mc/ini"
+  create_symlink ".local/bin" ".local/bin"
+  create_symlink ".local/share/mc/skins" ".local/share/mc/skins"
+  create_symlink ".config/lynx" ".config/lynx"
+  create_symlink ".config/kmonad/config.kbd" ".config/kmonad/config.kbd"
+  create_symlink ".config/tmux/tmux.conf" ".config/tmux/tmux.conf"
+  create_symlink ".bash_aliases" ".bash_aliases"
+  create_symlink ".config/mc/ini" ".config/mc/ini"
 
   echo -e "\nAll symlinks created successfully!"
 #+end_src

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-# Thanks to @rwxrob who introduced me to Lynx
-# and shared this wrapper along with his configs
+# Wrapper script for the GNU Lynx command-line browser.
+#   Thanks to @rwxrob who introduced me to Lynx
+#   and shared this wrapper along with his configs.
 
 # Be sure to install the ca-certificates package
 

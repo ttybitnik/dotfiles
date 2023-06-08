@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Display the network traffic.
+
 update() {
     sum=0
     for arg; do

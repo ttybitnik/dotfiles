@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
+
+# Display the media status.   
 # Alexays/Waybar (c) MIT LICENSE
+
 import argparse
 import logging
 import sys

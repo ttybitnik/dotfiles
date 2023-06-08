@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 
-link_path="${HOME}/.Xresources"
+# Switch globally between dark/light mode.
 
-if [ ! -L "$link_path" ]; then
-    echo "Error: $link_path is not a symbolic link."
+LINK_PATH="${HOME}/.Xresources"
+
+if [ ! -L "$LINK_PATH" ]; then
+    echo "Error: $LINK_PATH is not a symbolic link."
   exit 1
 fi
 
-target_path=$(readlink "$link_path")
+target_path=$(readlink "$LINK_PATH")
 filename=$(basename "$target_path")
 
 if [[ "$filename" == *"dark"* ]]; then
@@ -38,4 +40,5 @@ elif [[ "$filename" == *"light"* ]]; then
 
 else
     echo "The proper configuration files were not found."
+    exit
 fi

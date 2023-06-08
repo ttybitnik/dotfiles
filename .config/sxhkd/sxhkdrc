@@ -1,8 +1,8 @@
 XF86AudioLowerVolume
-	volume-
+	volume_down
 
 XF86AudioRaiseVolume
-	volume+
+	volume_up
 
 XF86AudioMute
 	pactl set-sink-mute 0 toggle; pkill -RTMIN+5 dwmblocks
@@ -43,4 +43,4 @@ super + c
       	calibre
 
 super + shift + h
-      	power-menu
+      	power_menu
