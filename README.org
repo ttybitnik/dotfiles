@@ -106,12 +106,18 @@ To automate the process of creating symbolic links from the repository files to 
       echo ">> $target"
   }
 
-  echo "Choose an environment:"
-  echo "1. Wayland - sway"
-  echo "2. Xorg - dwm"
-  read -p "Enter your choice (1 or 2): " choice
+  tty_env() {
+      echo -e "\nTTY environment"
+      create_symlink ".local/bin" ".local/bin"
+      create_symlink ".local/share/mc/skins" ".local/share/mc/skins"
+      create_symlink ".config/lynx" ".config/lynx"
+      create_symlink ".config/kmonad/config.kbd" ".config/kmonad/config.kbd"
+      create_symlink ".config/tmux/tmux.conf" ".config/tmux/tmux.conf"
+      create_symlink ".bash_aliases" ".bash_aliases"
+      create_symlink ".config/mc/ini" ".config/mc/ini"
+  }
 
-  if [ "$choice" = "1" ]; then
+  wayland_env() {
       echo -e "\nSway environment"
       create_symlink ".config/sway" ".config/sway"
       create_symlink ".config/waybar" ".config/waybar"
@@ -119,26 +125,35 @@ To automate the process of creating symbolic links from the repository files to 
       create_symlink ".config/rofi" ".config/rofi"
       create_symlink ".config/dunst/dunstrc-dark" ".config/dunst/dunstrc"
       create_symlink ".config/swaylock" ".config/swaylock"
-  elif [ "$choice" = "2" ]; then
+  }
+
+  xorg_env() {
       echo -e "\nDwm environment"
       create_symlink ".local/share/dwm" ".local/share/dwm"
       create_symlink ".config/sxhkd/sxhkdrc" ".config/sxhkd/sxhkdrc"
       create_symlink ".config/xsettingsd/xsettingsd-dark.conf" ".config/xsettingsd/xsettingsd.conf"
       create_symlink ".Xresources-dark" ".Xresources"
       create_symlink ".config/urxvt" ".urxvt"
+  }
+
+  echo "Choose an environment:"
+  echo "1. Wayland - sway"
+  echo "2. Xorg - dwm"
+  echo "3. TTY only"
+  read -p "Enter your choice (1, 2 or 3): " choice
+
+  if [ "$choice" = "1" ]; then
+      wayland_env
+      tty_env
+  elif [ "$choice" = "2" ]; then
+      xorg_env
+      tty_env
+  elif [ "$choice" = "3" ]; then
+      tty_env
   else
       echo "Invalid choice. Exiting."
       exit 1
   fi
-
-  echo -e "\nTTY environment"
-  create_symlink ".local/bin" ".local/bin"
-  create_symlink ".local/share/mc/skins" ".local/share/mc/skins"
-  create_symlink ".config/lynx" ".config/lynx"
-  create_symlink ".config/kmonad/config.kbd" ".config/kmonad/config.kbd"
-  create_symlink ".config/tmux/tmux.conf" ".config/tmux/tmux.conf"
-  create_symlink ".bash_aliases" ".bash_aliases"
-  create_symlink ".config/mc/ini" ".config/mc/ini"
 
   echo -e "\nAll symlinks created successfully!"
 #+end_src
