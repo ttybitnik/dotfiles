@@ -10,12 +10,12 @@ set -e
 # Check if the manager is installed
 # and run the appropriate command.
 run() {
-  printf "\n>> $1 \n\n"
+  printf "\n>> %s \n\n" "$1"
   $1
 }
 
 run_if_exists() {
-  if [ -x "$(command -v $1)" ]; then
+  if [ -x "$(command -v "$1")" ]; then
     run "$2"
   fi
 }

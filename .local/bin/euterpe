@@ -6,7 +6,7 @@
 tmux attach-session -t euterpe || tmux new-session -s euterpe
 
 # Create a new window for PulseAudio
-tmux new-window -n volume -c $HOME 'pulsemixer'
+tmux new-window -n volume -c "$HOME" 'pulsemixer'
 
 # Create a new window for Spotify
-tmux new-window -n spotify -c $HOME 'spt'
+tmux new-window -n spotify -c "$HOME" 'spt'
