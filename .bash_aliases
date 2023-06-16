@@ -17,7 +17,7 @@ alias yt='ytfzf --detach -f'
 alias tn='tmux new'
 alias ta='tmux attach'
 alias tk='tmux kill-session'
-alias ?='lynx-duck'
+alias ?='lynx_duck'
 
 alias fcd='cd $(find -type d | fzf)'
 alias femacs='emacs $(find -type f | fzf)'
