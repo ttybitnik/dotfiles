@@ -48,7 +48,7 @@ switcher_state() {
 	killall dunst && dunst > /dev/null 2>&1  &
 
     else
-	printf "The proper configuration files were not found. Check ${STATE_FILE}.\n"
+	printf "The proper configuration files were not found. Check %s.\n" "${STATE_FILE}"
 	exit
     fi
 }
