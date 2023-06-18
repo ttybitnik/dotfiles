@@ -55,6 +55,18 @@ run_if_exists "winget" "winget upgrade --all"
 # Flatpak
 run_if_exists "flatpak" "flatpak update -y"
 
-# Python
-run_if_exists "pip" "pip install --upgrade pip"
-run_if_exists "pip" "pip list --outdated | awk '{print $1}' | xargs -n1 pip install -U"
+# Pip
+# run_if_exists "pip" "pip list --outdated --format=json | jq '.[].name' | xargs -n1 pip install -U"
+run_if_exists "pip" "pip install pyright --upgrade"
+
+# Go
+# run_if_exists "go" "go get -u all"
+run_if_exists "go" "go install golang.org/x/tools/gopls@latest"
+run_if_exists "go" "go install golang.org/x/tools/cmd/goimports@latest"
+run_if_exists "go" "go install github.com/lighttiger2505/sqls@latest"
+
+# Npm
+run_if_exists "npm" "sudo npm update -g"
+
+# Cargo
+run_if_exists "cargo" "cargo install-update -a"
