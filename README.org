@@ -59,6 +59,7 @@ The following scripts are included in this repository:
 - qbit: /qBittorrent secure launcher/
 - power_menu: /logout screen options/
 - autostart: /sway/dwm autostart/
+- cron*: /cron jobs/
 
 The scripts are located in the following repository paths: =~/.local/bin/=, =~/.local/share/dwm/=.
 
