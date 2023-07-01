@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Cron job script to commit/update changes from local git repos.
+
+echo -e "Updating local git repos..."
+
+# List of the local git repos paths
+repo_paths=(
+    "${HOME}/.orpheus/gnu-emacs/org"
+    "${HOME}/.orpheus/gnu-emacs/org-agenda"
+    "${HOME}/.orpheus/gnu-emacs/org-roam"
+)
+
+# Iterate over each repo path and execute the git commands
+for path in "${repo_paths[@]}"; do
+  echo -e "\nProcessing repo at $path\n"
+
+  # Change the current working directory to the repo path
+  cd "$path" || { echo "Error: Unable to change directory to $path"; exit 1; }
+
+  # Execute the git commands in the repo path
+  git add -A
+  git commit -m "Update on $(LANG=C date)"
+done
