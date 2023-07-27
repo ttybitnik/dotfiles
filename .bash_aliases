@@ -4,7 +4,7 @@ alias mv='mv -i'
 alias rm='rm -i'
 alias cp='cp -ir'
 alias c='clear'
-alias tree='tree -I ".gitf"'
+alias tree='tree -I ".git"'
 alias grep='grep --color'
 alias chmox='chmod +x'
 
