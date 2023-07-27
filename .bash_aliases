@@ -1,15 +1,16 @@
 alias lsa='ls -ah'
 alias lla='ls -lah'
-alias mv="mv -i"
-alias rm="rm -i"
-alias cp="cp -ir"
+alias mv='mv -i'
+alias rm='rm -i'
+alias cp='cp -ir'
 alias c='clear'
 alias tree='tree -I ".gitf"'
-alias grep="grep --color"
+alias grep='grep --color'
 alias chmox='chmod +x'
 
 alias em='emacs'
 alias emacs='emacsclient -c -n'
+alias dired='emacsclient -c -n -e "(dired-jump)"'
 alias vi='vim'
 alias view='vi -R'
 alias mpv='mpv --no-terminal'
