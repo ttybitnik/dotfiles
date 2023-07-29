@@ -23,7 +23,7 @@ alias ?='lynx_duck'
 alias fcd='cd $(find -type d | fzf)'
 alias femacs='emacs $(find -type f | fzf)'
 alias fpath='find -type f | fzf | sed 's/^..//g' | tr -d '\n' | xclip -selection primary'
-alias dot='cd $HOME/.config/dotfiles'
+alias dotfiles='cd $HOME/.config/dotfiles'
 alias scripts='cd $HOME/.local/bin'
 
 
