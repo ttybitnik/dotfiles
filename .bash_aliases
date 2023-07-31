@@ -19,6 +19,7 @@ alias tn='tmux new'
 alias ta='tmux attach'
 alias tk='tmux kill-session'
 alias ?='lynx_duck'
+alias ??='lynx_wiki'
 
 alias fcd='cd $(find -type d | fzf)'
 alias femacs='emacs $(find -type f | fzf)'

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Wrapper for searching on Wikipedia.
+
+exec lynx "en.wikipedia.org/w/index.php?search=$*" # 📚
