@@ -72,6 +72,7 @@ This repository includes configuration files for the following applications:
 - GNU Lynx
 - GNU Midnight Commander
 - Kmonad
+- Systemd
 - Wayland environment
   - Foot
   - Sway
@@ -116,6 +117,7 @@ To automate the process of creating symbolic links from the repository files to 
       create_symlink ".config/tmux/tmux.conf" ".config/tmux/tmux.conf"
       create_symlink ".bash_aliases" ".bash_aliases"
       create_symlink ".config/mc/ini" ".config/mc/ini"
+      create_symlink ".config/systemd/user" ".config/systemd/user"
   }
 
   wayland_env() {
