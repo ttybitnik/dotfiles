@@ -15,10 +15,10 @@ The description is structured around the custom environments I run, including a 
   - [[#scripts][Scripts]]
   - [[#configurations][Configurations]]
   - [[#usage][Usage]]
-    - [[#automating-symbolic-links][Automating symbolic links]]
     - [[#switcher][Switcher]]
     - [[#omni][Omni]]
     - [[#euterpe][Euterpe]]
+    - [[#automating-symbolic-links][Automating symbolic links]]
   - [[#miscellaneous][Miscellaneous]]
       - [[#ytfzf-and-yt-dlp][Ytfzf and yt-dlp]]
       - [[#gtk-emacs-like-key-bindings][GTK Emacs-like key bindings]]
@@ -45,6 +45,10 @@ The following scripts are included in this repository:
 - switcher: /global dark/light mode switcher/
 - omni: /universal update automation/
 - euterpe: /audio and music management/
+- ttybkp: /backup naming standard/
+- ttygpg: /encryption automation/
+- ttyeod: /end of day wrapper/
+- autostart: /sway/dwm autostart/
 - vpn_bar: /vpn status and city/
 - net_bar: /network status/
 - ram_bar: /ram usage/
@@ -58,10 +62,6 @@ The following scripts are included in this repository:
 - weather: /weather status/
 - qbit: /qBittorrent secure launcher/
 - power_menu: /logout screen options/
-- autostart: /sway/dwm autostart/
-- ttybkp: /backup naming standard/
-- ttygpg: /encryption automation/
-- ttyeod: /end of day wrapper/
 - cron*: /cron jobs/
 
 The scripts are located in the following repository paths: =~/.local/bin/=, =~/.local/share/dwm/=.
@@ -92,6 +92,18 @@ This repository includes configuration files for the following applications:
 The configuration files are located in the following repository paths: =.=, =~/.config/=, =~/.local/share/=.
 
 ** Usage
+*** Switcher
+
+To switch between light and dark modes globally, just run =switcher=. This custom script sends SIGHUP signals to the respective programs, making it easy to adapt to changes in ambient light without having to manually adjust each program's settings.
+
+*** Omni
+
+To automate system updates, run =omni=. This script checks for the availability of various package managers and executes the corresponding update commands. It ensures that every manger present in the enviroment update its packages. 
+
+*** Euterpe
+
+To streamline the music experience, just run =euterpe=. This script leverages tmux to attach to a session with windows related to managing system sound and media.
+
 *** Automating symbolic links
 
 To automate the process of creating symbolic links from the repository files to their respective locations, use the following script:
@@ -165,18 +177,6 @@ To automate the process of creating symbolic links from the repository files to 
 #+end_src
 
 If you use *GNU Emacs*, you can execute the above code block with =C-c C-c=.
-
-*** Switcher
-
-To switch between light and dark modes globally, just run =switcher=. This custom script sends SIGHUP signals to the respective programs, making it easy to adapt to changes in ambient light without having to manually adjust each program's settings.
-
-*** Omni
-
-To automate system updates, run =omni=. This script checks for the availability of various package managers and executes the corresponding update commands. It ensures that every manger present in the enviroment update its packages. 
-
-*** Euterpe
-
-To streamline the music experience, just run =euterpe=. This script leverages tmux to attach to a session with windows related to managing system sound and media.
 
 ** Miscellaneous
 
