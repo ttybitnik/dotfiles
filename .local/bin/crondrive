@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Cron job script to sync changes between local and cloud folders.
+
+drive1="orpheus"
+drive1_path="${HOME}/.${drive1}/"
+drive2="prometheus"
+drive2_path="${HOME}/.${drive2}/"
+
+rclone bisync "${drive1_path}" "${drive1}:" --check-access --verbose
+rclone bisync "${drive2_path}" "${drive2}:" --check-access --verbose
