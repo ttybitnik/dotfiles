@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+# Naming standard for backups.
+
+sanitize_input() {
+    echo "${1// /_}" \
+	| tr '[:upper:]' '[:lower:]' \
+	| tr -cd '[:alnum:]_'
+}
+
+prompt_input() {
+    local input_domain
+    local input_scope
+    printf "Enter elements separated by spaces if needed.\n"
+    read -p "Technology name: " -r input_domain
+    read -p "Specific info: " -r input_scope
+
+    domain=$(sanitize_input "$input_domain")
+    scope=$(sanitize_input "$input_scope")
+}
+
+main() {
+    prompt_input
+    new_filename="${domain}_${scope}_$(date +%Y_%m_%d)_$1"
+
+    mv "$1" "$new_filename"
+    printf "\n>> %s \n\n" "$new_filename"
+}
+
+if [ "$#" != 1 ]; then
+    printf "Error. Wrong number of arguments.\n"
+    exit 1
+elif [ ! -f "$1" ]; then
+    printf "Error. The file '%s' does not exist.\n" "$1"
+    exit 1
+else
+    main "$@"
+fi

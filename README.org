@@ -59,6 +59,9 @@ The following scripts are included in this repository:
 - qbit: /qBittorrent secure launcher/
 - power_menu: /logout screen options/
 - autostart: /sway/dwm autostart/
+- ttybkp: /backup naming standard/
+- ttygpg: /encryption automation/
+- ttyeod: /end of day wrapper/
 - cron*: /cron jobs/
 
 The scripts are located in the following repository paths: =~/.local/bin/=, =~/.local/share/dwm/=.
