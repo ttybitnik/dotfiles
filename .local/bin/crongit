@@ -12,13 +12,11 @@ repo_paths=(
 )
 
 # Iterate over each repo path and execute the git commands
-for path in "${repo_paths[@]}"; do
-  echo -e "\nProcessing repo at $path\n"
+for p in "${repo_paths[@]}"; do
+  echo -e "\nProcessing repo at $p\n"
 
-  # Change the current working directory to the repo path
-  cd "$path" || { echo "Error: Unable to change directory to $path"; exit 1; }
+  cd "$p" || { echo "Error: Unable to change directory to $p"; exit 1; }
 
-  # Execute the git commands in the repo path
   git add -A
   git commit -m "Update on $(LANG=C date)"
 done

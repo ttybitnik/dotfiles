@@ -8,7 +8,7 @@
 set -e
 
 # Check if the manager is installed
-# and run the appropriate command.
+# and run the appropriate command
 run() {
   printf "\n>> %s \n\n" "$1"
   $1
