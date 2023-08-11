@@ -57,7 +57,6 @@ run_if_exists "flatpak" "flatpak update -y"
 
 # Pip
 # run_if_exists "pip" "pip list --outdated --format=json | jq '.[].name' | xargs -n1 pip install -U"
-run_if_exists "pip" "pip install pip --upgrade"
 run_if_exists "pip" "pip install pyright --upgrade"
 
 # Go
@@ -67,7 +66,7 @@ run_if_exists "go" "go install golang.org/x/tools/cmd/goimports@latest"
 run_if_exists "go" "go install github.com/lighttiger2505/sqls@latest"
 
 # Npm
-run_if_exists "npm" "sudo npm update -g"
+run_if_exists "npm" "npm update -g"
 
 # Cargo
 run_if_exists "cargo" "cargo install-update -a"
