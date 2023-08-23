@@ -5,6 +5,9 @@
 printf "*****************\n Running omni... \n*****************\n"
 omni
 
+printf "\n********************\n Running cronbib... \n********************\n"
+cronbib
+
 printf "\n********************\n Running crongit... \n********************\n"
 crongit
 
