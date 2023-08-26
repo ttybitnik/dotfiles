@@ -1,4 +1,4 @@
-#+TITLE: Dotfiles.ttybitnik
+#+TITLE: ttybitnik/dotfiles
 #+AUTHOR: Vinicius Moraes
 #+EMAIL: vinicius.moraes@eternodevir.com
 #+OPTIONS:   num:nil
