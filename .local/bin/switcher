@@ -17,13 +17,24 @@ fi
 switcher_state() {
     if [[ "$toggle" == dark ]]; then
 	toggle=light
-	printf "We can easily forgive a child who is afraid of the dark; the real tragedy of life is when men are afraid of the light.\n— Plato\n"
-	ln -sf "${HOME}/.emacs.d/local/switcher-day.el" "${HOME}/.emacs.d/local/switcher.el"
-	ln -sf "${HOME}/.config/dotfiles/.config/foot/switcher-light" "${HOME}/.config/foot/switcher"
-	ln -sf "${HOME}/.config/dotfiles/.config/rofi/switcher-light" "${HOME}/.config/rofi/switcher.rasi"
-	ln -sf "${HOME}/.config/dotfiles/.config/dunst/dunstrc-light" "${HOME}/.config/dunst/dunstrc"
-	ln -sf "${HOME}/.config/dotfiles/.config/sway/switcher-light" "${HOME}/.config/sway/switcher"
-	ln -sf "${HOME}/.config/dotfiles/.config/waybar/switcher-light" "${HOME}/.config/waybar/style.css"
+
+	printf "%s\n" \
+	       "We can easily forgive a child who is afraid of the dark;" \
+	       "the real tragedy of life is when men are afraid of the light."
+	printf "— Plato\n"
+
+	ln -sf "${HOME}/.emacs.d/local/switcher-day.el" \
+	   "${HOME}/.emacs.d/local/switcher.el"
+	ln -sf "${HOME}/.config/dotfiles/.config/foot/switcher-light" \
+	   "${HOME}/.config/foot/switcher"
+	ln -sf "${HOME}/.config/dotfiles/.config/rofi/switcher-light" \
+	   "${HOME}/.config/rofi/switcher.rasi"
+	ln -sf "${HOME}/.config/dotfiles/.config/dunst/dunstrc-light" \
+	   "${HOME}/.config/dunst/dunstrc"
+	ln -sf "${HOME}/.config/dotfiles/.config/sway/switcher-light" \
+	   "${HOME}/.config/sway/switcher"
+	ln -sf "${HOME}/.config/dotfiles/.config/waybar/switcher-light" \
+	   "${HOME}/.config/waybar/style.css"
 
 	swaymsg reload
 	gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
@@ -33,13 +44,25 @@ switcher_state() {
 
     elif [[ "$toggle" == light ]]; then
 	toggle=dark
-	printf "Darkness now rose, as daylight sunk, and brought in low'ring night her shadowy offspring.\n— John Milton\n"
-	ln -sf "${HOME}/.emacs.d/local/switcher-night.el" "${HOME}/.emacs.d/local/switcher.el"
-	ln -sf "${HOME}/.config/dotfiles/.config/foot/switcher-dark" "${HOME}/.config/foot/switcher"
-	ln -sf "${HOME}/.config/dotfiles/.config/rofi/switcher-dark" "${HOME}/.config/rofi/switcher.rasi"
-	ln -sf "${HOME}/.config/dotfiles/.config/dunst/dunstrc-dark" "${HOME}/.config/dunst/dunstrc"
-	ln -sf "${HOME}/.config/dotfiles/.config/sway/switcher-dark" "${HOME}/.config/sway/switcher"
-	ln -sf "${HOME}/.config/dotfiles/.config/waybar/switcher-dark" "${HOME}/.config/waybar/style.css"
+
+	printf "%s\n" \
+	       "Darkness now rose, as daylight" \
+	       "sunk, and brought in low'ring" \
+	       "night her shadowy offspring."
+	printf "— John Milton\n"
+
+	ln -sf "${HOME}/.emacs.d/local/switcher-night.el" \
+	   "${HOME}/.emacs.d/local/switcher.el"
+	ln -sf "${HOME}/.config/dotfiles/.config/foot/switcher-dark" \
+	   "${HOME}/.config/foot/switcher"
+	ln -sf "${HOME}/.config/dotfiles/.config/rofi/switcher-dark" \
+	   "${HOME}/.config/rofi/switcher.rasi"
+	ln -sf "${HOME}/.config/dotfiles/.config/dunst/dunstrc-dark" \
+	   "${HOME}/.config/dunst/dunstrc"
+	ln -sf "${HOME}/.config/dotfiles/.config/sway/switcher-dark" \
+	   "${HOME}/.config/sway/switcher"
+	ln -sf "${HOME}/.config/dotfiles/.config/waybar/switcher-dark" \
+	   "${HOME}/.config/waybar/style.css"
 
 	swaymsg reload
 	gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
@@ -48,7 +71,8 @@ switcher_state() {
 	killall dunst && dunst > /dev/null 2>&1  &
 
     else
-	printf "The proper configuration files were not found. Check %s.\n" "${STATE_FILE}"
+	printf "The proper configuration files were not found. Check %s.\n" \
+	       "${STATE_FILE}"
 	exit
     fi
 }

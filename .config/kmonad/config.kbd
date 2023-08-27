@@ -9,7 +9,11 @@
 #| --------------------------------------------------------------------------
                             KMonad: BR abnt-2 100% tempdaslate 
 
-This file contains the `defsrc` configuration for the TypeMatrix 2030 keyboard. You need to enable 106 key mode by pressing Fn+F3. Three keys cannot be remapped: the Fn key, the Num key and the Play/Paupse key. Copy out the 'defsrc' layer to start your own keyboard configuration. Copy out the `deflayer` template to easily start a new layer with matching `transparent` buttons.
+This file contains the `defsrc` configuration for the TypeMatrix 2030
+keyboard. You need to enable 106 key mode by pressing Fn+F3. Three keys cannot
+be remapped: the Fn key, the Num key and the Play/Paupse key. Copy out the
+'defsrc' layer to start your own keyboard configuration. Copy out the `deflayer`
+template to easily start a new layer with matching `transparent` buttons.
 
 (deflayer switch
   _    _    _    _    _    _    _    _    _    _    _    _    _           _    _    _

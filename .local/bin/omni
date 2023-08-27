@@ -56,7 +56,8 @@ run_if_exists "winget" "winget upgrade --all"
 run_if_exists "flatpak" "flatpak update -y"
 
 # Pip
-# run_if_exists "pip" "pip list --outdated --format=json | jq '.[].name' | xargs -n1 pip install -U"
+# run_if_exists "pip" "pip list --outdated --format=json | jq '.[].name' | xargs
+# -n1 pip install -U"
 run_if_exists "pip" "pip install pyright --upgrade"
 
 # Go

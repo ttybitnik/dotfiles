@@ -1,5 +1,5 @@
 # Control which set of key bindings is used, it can be either 'emacs' or
-# 'vi'. By default, Readline uses Emacs editing mode.
+# 'vi'. By default, Readline uses Emacs editing mode
 set editing-mode emacs
 
 # Perform file completion in a case insensitive fashion
@@ -8,28 +8,26 @@ set completion-ignore-case on
 # Display matches for ambiguous patterns at first tab press
 set show-all-if-ambiguous on
 
-# Immediately add a trailing slash when autocompleting symlinks to directories.
+# Immediately add a trailing slash when autocompleting symlinks to directories
 set mark-symlinked-directories on
 
-# Do not autocomplete hidden files unless the pattern explicitly begins with a
-# dot.
+# Do not autocomplete hidden files unless the pattern begins with a dot
 set match-hidden-files off
 
 # Show all autocomplete results at once, without more/pagination
 set page-completions off
 
 # If there are more than 200 possible completions for a word, ask to show them
-# all.
 set completion-query-items 200
 
 # Append an extra character information to file names when completing, like `ls
-# -F` does.
+# -F` does
 set visible-stats on
 
 # Be more intelligent when autocompleting by also looking at the text after the
 # cursor. For example, when the current line is "cd mozil", and the cursor is on
 # the "z", pressing Tab will not autocomplete it to "cd mozillail", but to "cd
-# mozilla". (This is supported by the Readline used by Bash 4).
+# mozilla". (This is supported by the Readline used by Bash 4)
 set skip-completed-text on
 
 # Allow UTF-8 input and output, instead of showing stuff like $'\0123\0456'
@@ -38,7 +36,7 @@ set output-meta on
 set convert-meta off
 
 # Use the text that has already been typed as the prefix for searching through
-# commands (basically more intelligent Up/Down behavior).
+# commands (basically more intelligent Up/Down behavior)
 "\C-p":history-search-backward # \e[B up arrow
 "\C-n":history-search-forward  # \e[A down arrow
 

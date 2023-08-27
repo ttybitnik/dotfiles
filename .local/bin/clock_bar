@@ -3,4 +3,5 @@
 # Display the current date and time.
 
 time="$(date '+%d/%m/%y, %a %H:%M')"
+
 echo "$time"
