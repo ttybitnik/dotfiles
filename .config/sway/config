@@ -9,17 +9,17 @@ set $right l
 set $term foot tmux attach
 set $rofi_cmd rofi -terminal '$term'
 set $menu $rofi_cmd -theme switcher -show combi \
-    	  	    -combi-modes drun#run -modes combi
+    	  	      -combi-modes drun#run -modes combi
 
 ### Output configuration ###
 output * bg ~/Pictures/Rio4bw.jpg fill
 
 ### Idle configuration ###
 # exec swayidle -w \
-#          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * power off"' \
-#	   	       resume 'swaymsg "output * power on"' \
-#          before-sleep 'swaylock -f -c 000000'
+#        timeout 300 'swaylock -f -c 000000' \
+#        timeout 600 'swaymsg "output * power off"' \
+#	 resume 'swaymsg "output * power on"' \
+#        before-sleep 'swaylock -f -c 000000'
 
 ### Input configuration ###
 input type:keyboard {
@@ -36,7 +36,7 @@ bindsym $mod+x exec $menu
 floating_modifier $mod normal
 bindsym $mod+Control+r reload
 bindsym $mod+Control+q exec swaynag -t warning \
--m 'You pressed the exit shortcut. Do you really want to exit sway? \
+  -m 'You pressed the exit shortcut. Do you really want to exit sway? \
 This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
 # Moving around:
@@ -140,7 +140,7 @@ assign [app_id="org.qbittorrent.qBittorrent"] workspace 9
 #  - /etc/sway/config.d
 #  - $XDG_CONFIG_HOME/sway/config.d ($HOME/.config/sway/config.d)
 include '$(/usr/libexec/sway/layered-include \
-	"/usr/share/sway/config.d/*.conf" \
-	"/etc/sway/config.d/*.conf" \
-	"${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'
+	     "/usr/share/sway/config.d/*.conf" \
+	     "/etc/sway/config.d/*.conf" \
+	     "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'
 include switcher

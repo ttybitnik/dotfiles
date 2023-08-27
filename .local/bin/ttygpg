@@ -7,7 +7,7 @@ delete_if_exist() {
 
     if [ -f "$encrypted_file" ]; then
 	printf "File '%s' encrypted successfully. Remove old file?\n\n" \
-	       "$encrypted_file"
+	          "$encrypted_file"
 	rm -i "$1"
     else
 	printf "Error. Original file does not exist.\n"
