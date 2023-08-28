@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Cron job script to sync changes between local and cloud folders.
+# Cron job script to sync changes between remote and local directories.
 
 drive1="orpheus"
 drive1_path="${HOME}/.${drive1}/"
