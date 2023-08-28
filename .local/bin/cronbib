@@ -2,16 +2,16 @@
 
 # Cron job script to automate the exportation from Calibre to BiBTeX.
 
-bibfile="${HOME}/.prometheus/Bibliography/general.bib"
-calibregui_pid="GUIPool"
+readonly BIBFILE="${HOME}/.prometheus/Bibliography/general.bib"
+readonly CALIBREGUI_PID="GUIPool"
 
 calibretobib () {
-    calibredb catalog "$bibfile" --entry-type=mixed
-    sed -i 's/{"}/\\"/g' "$bibfile"
+    calibredb catalog "$BIBFILE" --entry-type=mixed
+    sed -i 's/{"}/\\"/g' "$BIBFILE"
 }
 
-if pgrep -x "$calibregui_pid" > /dev/null; then
-    pkill -x "$calibregui_pid"
+if pgrep -x "$CALIBREGUI_PID" > /dev/null; then
+    pkill -x "$CALIBREGUI_PID"
     sleep 3
     calibretobib
 else

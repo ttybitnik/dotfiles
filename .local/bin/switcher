@@ -3,7 +3,7 @@
 # Switch globally between dark/light mode.
 
 # File to store the mode state
-STATE_FILE="${HOME}/.config/dotfiles/.switcher_state"
+readonly STATE_FILE="${HOME}/.config/dotfiles/.switcher_state"
 
 # Read the current state from the file
 toggle=$(cat "$STATE_FILE" 2>/dev/null)
