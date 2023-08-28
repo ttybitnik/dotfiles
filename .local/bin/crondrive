@@ -2,10 +2,12 @@
 
 # Cron job script to sync changes between remote and local directories.
 
-drive1="orpheus"
-drive1_path="${HOME}/.${drive1}/"
-drive2="prometheus"
-drive2_path="${HOME}/.${drive2}/"
+declare -A remotes
+remotes[orpheus]="${HOME}/.orpheus/"
+remotes[prometheus]="${HOME}/.prometheus/"
 
-rclone bisync "${drive1_path}" "${drive1}:" --check-access --verbose
-rclone bisync "${drive2_path}" "${drive2}:" --check-access --verbose
+for drive in "${!remotes[@]}"; do
+    path="${remotes[$drive]}"
+    rclone bisync "$path" "${drive}:" --check-access --verbose
+done
+
