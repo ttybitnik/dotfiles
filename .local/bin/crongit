@@ -2,7 +2,7 @@
 
 # Cron job script to commit/update changes from local git repos.
 
-echo -e "Updating local git repos..."
+printf "Updating local git repos...\n"
 
 # List of the local git repos paths
 repo_paths=(
@@ -13,9 +13,10 @@ repo_paths=(
 
 # Iterate over each repo path and execute the git commands
 for p in "${repo_paths[@]}"; do
-  echo -e "\nProcessing repo at $p\n"
+  printf "\nProcessing repo at %s\n" "$p"
 
-  cd "$p" || { echo "Error: Unable to change directory to $p" >&2; exit 1; }
+  cd "$p" || { printf "Error: Unable to change directory to %s\n" "$p" >&2
+	       exit 1; }
 
   git add -A
   git commit -m "Update on $(LANG=C date)"

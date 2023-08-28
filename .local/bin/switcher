@@ -81,4 +81,4 @@ switcher_state() {
 switcher_state
 
 # Save the updated state to the file
-echo "$toggle" > "$STATE_FILE"
+printf "%s" "$toggle" > "$STATE_FILE"

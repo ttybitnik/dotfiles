@@ -4,4 +4,4 @@
 
 time="$(date '+%d/%m/%y, %a %H:%M')"
 
-echo "$time"
+printf "%s" "$time"

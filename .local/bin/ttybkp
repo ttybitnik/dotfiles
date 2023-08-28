@@ -3,9 +3,9 @@
 # Naming standard for backups.
 
 sanitize_input() {
-    echo "${1// /_}" \
-	| tr '[:upper:]' '[:lower:]' \
-	| tr -cd '[:alnum:]_'
+    printf "%s" "${1// /_}" \
+	           | tr '[:upper:]' '[:lower:]' \
+		   | tr -cd '[:alnum:]_'
 }
 
 prompt_input() {

@@ -121,11 +121,11 @@ To automate the process of creating symbolic links from the repository files to 
 
       mkdir -p "$(dirname "$target")"
       ln -sf "$source" "$target"
-      echo ">> $target"
+      printf ">> %s\n" "$target"
   }
 
   tty_env() {
-      echo -e "\nTTY environment"
+      printf "\nTTY environment"
       create_symlink ".local/bin" ".local/bin"
       create_symlink ".local/share/mc/skins" ".local/share/mc/skins"
       create_symlink ".config/lynx" ".config/lynx"
@@ -138,7 +138,7 @@ To automate the process of creating symbolic links from the repository files to 
   }
 
   wayland_env() {
-      echo -e "\nSway environment"
+      printf "\nSway environment"
       create_symlink ".config/sway" ".config/sway"
       create_symlink ".config/waybar" ".config/waybar"
       create_symlink ".config/foot" ".config/foot"
@@ -148,7 +148,7 @@ To automate the process of creating symbolic links from the repository files to 
   }
 
   xorg_env() {
-      echo -e "\nDwm environment"
+      printf "\nDwm environment"
       create_symlink ".local/share/dwm" ".local/share/dwm"
       create_symlink ".config/sxhkd/sxhkdrc" ".config/sxhkd/sxhkdrc"
       create_symlink ".config/xsettingsd/xsettingsd-dark.conf" ".config/xsettingsd/xsettingsd.conf"
@@ -156,10 +156,10 @@ To automate the process of creating symbolic links from the repository files to 
       create_symlink ".config/urxvt" ".urxvt"
   }
 
-  echo "Choose an environment:"
-  echo "1. Wayland - sway"
-  echo "2. Xorg - dwm"
-  echo "3. TTY only"
+  printf "Choose an environment:\n"
+  printf "1. Wayland - sway\n"
+  printf "2. Xorg - dwm\n"
+  printf "3. TTY only\n"
   read -p "Enter your choice (1, 2 or 3): " choice
 
   if [ "$choice" = "1" ]; then
@@ -171,11 +171,11 @@ To automate the process of creating symbolic links from the repository files to 
   elif [ "$choice" = "3" ]; then
       tty_env
   else
-      echo "Invalid choice. Exiting." >&2
+      printf "Invalid choice. Exiting.\n" >&2
       exit 1
   fi
 
-  echo -e "\nAll symlinks created successfully!"
+  printf "\nAll symlinks created successfully!\n"
 #+end_src
 
 If you use *GNU Emacs*, you can execute the above code block with =C-c C-c=.
