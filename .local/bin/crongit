@@ -15,7 +15,7 @@ repo_paths=(
 for p in "${repo_paths[@]}"; do
   echo -e "\nProcessing repo at $p\n"
 
-  cd "$p" || { echo "Error: Unable to change directory to $p"; exit 1; }
+  cd "$p" || { echo "Error: Unable to change directory to $p" >&2; exit 1; }
 
   git add -A
   git commit -m "Update on $(LANG=C date)"

@@ -26,7 +26,7 @@ if [ -e "$HOME/.config/lynx/lynx.lss" ];then
 fi
 
 if [ ! -x "$lynxpath" ]; then
-  echo "Doesn't look like lynx is installed."
+  echo "Doesn't look like lynx is installed." >&2
   exit 1
 fi
 

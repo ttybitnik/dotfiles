@@ -5,7 +5,7 @@
 LINK_PATH="${HOME}/.Xresources"
 
 if [ ! -L "$LINK_PATH" ]; then
-    echo "Error: $LINK_PATH is not a symbolic link."
+    echo "Error: $LINK_PATH is not a symbolic link." >&2
   exit 1
 fi
 
@@ -54,6 +54,6 @@ elif [[ "$filename" == *"light"* ]]; then
     emacsclient --eval "(config-reload)" 1> /dev/null &
 
 else
-    echo "The proper configuration files were not found."
-    exit
+    echo "The proper configuration files were not found." >&2
+    exit 1
 fi

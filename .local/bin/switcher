@@ -72,8 +72,8 @@ switcher_state() {
 
     else
 	printf "The proper configuration files were not found. Check %s.\n" \
-	          "${STATE_FILE}"
-	exit
+	          "${STATE_FILE}" >&2
+	exit 1
     fi
 }
 

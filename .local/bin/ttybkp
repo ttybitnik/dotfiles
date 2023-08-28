@@ -28,10 +28,10 @@ main() {
 }
 
 if [ "$#" != 1 ]; then
-    printf "Error. Wrong number of arguments.\n"
+    printf "Error. Wrong number of arguments.\n" >&2
     exit 1
 elif [ ! -f "$1" ]; then
-    printf "Error. The file '%s' does not exist.\n" "$1"
+    printf "Error. The file '%s' does not exist.\n" "$1" >&2
     exit 1
 else
     main "$@"

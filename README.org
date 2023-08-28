@@ -171,7 +171,7 @@ To automate the process of creating symbolic links from the repository files to 
   elif [ "$choice" = "3" ]; then
       tty_env
   else
-      echo "Invalid choice. Exiting."
+      echo "Invalid choice. Exiting." >&2
       exit 1
   fi
 
