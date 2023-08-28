@@ -21,6 +21,7 @@ prompt_input() {
 
 main() {
     prompt_input
+    local new_filename
     new_filename="${domain}_${scope}_$(date +%Y_%m_%d)_$1"
 
     mv "$1" "$new_filename"

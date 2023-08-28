@@ -3,6 +3,8 @@
 # Display the network traffic.
 
 update() {
+    local sum
+    local cache
     sum=0
     for arg; do
 	read -r i < "$arg"

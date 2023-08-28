@@ -116,6 +116,8 @@ To automate the process of creating symbolic links from the repository files to 
   # This can overwrite previous config files.
 
   create_symlink() {
+      local source
+      local target
       source="${HOME}/.config/dotfiles/$1"
       target="${HOME}/$2"
 
