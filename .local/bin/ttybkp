@@ -28,7 +28,7 @@ main() {
     printf "\n>> %s \n\n" "$new_filename"
 }
 
-if [ "$#" != 1 ]; then
+if [ $# != 1 ]; then
     printf "Error. Wrong number of arguments.\n" >&2
     exit 1
 elif [ ! -f "$1" ]; then

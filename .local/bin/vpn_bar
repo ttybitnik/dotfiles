@@ -2,7 +2,7 @@
 
 # Display the vpn status.
 
-vpncity=$(nordvpn status | grep "City" | sed "s/.*: //")
+vpncity="$(nordvpn status | grep "City" | sed "s/.*: //")"
 
 if [[ -n "$vpncity" ]]; then
   printf " %s" "$vpncity"
