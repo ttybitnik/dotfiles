@@ -12,7 +12,7 @@ set $menu $rofi_cmd -theme switcher -show combi \
     	  	      -combi-modes drun#run -modes combi
 
 ### Output configuration ###
-output * bg ~/Pictures/Rio4bw.jpg fill
+output * bg "$(find $TTY_WALLPAPER -type f | shuf -n 1)" fill
 
 ### Idle configuration ###
 # exec swayidle -w \
