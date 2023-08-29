@@ -1,6 +1,5 @@
 #!/bin/bash
 
-export PATH="$HOME/.local/bin:$PATH" &
 xrdb ~/.Xresources &
 ~/.config/suckless/dwm/patch/dwmc xrdb & 
 xsettingsd &
