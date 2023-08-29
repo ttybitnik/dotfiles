@@ -1,32 +1,50 @@
+# .bash_aliases
+#===============================================================================
+#				    Defaults
+#===============================================================================
+alias ls='ls --color=auto --group-directories-first'
+alias mv='mv -iv'
+alias rm='rm -Iv'
+alias cp='cp -irv'
+alias mkdir='mkdir -v'
+alias tree='tree -I ".git"'
+alias grep='grep --color=auto'
+alias diff='diff --color=auto --unified'
+alias vi='vim'
+alias emacs='emacsclient -c -n'
+alias mpv='mpv --no-terminal'
+#===============================================================================
+#				   Shortcuts
+#===============================================================================
 alias lsa='ls -ah'
 alias lla='ls -lah'
-alias mv='mv -iv'
-alias rm='rm -iv'
-alias cp='cp -irv'
+alias mkd='mkdir'
+alias g='git'
 alias c='clear'
-alias tree='tree -I ".git"'
-alias grep='grep --color'
 alias chmox='chmod +x'
-
-alias em='emacs'
-alias emacs='emacsclient -c -n'
-alias dired='emacsclient -c -n -e "(dired-jump)"'
-alias vi='vim'
-alias view='vi -R'
-alias mpv='mpv --no-terminal'
-alias yt='ytfzf --detach -f'
 alias tn='tmux new'
 alias ta='tmux attach'
 alias tk='tmux kill-session'
-
+alias cs='cryptsetup'
+alias em='emacs'
+alias yt='ytfzf --detach -f'
+#===============================================================================
+#				 Functionality
+#===============================================================================
+alias dotfiles='cd $TTY_DOTFILES'
+alias scripts='cd $TTY_SCRIPTS'
+alias dired='emacsclient -c -n -e "(dired-jump)"'
+alias view='vi -R'
 alias ?='lynx_duck'
 alias ??='lynx_wiki'
 alias fcd='cd $(find -type d | fzf)'
 alias femacs='emacs $(find -type f | fzf)'
 alias fpath='find -type f | fzf | sed 's/^..//g' \
       	       | tr -d '\n' | xclip -selection primary'
-alias dotfiles='cd $HOME/.config/dotfiles'
-alias scripts='cd $HOME/.local/bin'
-
-alias weather='curl wttr.in/Juiz+de+fora | head -n -1'
-. ~/.bash_aliases2
+alias weather='curl wttr.in/"${TTY_CITY// /+}" | head -n -1'
+#===============================================================================
+#				    Private
+#===============================================================================
+if [ -f ~/.bash_aliases2 ]; then
+    . ~/.bash_aliases2
+fi
