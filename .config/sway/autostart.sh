@@ -1,5 +1,6 @@
 #!/bin/bash
 
+gpg-agent --daemon &
 gammastep -l -23.55:-46.63 &
 sleep 5
 foot -e tmux &
