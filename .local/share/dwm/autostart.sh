@@ -1,5 +1,6 @@
 #!/bin/bash
 
+gpg-agent --daemon &
 xrdb ~/.Xresources &
 ~/.config/suckless/dwm/patch/dwmc xrdb & 
 xsettingsd &
