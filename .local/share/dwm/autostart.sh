@@ -8,7 +8,7 @@ nitrogen --restore &
 dwmblocks &
 sxhkd &
 \emacs &
-redshift -l -23.55:-46.63 &
+redshift -l "$TTY_GEO" &
 sleep 5
 urxvt -e tmux &
 sleep 5
