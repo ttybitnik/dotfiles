@@ -44,6 +44,7 @@ The following scripts are included in this repository:
 
 - switcher: /global dark/light mode switcher/
 - omni: /universal update automation/
+- hermes: /custom motd/
 - euterpe: /audio and music management/
 - ttybkp: /backup naming standard/
 - ttygpg: /encryption automation/
