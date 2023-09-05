@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+
+# Manage LUKS devices, ensuring open/close process and supporting '<key>.gpg'.
+#   Dependencies:
+#     /etc/fstab for specifying mounting options
+#     ~/.ttymnt2 for setting privately arrays with devices info
+#   Arrays structure:
+#     device_name device mount_point key_path(optional)
+
+readonly DEVICES_FILE="${HOME}/.ttymnt2"
+
+action="$1"
+device_name="$2"
+device_info=$(grep "^$device_name" "$DEVICES_FILE")
+
+validate() {
+    if [ ! -f "$DEVICES_FILE" ]; then
+	printf "Error: devices info file not found.\n" >&2
+	exit 1
+    fi
+
+    if [ -z "$device_info" ]; then
+	printf "Device not found: %s.\n" "$device_name" >&2
+	exit 1
+    fi
+
+    if [ $# -ne 2 ]; then
+	printf "Usage: ttymnt <open|close> <device_name>\n" >&2
+	exit 1
+    fi
+}
+
+open_device() {
+    local device_info="$1"
+    local device_name
+    local device
+    local mount_point
+    local key_path
+
+    read -r device_name device mount_point key_path <<< "$device_info"
+
+    if [ -b "$device" ]; then
+	if [ -n "$key_path" ]; then
+	    gpg -d "$key_path" \
+		| sudo cryptsetup --key-file=- open "$device" "$device_name"
+	    sudo mount "$mount_point"
+	else
+            sudo cryptsetup open "$device" "$device_name"
+            sudo mount "$mount_point"
+	fi
+	printf ">> Device '%s' opened and mounted at %s.\n" \
+	          "$device_name" "$mount_point"
+    else
+        printf ">> Device not found or not a block device: %s.\n" "$device" >&2
+	exit 1
+    fi
+}
+
+close_device() {
+    local device_info="$1"
+    local device_name
+    local mount_point
+
+    read -r device_name _ mount_point _ <<< "$device_info"
+
+    if [ -d "$mount_point" ]; then
+        sudo umount "$mount_point"
+        sudo cryptsetup close "$device_name"
+        printf ">> Device '%s' unmounted from %s and closed.\n" \
+	          "$device_name" "$mount_point"
+    else
+        printf ">> Mount point not found or not a directory: %s.\n" \
+	          "$mount_point" >&2
+	exit 1
+    fi
+}
+
+main() {
+    case "$action" in
+	"open")
+            open_device "$device_info"
+            ;;
+	"close")
+            close_device "$device_info"
+            ;;
+	*)
+            printf "Invalid action: %s.\n" "$action" >&2
+            printf "Usage: ttymnt <open|close> <device_name>\n" >&2
+            exit 1
+            ;;
+    esac
+}
+
+validate "$@"
+main
