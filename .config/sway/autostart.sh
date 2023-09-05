@@ -1,7 +1,7 @@
 #!/bin/bash
 
 gpg-agent --daemon &
-gammastep -l -23.55:-46.63 &
+gammastep -l "$TTY_GEO" &
 sleep 5
 foot -e tmux &
 emacs &
