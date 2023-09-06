@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# Helper for switching to light mode next session based on current time.
+#   Dependencies:
+#     ~/.local/bin/switcher
+#   Required by:
+#     ~/.config/systemd/user/switcher.service
+
+current_hour=$(date +"%H")
+
+if [ "$current_hour" -ge 22 ] || [ "$current_hour" -lt 5 ]; then
+    printf "light" > "$CUSTOM_SWITCHER"
+    ln -sf "${HOME}/.emacs.d/local/switcher-day.el" \
+       "${HOME}/.emacs.d/local/switcher.el"
+    ln -sf "${HOME}/.config/dotfiles/.config/foot/switcher-light" \
+       "${HOME}/.config/foot/switcher"
+    ln -sf "${HOME}/.config/dotfiles/.config/rofi/switcher-light" \
+       "${HOME}/.config/rofi/switcher.rasi"
+    ln -sf "${HOME}/.config/dotfiles/.config/dunst/dunstrc-light" \
+       "${HOME}/.config/dunst/dunstrc"
+    ln -sf "${HOME}/.config/dotfiles/.config/sway/switcher-light" \
+       "${HOME}/.config/sway/switcher"
+    ln -sf "${HOME}/.config/dotfiles/.config/waybar/switcher-light" \
+       "${HOME}/.config/waybar/style.css"
+fi
