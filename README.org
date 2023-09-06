@@ -102,6 +102,10 @@ To switch between light and dark modes globally, just run =switcher=. This custo
 
 To automate system updates, run =omni=. This script checks for the availability of various package managers and executes the corresponding update commands. It ensures that every manger present in the enviroment update its packages. 
 
+*** Hermes
+
+To display a MOTD with a log of last logins and a custom fortune, run =hermes=. This script is designed to be executed automatically in every interactive login shell through =hermes.service= and =.bash_profile=. For more details, check the script comments.
+
 *** Euterpe
 
 To streamline the music experience, just run =euterpe=. This script leverages tmux to attach to a session with windows related to managing system sound and media.
