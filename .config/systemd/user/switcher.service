@@ -1,0 +1,10 @@
+[Unit]
+Description=Switcher light mode next session
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStop=%h/.config/dotfiles/.local/bin/switcher_helper
+
+[Install]
+WantedBy=default.target
