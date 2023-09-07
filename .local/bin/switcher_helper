@@ -22,4 +22,5 @@ if [ "$current_hour" -ge 22 ] || [ "$current_hour" -lt 5 ]; then
               "${HOME}/.config/sway/switcher"
     ln -sf "${HOME}/.config/dotfiles/.config/waybar/switcher-light" \
               "${HOME}/.config/waybar/style.css"
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
 fi
