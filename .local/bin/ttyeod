@@ -11,5 +11,5 @@ cronbib
 printf "\n********************\n Running crongit... \n********************\n"
 crongit
 
-printf "\n*********************\n Running crondrive... \n********************\n"
+printf "\n*********************\n Running crondrive... \n*********************\n"
 crondrive
