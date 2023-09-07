@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 
 # Cron job script to automate the exportation from Calibre to BiBTeX.
+#   Dependencies:
+#     ./tty.sh
+
+source tty.sh
 
 readonly BIBFILE="${HOME}/.prometheus/Bibliography/general.bib"
 readonly CALIBREGUI_PID="GUIPool"
 
 calibretobib () {
-    calibredb catalog "$BIBFILE" --entry-type=mixed
-    sed -i 's/{"}/\\"/g' "$BIBFILE"
+    tty::run_print calibredb catalog "$BIBFILE" --entry-type=mixed
+    tty::run_print sed -i 's/{"}/\\"/g' "$BIBFILE"
 }
 
 if pgrep -x "$CALIBREGUI_PID" > /dev/null; then

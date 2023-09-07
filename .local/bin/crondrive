@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
 # Cron job script to sync changes between remote and local directories.
+#   Dependencies:
+#     ./tty.sh
+
+source tty.sh
 
 declare -A remotes
 remotes[orpheus]="${HOME}/.orpheus/"
@@ -8,6 +12,5 @@ remotes[prometheus]="${HOME}/.prometheus/"
 
 for drive in "${!remotes[@]}"; do
     path="${remotes[$drive]}"
-    rclone bisync "$path" "${drive}:" --check-access --verbose
+    tty::run_print rclone bisync "$path" "${drive}:" --check-access --verbose
 done
-

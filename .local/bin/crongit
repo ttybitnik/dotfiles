@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
 # Cron job script to commit/update changes from local git repos.
+#   Dependencies:
+#     ./tty.sh
 
-printf "Updating local git repos...\n"
+source tty.sh
 
 repo_paths=(
     "${HOME}/.orpheus/gnu-emacs/org"
@@ -11,11 +13,8 @@ repo_paths=(
 )
 
 for p in "${repo_paths[@]}"; do
-  printf "\nProcessing repo at %s\n" "$p"
-
-  cd "$p" || { printf "Error: Unable to change directory to %s\n" "$p" >&2
-	       exit 1; }
-
-  git add -A
-  git commit -m "Update on $(LANG=C date)"
+    tty::run_print \
+      cd "$p" 2> /dev/null || tty::err "Error: Unable to change directory to $p"
+    tty::run_print git add -A
+    tty::run_print git commit -m "Update on $(LANG=C date)"
 done
