@@ -4,14 +4,12 @@
 
 printf "Updating local git repos...\n"
 
-# List of the local git repos paths
 repo_paths=(
     "${HOME}/.orpheus/gnu-emacs/org"
     "${HOME}/.orpheus/gnu-emacs/org-agenda"
     "${HOME}/.orpheus/gnu-emacs/org-roam"
 )
 
-# Iterate over each repo path and execute the git commands
 for p in "${repo_paths[@]}"; do
   printf "\nProcessing repo at %s\n" "$p"
 

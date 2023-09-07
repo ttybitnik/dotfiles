@@ -2,11 +2,8 @@
 
 # Set up tmux sound related windows.
 
-# Create a new session if it doesn't already exist
 tmux attach-session -t euterpe || tmux new-session -s euterpe
 
-# Create a new window for PulseAudio
 tmux new-window -n volume -c "$HOME" 'pulsemixer'
 
-# Create a new window for Spotify
 tmux new-window -n spotify -c "$HOME" 'spt'

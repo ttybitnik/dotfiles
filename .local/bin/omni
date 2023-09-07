@@ -7,8 +7,9 @@
 # Exit immediately if any command fails
 set -e
 
-# Check if the manager is installed
-# and run the appropriate command
+# Prompt for sudo password only once
+sudo true
+
 run() {
   printf "\n>> %s \n\n" "$1"
   $1
@@ -19,9 +20,6 @@ run_if_exists() {
     run "$2"
   fi
 }
-
-# Prompt for sudo password only once
-sudo true
 
 ### Distros
 # Arch
