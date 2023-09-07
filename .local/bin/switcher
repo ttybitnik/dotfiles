@@ -2,19 +2,11 @@
 
 # Switch globally between dark/light mode.
 
-# File to store the mode state
 readonly STATE_FILE="$CUSTOM_SWITCHER"
 
-# Read the current state from the file
 toggle=$(cat "$STATE_FILE" 2>/dev/null)
 
-# If the file doesn't exist or is empty, set the default state to dark
-if [[ -z "$toggle" ]]; then
-    toggle=dark
-fi
-
-# Function to toggle between the states
-switcher_state() {
+switcher_changes() {
     if [[ "$toggle" == dark ]]; then
 	toggle=light
 
@@ -35,12 +27,7 @@ switcher_state() {
 	          "${HOME}/.config/sway/switcher"
 	ln -sf "${HOME}/.config/dotfiles/.config/waybar/switcher-light" \
 	          "${HOME}/.config/waybar/style.css"
-
-	swaymsg reload
 	gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
-	emacsclient --eval "(config-reload)"  > /dev/null 2>&1 & 
-	killall -USR1 foot
-	killall dunst && dunst > /dev/null 2>&1 & 
 
     elif [[ "$toggle" == light ]]; then
 	toggle=dark
@@ -63,12 +50,7 @@ switcher_state() {
 	          "${HOME}/.config/sway/switcher"
 	ln -sf "${HOME}/.config/dotfiles/.config/waybar/switcher-dark" \
 	          "${HOME}/.config/waybar/style.css"
-
-	swaymsg reload
 	gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-	emacsclient --eval "(config-reload)" > /dev/null 2>&1 & 
-	killall -USR1 foot
-	killall dunst && dunst > /dev/null 2>&1  &
 
     else
 	printf "The proper configuration files were not found. Check %s.\n" \
@@ -77,8 +59,23 @@ switcher_state() {
     fi
 }
 
-# Toggle the state
-switcher_state
+switcher_reload() {
+    swaymsg reload
+    emacsclient --eval "(config-reload)" > /dev/null 2>&1 & 
+    killall -USR1 foot
+    killall dunst && dunst > /dev/null 2>&1  &
+}
 
-# Save the updated state to the file
-printf "%s" "$toggle" > "$STATE_FILE"
+
+main() {
+    if [[ -z "$toggle" ]]; then
+	toggle=light
+    fi
+
+    switcher_changes
+    switcher_reload
+
+    printf "%s" "$toggle" > "$STATE_FILE"
+}
+
+main

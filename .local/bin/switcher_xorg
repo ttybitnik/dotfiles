@@ -1,59 +1,62 @@
-#!/usr/bin/env bash
+#!/use/bin/env bash
 
 # Switch globally between dark/light mode.
 
 readonly LINK_PATH="${HOME}/.Xresources"
 
-if [ ! -L "$LINK_PATH" ]; then
-    printf "Error: %s is not a symbolic link.\n" "$LINK_PATH" >&2
-  exit 1
-fi
-
 target_path=$(readlink "$LINK_PATH")
 filename=$(basename "$target_path")
 
-if [[ "$filename" == *"dark"* ]]; then
-    printf "%s\n" \
-	      "We can easily forgive a child who is afraid of the dark;" \
-	      "the real tragedy of life is when men are afraid of the light."
-    printf "— Plato\n"
+switcher_changes() {
+    if [[ "$filename" == *"dark"* ]]; then
+	printf "%s\n" \
+	          "We can easily forgive a child who is afraid of the dark;" \
+	          "the real tragedy of life is when men are afraid of the light."
+	printf "— Plato\n"
 
-    ln -sf "${HOME}/.config/dotfiles/.config/xsettingsd/xsettingsd-light.conf" \
-              "${HOME}/.config/xsettingsd/xsettingsd.conf"
-    ln -sf "${HOME}/.config/dotfiles/.Xresources-light" \
-              "${HOME}/.Xresources"
-    ln -sf "${HOME}/.emacs.d/local/switcher-day.el" \
-              "${HOME}/.emacs.d/local/switcher.el"
+	ln -sf "${HOME}/.config/dotfiles/.config/xsettingsd/xsettingsd-light.conf" \
+                  "${HOME}/.config/xsettingsd/xsettingsd.conf"
+	ln -sf "${HOME}/.config/dotfiles/.Xresources-light" \
+                  "${HOME}/.Xresources"
+	ln -sf "${HOME}/.emacs.d/local/switcher-day.el" \
+                  "${HOME}/.emacs.d/local/switcher.el"
 
+    elif [[ "$filename" == *"light"* ]]; then
+	printf "%s\n" \
+	          "Darkness now rose, as daylight" \
+	          "sunk, and brought in low'ring" \
+	          "night her shadowy offspring."
+	printf "— John Milton\n"
+
+	ln -sf "${HOME}/.config/dotfiles/.config/xsettingsd/xsettingsd-dark.conf" \
+                  "${HOME}/.config/xsettingsd/xsettingsd.conf"
+	ln -sf "${HOME}/.config/dotfiles/.Xresources-dark" \
+                  "${HOME}/.Xresources"
+	ln -sf "${HOME}/.emacs.d/local/switcher-night.el" \
+                  "${HOME}/.emacs.d/local/switcher.el"
+    else
+	printf "The proper configuration files were not found.\n" >&2
+	exit 1
+    fi
+}
+
+switcher_reload() {
     xrdb -merge "${HOME}/.Xresources"
     ~/.config/suckless/dwm/patch/dwmc xrdb
     killall -HUP xsettingsd
     killall -HUP urxvt
     killall -USR1 st
-    emacsclient  --eval "(config-reload)" 1> /dev/null &
+    emacsclient  --eval "(config-reload)" 1> /dev/null &    
+}
 
-elif [[ "$filename" == *"light"* ]]; then
-    printf "%s\n" \
-	      "Darkness now rose, as daylight" \
-	      "sunk, and brought in low'ring" \
-	      "night her shadowy offspring."
-    printf "— John Milton\n"
+main() {
+    if [ ! -L "$LINK_PATH" ]; then
+	printf "Error: %s is not a symbolic link.\n" "$LINK_PATH" >&2
+	exit 1
+    fi
 
-    ln -sf "${HOME}/.config/dotfiles/.config/xsettingsd/xsettingsd-dark.conf" \
-              "${HOME}/.config/xsettingsd/xsettingsd.conf"
-    ln -sf "${HOME}/.config/dotfiles/.Xresources-dark" \
-              "${HOME}/.Xresources"
-    ln -sf "${HOME}/.emacs.d/local/switcher-night.el" \
-              "${HOME}/.emacs.d/local/switcher.el"
+    switcher_changes
+    switcher_reload
+}
 
-    xrdb -merge "${HOME}/.Xresources"
-    ~/.config/suckless/dwm/patch/dwmc xrdb
-    killall -HUP xsettingsd
-    killall -HUP urxvt
-    killall -USR1 st
-    emacsclient --eval "(config-reload)" 1> /dev/null &
-
-else
-    printf "The proper configuration files were not found.\n" >&2
-    exit 1
-fi
+main
