@@ -21,7 +21,9 @@ run_if_exists() {
   fi
 }
 
-### Distros
+#===============================================================================
+#				    Distros
+#===============================================================================
 # Arch
 run_if_exists "pacman" "sudo pacman -Syu"
 
@@ -49,7 +51,9 @@ run_if_exists "brew" "brew upgrade"
 # Windows
 run_if_exists "winget" "winget upgrade --all"
 
-### Package managers
+#===============================================================================
+#				Package Managers
+#===============================================================================
 # Flatpak
 run_if_exists "flatpak" "flatpak update -y"
 
