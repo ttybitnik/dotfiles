@@ -2,7 +2,7 @@
 
 # Cron job script to sync changes between remote and local directories.
 #   Dependencies:
-#     ./tty.sh
+#     ~/.local/bin/tty.sh
 
 source tty.sh
 
