@@ -45,13 +45,13 @@ open_device() {
 		| sudo cryptsetup --key-file=- open "$device" "$device_name"
 	    sudo mount "$mount_point"
 	else
-            sudo cryptsetup open "$device" "$device_name"
-            sudo mount "$mount_point"
+	    sudo cryptsetup open "$device" "$device_name"
+	    sudo mount "$mount_point"
 	fi
 	printf ">> Device '%s' opened and mounted at %s.\n" \
-	          "$device_name" "$mount_point"
+	       "$device_name" "$mount_point"
     else
-        printf ">> Device not found or not a block device: %s.\n" "$device" >&2
+	printf ">> Device not found or not a block device: %s.\n" "$device" >&2
 	exit 1
     fi
 }
@@ -64,13 +64,13 @@ close_device() {
     read -r device_name _ mount_point _ <<< "$device_info"
 
     if [ -d "$mount_point" ]; then
-        sudo umount "$mount_point"
-        sudo cryptsetup close "$device_name"
-        printf ">> Device '%s' unmounted from %s and closed.\n" \
-	          "$device_name" "$mount_point"
+	sudo umount "$mount_point"
+	sudo cryptsetup close "$device_name"
+	printf ">> Device '%s' unmounted from %s and closed.\n" \
+	       "$device_name" "$mount_point"
     else
-        printf ">> Mount point not found or not a directory: %s.\n" \
-	          "$mount_point" >&2
+	printf ">> Mount point not found or not a directory: %s.\n" \
+	       "$mount_point" >&2
 	exit 1
     fi
 }
@@ -78,16 +78,16 @@ close_device() {
 main() {
     case "$action" in
 	"open")
-            open_device "$device_info"
-            ;;
+	    open_device "$device_info"
+	    ;;
 	"close")
-            close_device "$device_info"
-            ;;
+	    close_device "$device_info"
+	    ;;
 	*)
-            printf "Invalid action: %s.\n" "$action" >&2
-            printf "Usage: ttymnt <open|close> <device_name>\n" >&2
-            exit 1
-            ;;
+	    printf "Invalid action: %s.\n" "$action" >&2
+	    printf "Usage: ttymnt <open|close> <device_name>\n" >&2
+	    exit 1
+	    ;;
     esac
 }
 

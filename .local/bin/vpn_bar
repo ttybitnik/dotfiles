@@ -5,10 +5,10 @@
 vpncity="$(nordvpn status | grep "City" | sed "s/.*: //")"
 
 if [[ -n "$vpncity" ]]; then
-  printf " %s" "$vpncity"
+    printf " %s" "$vpncity"
 else
-  printf " Unsafe"
-  if pgrep -x "qbittorrent" > /dev/null; then
-    killall -q qbittorrent
-  fi
+    printf " Unsafe"
+    if pgrep -x "qbittorrent" > /dev/null; then
+	killall -q qbittorrent
+    fi
 fi

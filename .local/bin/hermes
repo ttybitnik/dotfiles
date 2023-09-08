@@ -8,7 +8,7 @@ cat "$(dirname "${CUSTOM_HERMES}")/logo"
 printf "@%s\n\n" "$HOSTNAME"
 printf "Last logins:\n"
 lastlog -t 30 \
-  | awk 'NR>1 { printf ">> %-20s %-15s %-5s %-4s %-12s %-8s %-8s\n", \
+    | awk 'NR>1 { printf ">> %-20s %-15s %-5s %-4s %-12s %-8s %-8s\n", \
            $1, $2, $4, $5, $6, $7, $8, $9 }'
 printf "\n"
 fortune

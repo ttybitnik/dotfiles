@@ -10,24 +10,24 @@ lynxpath=/usr/bin/lynx
 [[ ! -x $lynxpath ]] && lynxpath=/usr/local/bin/lynx
 
 useragent="Mozilla/5.0
-	     (Macintosh; Intel Mac OS X 10_8_0)
-	     AppleWebKit/537.1
-	     (KHTML, like Gecko)
-	     Chrome/21.0.1180.79
-	     Safari/537.1
-	     Lynx"
+	   (Macintosh; Intel Mac OS X 10_8_0)
+	   AppleWebKit/537.1
+	   (KHTML, like Gecko)
+	   Chrome/21.0.1180.79
+	   Safari/537.1
+	   Lynx"
 
-if [ -e "$HOME/.config/lynx/lynx.cfg" ];then
-  export LYNX_CFG="$HOME/.config/lynx/lynx.cfg"
+if [ -e "$HOME/.config/lynx/lynx.cfg" ]; then
+    export LYNX_CFG="$HOME/.config/lynx/lynx.cfg"
 fi
 
-if [ -e "$HOME/.config/lynx/lynx.lss" ];then
-  export LYNX_LSS="$HOME/.config/lynx/lynx.lss"
+if [ -e "$HOME/.config/lynx/lynx.lss" ]; then
+    export LYNX_LSS="$HOME/.config/lynx/lynx.lss"
 fi
 
 if [ ! -x "$lynxpath" ]; then
-  printf "Doesn't look like lynx is installed.\n" >&2
-  exit 1
+    printf "Doesn't look like lynx is installed.\n" >&2
+    exit 1
 fi
 
 exec "$lynxpath" --useragent="$useragent" "$@"

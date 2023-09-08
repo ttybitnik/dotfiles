@@ -10,30 +10,30 @@ filename=$(basename "$target_path")
 switcher_changes() {
     if [[ "$filename" == *"dark"* ]]; then
 	printf "%s\n" \
-	          "We can easily forgive a child who is afraid of the dark;" \
-	          "the real tragedy of life is when men are afraid of the light."
+	       "We can easily forgive a child who is afraid of the dark;" \
+	       "the real tragedy of life is when men are afraid of the light."
 	printf "— Plato\n"
 
 	ln -sf "${HOME}/.config/dotfiles/.config/xsettingsd/xsettingsd-light.conf" \
-                  "${HOME}/.config/xsettingsd/xsettingsd.conf"
+	   "${HOME}/.config/xsettingsd/xsettingsd.conf"
 	ln -sf "${HOME}/.config/dotfiles/.Xresources-light" \
-                  "${HOME}/.Xresources"
+	   "${HOME}/.Xresources"
 	ln -sf "${HOME}/.emacs.d/local/switcher-day.el" \
-                  "${HOME}/.emacs.d/local/switcher.el"
+	   "${HOME}/.emacs.d/local/switcher.el"
 
     elif [[ "$filename" == *"light"* ]]; then
 	printf "%s\n" \
-	          "Darkness now rose, as daylight" \
-	          "sunk, and brought in low'ring" \
-	          "night her shadowy offspring."
+	       "Darkness now rose, as daylight" \
+	       "sunk, and brought in low'ring" \
+	       "night her shadowy offspring."
 	printf "— John Milton\n"
 
 	ln -sf "${HOME}/.config/dotfiles/.config/xsettingsd/xsettingsd-dark.conf" \
-                  "${HOME}/.config/xsettingsd/xsettingsd.conf"
+	   "${HOME}/.config/xsettingsd/xsettingsd.conf"
 	ln -sf "${HOME}/.config/dotfiles/.Xresources-dark" \
-                  "${HOME}/.Xresources"
+	   "${HOME}/.Xresources"
 	ln -sf "${HOME}/.emacs.d/local/switcher-night.el" \
-                  "${HOME}/.emacs.d/local/switcher.el"
+	   "${HOME}/.emacs.d/local/switcher.el"
     else
 	printf "The proper configuration files were not found.\n" >&2
 	exit 1

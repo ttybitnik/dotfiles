@@ -3,7 +3,7 @@
 #				     System
 #===============================================================================
 if [ -f ~/.bashrc ]; then
-	. ~/.bashrc
+    . ~/.bashrc
 fi
 #===============================================================================
 #				  Environments
@@ -74,30 +74,30 @@ case "$(uname -s)" in
     *)        CUSTOM_SYSTEM="UNKNOWN" ;;
 esac
 if [[ "$CUSTOM_SYSTEM" == "LINUX" && \
-	 -n "$(grep '(Microsoft@Microsoft.com)' /proc/version)" ]]; then
+	  -n "$(grep '(Microsoft@Microsoft.com)' /proc/version)" ]]; then
     CUSTOM_SYSTEM="Win11_Linux"
 fi
 export CUSTOM_SYSTEM
 
 if which brew >/dev/null 2>&1; then
-  CUSTOM_INSTALL="BREW"
+    CUSTOM_INSTALL="BREW"
 fi
 if which apt-get >/dev/null 2>&1; then
-  CUSTOM_INSTALL="APT"
+    CUSTOM_INSTALL="APT"
 fi
 if which yum >/dev/null 2>&1; then
-  CUSTOM_INSTALL="YUM"
+    CUSTOM_INSTALL="YUM"
 fi
 export CUSTOM_INSTALL
 #===============================================================================
 #				    Systemd
 #===============================================================================
 systemctl --user import-environment \
-  PATH \
-  TTY_WALLPAPER \
-  TTY_MOTTO \
-  CUSTOM_HERMES \
-  CUSTOM_SWITCHER
+	  PATH \
+	  TTY_WALLPAPER \
+	  TTY_MOTTO \
+	  CUSTOM_HERMES \
+	  CUSTOM_SWITCHER
 #===============================================================================
 #				    Startup
 #===============================================================================

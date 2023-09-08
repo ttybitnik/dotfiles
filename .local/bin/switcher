@@ -11,61 +11,60 @@ switcher_changes() {
 	toggle=light
 
 	printf "%s\n" \
-	          "We can easily forgive a child who is afraid of the dark;" \
-	          "the real tragedy of life is when men are afraid of the light."
+	       "We can easily forgive a child who is afraid of the dark;" \
+	       "the real tragedy of life is when men are afraid of the light."
 	printf "— Plato\n"
 
 	ln -sf "${HOME}/.emacs.d/local/switcher-day.el" \
-	          "${HOME}/.emacs.d/local/switcher.el"
+	   "${HOME}/.emacs.d/local/switcher.el"
 	ln -sf "${HOME}/.config/dotfiles/.config/foot/switcher-light" \
-	          "${HOME}/.config/foot/switcher"
+	   "${HOME}/.config/foot/switcher"
 	ln -sf "${HOME}/.config/dotfiles/.config/rofi/switcher-light" \
-	          "${HOME}/.config/rofi/switcher.rasi"
+	   "${HOME}/.config/rofi/switcher.rasi"
 	ln -sf "${HOME}/.config/dotfiles/.config/dunst/dunstrc-light" \
-	          "${HOME}/.config/dunst/dunstrc"
+	   "${HOME}/.config/dunst/dunstrc"
 	ln -sf "${HOME}/.config/dotfiles/.config/sway/switcher-light" \
-	          "${HOME}/.config/sway/switcher"
+	   "${HOME}/.config/sway/switcher"
 	ln -sf "${HOME}/.config/dotfiles/.config/waybar/switcher-light" \
-	          "${HOME}/.config/waybar/style.css"
+	   "${HOME}/.config/waybar/style.css"
 	gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
 
     elif [[ "$toggle" == light ]]; then
 	toggle=dark
 
 	printf "%s\n" \
-	          "Darkness now rose, as daylight" \
-	          "sunk, and brought in low'ring" \
-	          "night her shadowy offspring."
+	       "Darkness now rose, as daylight" \
+	       "sunk, and brought in low'ring" \
+	       "night her shadowy offspring."
 	printf "— John Milton\n"
 
 	ln -sf "${HOME}/.emacs.d/local/switcher-night.el" \
-	          "${HOME}/.emacs.d/local/switcher.el"
+	   "${HOME}/.emacs.d/local/switcher.el"
 	ln -sf "${HOME}/.config/dotfiles/.config/foot/switcher-dark" \
-	          "${HOME}/.config/foot/switcher"
+	   "${HOME}/.config/foot/switcher"
 	ln -sf "${HOME}/.config/dotfiles/.config/rofi/switcher-dark" \
-	          "${HOME}/.config/rofi/switcher.rasi"
+	   "${HOME}/.config/rofi/switcher.rasi"
 	ln -sf "${HOME}/.config/dotfiles/.config/dunst/dunstrc-dark" \
-	          "${HOME}/.config/dunst/dunstrc"
+	   "${HOME}/.config/dunst/dunstrc"
 	ln -sf "${HOME}/.config/dotfiles/.config/sway/switcher-dark" \
-	          "${HOME}/.config/sway/switcher"
+	   "${HOME}/.config/sway/switcher"
 	ln -sf "${HOME}/.config/dotfiles/.config/waybar/switcher-dark" \
-	          "${HOME}/.config/waybar/style.css"
+	   "${HOME}/.config/waybar/style.css"
 	gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 
     else
 	printf "The proper configuration files were not found. Check %s.\n" \
-	          "${STATE_FILE}" >&2
+	       "${STATE_FILE}" >&2
 	exit 1
     fi
 }
 
 switcher_reload() {
     swaymsg reload
-    emacsclient --eval "(config-reload)" > /dev/null 2>&1 & 
+    emacsclient --eval "(config-reload)" > /dev/null 2>&1 &
     killall -USR1 foot
     killall dunst && dunst > /dev/null 2>&1  &
 }
-
 
 main() {
     if [[ -z "$toggle" ]]; then

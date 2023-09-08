@@ -6,19 +6,19 @@ options=$(printf "\uf023 Lock\n\uf08b Logout\n\uf021 Reboot\n\uf011 Shutdown")
 selected=$(printf "%s" "$options" | dmenu -i -p "Select an option:")
 
 case "$selected" in
-  "\uf023 Lock")
-    slock
-    ;;
-  "\uf08b Logout")
-    pkill dwm
-    ;;
-  "\uf021 Reboot")
-    systemctl reboot
-    ;;
-  "\uf011 Shutdown")
-    systemctl poweroff
-    ;;
-  *)
-    exit 1
-    ;;
+    "\uf023 Lock")
+	slock
+	;;
+    "\uf08b Logout")
+	pkill dwm
+	;;
+    "\uf021 Reboot")
+	systemctl reboot
+	;;
+    "\uf011 Shutdown")
+	systemctl poweroff
+	;;
+    *)
+	exit 1
+	;;
 esac

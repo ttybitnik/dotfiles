@@ -4,8 +4,8 @@
 
 sanitize_input() {
     printf "%s" "${1// /_}" \
-	           | tr '[:upper:]' '[:lower:]' \
-		   | tr -cd '[:alnum:]_'
+	| tr '[:upper:]' '[:lower:]' \
+	| tr -cd '[:alnum:]_'
 }
 
 prompt_input() {
