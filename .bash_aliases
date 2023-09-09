@@ -2,12 +2,12 @@
 #===============================================================================
 #				    Defaults
 #===============================================================================
-alias ls='ls --color=auto --group-directories-first'
+alias ls='ls -hvF --color=auto --group-directories-first'
 alias mv='mv -iv'
 alias rm='rm -Iv'
 alias cp='cp -irv'
 alias mkdir='mkdir -v'
-alias tree='tree -I ".git"'
+alias tree='tree -vF -I ".git"'
 alias grep='grep --color=auto'
 alias diff='diff --color=auto --unified'
 alias vi='vim'
@@ -16,8 +16,8 @@ alias mpv='mpv --no-terminal'
 #===============================================================================
 #				   Shortcuts
 #===============================================================================
-alias lsa='ls -ah'
-alias lla='ls -lah'
+alias lsa='ls -a'
+alias lla='ls -la'
 alias mkd='mkdir'
 alias g='git'
 alias c='clear'
