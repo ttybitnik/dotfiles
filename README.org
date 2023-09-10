@@ -30,7 +30,7 @@ The description is structured around the custom environments I run, including a 
 
 ** Requirements
 
-Before using my dotfiles, ensure that user's =$PATH= includes =~/.local/bin/=, and =~/.bashrc= includes =~/.bash_aliases=.
+Before using my dotfiles, ensure that that you have my =bash= configuration files or that user's =$PATH= includes =~/.local/bin/=, and =~/.bashrc= includes =~/.bash_aliases=.
 
 *** Suggestions
 
@@ -62,9 +62,11 @@ The following scripts are included in this repository:
 - media_bar: /media status/
 - clock_bar: /date and time/
 - weather: /weather status/
-- qbit: /qBittorrent secure launcher/
+- qbit: /qbittorrent secure launcher/
 - power_menu: /logout screen options/
-- cron*: /cron jobs/
+- cronbib: /calibre to bibtex cron job/
+- crondrive: /bisync drives cron job/
+- crongit: /commit local repos cron job/
 
 The scripts are located in the following repository paths: =~/.local/bin/=, =~/.local/share/dwm/=.
 
