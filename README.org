@@ -17,6 +17,7 @@ The description is structured around the custom environments I run, including a 
   - [[#usage][Usage]]
     - [[#switcher][Switcher]]
     - [[#omni][Omni]]
+    - [[#hermes][Hermes]]
     - [[#euterpe][Euterpe]]
     - [[#automating-symbolic-links][Automating symbolic links]]
   - [[#miscellaneous][Miscellaneous]]
