@@ -30,7 +30,7 @@ The description is structured around the custom environments I run, including a 
 
 ** Requirements
 
-Before using my dotfiles, ensure that that you have my =bash= configuration files or that user's =$PATH= includes =~/.local/bin/=, and =~/.bashrc= includes =~/.bash_aliases=.
+Before using my dotfiles, change the personal environment values in =.bash_profile= accordingly.
 
 *** Suggestions
 
@@ -218,10 +218,6 @@ gtk-key-theme-name = Emacs
 
 **** Wayland environment
 
-***** Gammastep
-
-To adjust the color temperature of the display based on the time of day, edit the location command in the =autostart= script.
-
 **** Xorg environment
 
 ***** Mouse speed
@@ -239,10 +235,6 @@ EndSection
 #+end_src
 
 After saving the file, restart Xorg.
-
-***** Redshift
-
-To adjust the color temperature of the display based on the time of day, edit the location command in the =autostart= script.
 
 ** License
 
