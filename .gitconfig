@@ -1,0 +1,43 @@
+[commit]
+	gpgsign = true
+
+[mergetool]
+	keepBackup = true
+
+[core]
+	pager = less -iXFR
+
+[color]
+	ui = always
+
+[apply]
+	whitespace = fix
+
+[alias]
+	co = checkout
+	add = add -a
+	ca = commit -am
+	cm = commit -m
+	st = status -s
+	dif = diff
+	difc = diff --color-words
+	lp  = log --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=rfc
+	lpu = log --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %s %Cgreen(%cr)%Creset - %C(magenta)%cn%Creset' --abbrev-commit --date=relative
+	lpn = log --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %s %Cgreen(%cr)%Creset - %C(magenta)%cn%Creset' --abbrev-commit --date=relative -n
+	lpd = log --pretty=format:'%Cgreen%cd%Creset %Cred%h%Creset %C(yellow)%d%Creset %s' --abbrev-commit --date=short
+	lg = log --grep
+	lt= log --graph --oneline --decorate --all
+
+[url "git@github.com:"]
+	insteadOf = "gh:"
+	pushInsteadOf = "github:"
+	pushInsteadOf = "git://github.com/"
+
+[url "git@gitlab.com:"]
+	insteadOf = "gl:"
+	pushInsteadOf = "gitlab:"
+	pushInsteadOf = "git://gitlab.com/"
+
+# Personal
+[include]
+	path = /home/ttybitnik/.gitconfig2

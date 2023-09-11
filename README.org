@@ -76,6 +76,7 @@ This repository includes configuration files for the following applications:
 
 - Bash
 - Readline
+- Git
 - Tmux
 - Curl
 - GNU Lynx
@@ -147,6 +148,7 @@ To automate the process of creating symbolic links from the repository files to 
       create_symlink ".bashrc" ".bashrc"
       create_symlink ".inputrc" ".inputrc"
       create_symlink ".curlrc" ".curlrc"
+      create_symlink ".gitconfig" ".gitconfig"
       create_symlink ".config/mc/ini" ".config/mc/ini"
       create_symlink ".config/systemd/user" ".config/systemd/user"
   }
