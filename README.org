@@ -77,6 +77,7 @@ This repository includes configuration files for the following applications:
 - Bash
 - Readline
 - Tmux
+- Curl
 - GNU Lynx
 - GNU Midnight Commander
 - Kmonad
@@ -145,6 +146,7 @@ To automate the process of creating symbolic links from the repository files to 
       create_symlink ".bash_profile" ".bash_profile"
       create_symlink ".bashrc" ".bashrc"
       create_symlink ".inputrc" ".inputrc"
+      create_symlink ".curlrc" ".curlrc"
       create_symlink ".config/mc/ini" ".config/mc/ini"
       create_symlink ".config/systemd/user" ".config/systemd/user"
   }
