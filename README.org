@@ -68,7 +68,7 @@ The following scripts are included in this repository:
 - crondrive: /bisync drives cron job/
 - crongit: /commit local repos cron job/
 
-The scripts are located in the following repository paths: =~/.local/bin/=, =~/.local/share/dwm/=.
+The scripts are located in the following repository path: =./.local/bin/=.
 
 ** Configurations
 
@@ -96,7 +96,7 @@ This repository includes configuration files for the following applications:
   - Xresources
   - Xsettingsd
 
-The configuration files are located in the following repository paths: =.=, =~/.config/=, =~/.local/share/=.
+The configuration files are located in the following repository paths: =.=, =./.config/=, =./.local/share/=.
 
 ** Usage
 *** Switcher
