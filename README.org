@@ -34,10 +34,10 @@ Before using my dotfiles, change the personal environment values in =.bash_profi
 
 *** Suggestions
 
-| General             | GNU Emacs ([[https://github.com/ttybitnik/emacs.d][my config]]), GNU Image Manipulation Program, Ffmpeg, Pandoc, Imv, Fzf, Ytfzf, Yt-dlp, Shotcut, Mpv, Nautilus                                        |
-| TTY Environment     | GNU Emacs (ditto), GNU Midnight Commander, GNU Lynx, GNU Parallel, GNU Privacy Guard, ClamAV, Tmux, Git, Htop, Powertop, Tree, Nmcli, Pulsemixer, Spotify-tui |
-| Wayland Environment | Foot, Sway, Swaylock, Waybar, Rofi, Dunst, Kanshi, Gammastep, Wl-clipboard                                                                                    |
-| Xorg Environment    | Urxvt, Suckless tools ([[https://github.com/ttybitnik/suckless][my builds]]), Redshift, Nitrogen, Sxhkd, Xclip, Xsettingsd                                                                               |
+| General             | GNU Emacs ([[https://github.com/ttybitnik/emacs.d][my config]]), GNU Image Manipulation Program, Ffmpeg, Pandoc, Imv, Fzf, Ytfzf, Yt-dlp, Shotcut, Mpv, Nautilus                                                   |
+| TTY Environment     | GNU Emacs (ditto), GNU Midnight Commander, GNU Lynx, GNU Parallel, GNU Privacy Guard, ClamAV, Tmux, Git, Htop, Powertop, Hyperfine, Tree, Nmcli, Pulsemixer, Spotify-tui |
+| Wayland Environment | Foot, Sway, Swaylock, Waybar, Rofi, Dunst, Kanshi, Gammastep, Wl-clipboard                                                                                               |
+| Xorg Environment    | Urxvt, Suckless tools ([[https://github.com/ttybitnik/suckless][my builds]]), Redshift, Nitrogen, Sxhkd, Xclip, Xsettingsd                                                                                          |
 
 ** Scripts
 
