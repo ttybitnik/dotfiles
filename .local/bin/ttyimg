@@ -16,8 +16,8 @@ main() {
 }
 
 if [ $# = 0 ]; then
-	printf "Usage: ttyimg [filename0] [filename1] [filename2] [...]\n" >&2
-	exit 1
+    printf "Usage: ttyimg [filename0] [filename1] [filename2] [...]\n" >&2
+    exit 1
 fi
 
 for filename in "$@"; do
