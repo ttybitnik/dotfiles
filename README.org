@@ -50,6 +50,7 @@ The following scripts are included in this repository:
 - ttybkp: /backup naming standard/
 - ttygpg: /encryption automation/
 - ttyeod: /end of day wrapper/
+- ttyimg: /image privacy and filtering/
 - autostart: /sway/dwm autostart/
 - vpn_bar: /vpn status and city/
 - net_bar: /network status/
