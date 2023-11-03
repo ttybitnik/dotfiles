@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# Filter images and remove exif data for blog posts.
+
+ffmpeg_scale="scale=1920:1080"
+ffmpeg_bw="colorchannelmixer=rr=0.3:rg=0.6:rb=0.1:gr=0.3:gg=0.6:gb=0.1"
+ffmpeg_bw+=":br=0.3:bg=0.6:bb=0.1"
+ffmpeg_noise="hue=s=0,boxblur=lr=1.2,noise=c0s=7:allf=t"
+
+main() {
+    ffmpeg -i "$1" \
+	   -vf "${ffmpeg_scale}, ${ffmpeg_bw}, ${ffmpeg_noise}" \
+	   "ttyimg_${1}"
+
+    exiftool -overwrite_original -All= "ttyimg_${1}"
+}
+
+if [ $# = 0 ]; then
+	printf "Usage: ttyimg [filename0] [filename1] [filename2] [...]\n" >&2
+	exit 1
+fi
+
+for filename in "$@"; do
+    if [ ! -f "$filename" ]; then
+	printf "Error. The file '%s' does not exist.\n" "$filename" >&2
+    else
+	main "$filename"
+    fi
+done
