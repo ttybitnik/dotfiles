@@ -125,12 +125,38 @@ bindsym $mod+d exec flatpak run com.discordapp.Discord
 default_Border pixel 2
 gaps inner 4
 gaps outer 4
-exec ~/.config/sway/autostart.sh
+
+### Startup scripting ###
+# exec ~/.config/sway/autostart.sh
+exec "gpg-agent --daemon;"
+exec "gammastep -l $TTY_GEO;"
+exec "sleep 15 && qbit;"
+
+workspace 1
+exec "foot -e tmux;"
+exec "sleep 2 && swaymsg [app_id=foot workspace=1] focus, splitv, mark tty_tmux;"
+exec "spotify;"
+exec "sleep 2 && swaymsg [class=Spotify] move container to mark tty_tmux, \
+	         move up, resize set height 300 px, splith, mark spt_md;"
+exec "emacs;"
+exec "sleep 2 && swaymsg [class=Emacs] focus, move right, resize set 1165 px;"
+
+workspace 2
+exec "foot -e tmux;"
+
+workspace 3
+exec "firefox;"
+exec "sleep 4 && swaymsg [app_id=firefox workspace=3] focus, mark scr_frfx;"
+exec "sleep 4 && swaymsg [con_mark=scr_frfx] move container scratchpad;"
+
+workspace 1
+exec "sleep 4 && swaymsg [app_id=gcr-prompter] move container to workspace 3;"
+exec "sleep 4 && swaymsg workspace 3, focus floating;"
 
 ### Assign windows to workspaces ###
-assign [app_id="firefox"] workspace 3
+for_window [title=Picture-in-Picture] move container to mark spt_md, \
+	       layout tabbed
 assign [class="Google-chrome"] workspace 3
-assign [class="Spotify"] workspace 4
 assign [class="discord"] workspace 5
 assign [app_id="org.gnome.Nautilus"] workspace 6
 assign [class="Gimp"] workspace 7
