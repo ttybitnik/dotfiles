@@ -90,7 +90,10 @@ bindsym $mod+e layout toggle split
 bindsym $mod+f fullscreen
 bindsym $mod+i floating toggle
 bindsym $mod+space focus mode_toggle
-bindsym $mod+a focus parent
+bindsym $mod+p focus parent
+bindsym $mod+c focus child
+bindsym $mod+a resize set 1165 px
+bindsym $mod+Control+a resize set height 300 px
 
 # Scratchpad:
 bindsym $mod+Control+s move scratchpad
@@ -112,12 +115,11 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Launchers
+bindsym $mod+Control+e exec emacsclient -c -n
 bindsym $mod+g exec firefox
 bindsym $mod+Control+g exec google-chrome
 bindsym $mod+y exec spotify
-bindsym $mod+Control+e exec emacsclient -c -n
 bindsym $mod+d exec flatpak run com.discordapp.Discord
-bindsym $mod+c exec calibre
 
 ### General ###
 default_Border pixel 2
