@@ -106,7 +106,7 @@ To switch between light and dark modes globally, just run =switcher=. This custo
 
 *** Omni
 
-To automate system updates, run =omni=. This script checks for the availability of various package managers and executes the corresponding update commands. It ensures that every manger present in the enviroment update its packages. 
+To automate system updates, run =omni=. This script checks for the availability of various package managers and executes the corresponding update commands. It ensures that every manager present in the enviroment update its packages.
 
 *** Hermes
 
