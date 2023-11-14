@@ -9,7 +9,7 @@
 current_hour=$(date +"%H")
 
 if [ "$current_hour" -ge 6 ] || [ "$current_hour" -lt 18 ]; then
-    printf "light" > "$CUSTOM_SWITCHER"
+    printf "dark" > "$CUSTOM_SWITCHER"
     ln -sf "${HOME}/.emacs.d/local/switcher-day.el" \
        "${HOME}/.emacs.d/local/switcher.el"
     ln -sf "${HOME}/.config/dotfiles/.config/foot/switcher-light" \
@@ -26,7 +26,7 @@ if [ "$current_hour" -ge 6 ] || [ "$current_hour" -lt 18 ]; then
 fi
 
 if [ "$current_hour" -ge 18 ] || [ "$current_hour" -lt 6 ]; then
-    printf "dark" > "$CUSTOM_SWITCHER"
+    printf "light" > "$CUSTOM_SWITCHER"
     ln -sf "${HOME}/.emacs.d/local/switcher-night.el" \
        "${HOME}/.emacs.d/local/switcher.el"
     ln -sf "${HOME}/.config/dotfiles/.config/foot/switcher-dark" \
