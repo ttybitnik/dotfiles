@@ -61,7 +61,7 @@ switcher_changes() {
 
 switcher_reload() {
     swaymsg reload
-    emacsclient --eval "(config-reload)" > /dev/null 2>&1 &
+    emacsclient --eval "(config-reload/ttybitnik)" > /dev/null 2>&1 &
     killall -USR1 foot
     killall dunst && dunst > /dev/null 2>&1  &
 }
