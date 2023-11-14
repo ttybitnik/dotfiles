@@ -155,7 +155,7 @@ exec "sleep 4 && swaymsg workspace 3, focus floating;"
 
 ### Assign windows to workspaces ###
 for_window [title=Picture-in-Picture] move container to mark spt_md, \
-	       layout tabbed
+	       layout tabbed, resize set height 440 px
 assign [class="Google-chrome"] workspace 3
 assign [class="discord"] workspace 5
 assign [app_id="org.gnome.Nautilus"] workspace 6
