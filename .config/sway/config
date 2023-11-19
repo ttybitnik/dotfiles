@@ -130,7 +130,6 @@ gaps outer 4
 # exec ~/.config/sway/autostart.sh
 exec "gpg-agent --daemon;"
 exec "gammastep -l $TTY_GEO;"
-exec "sleep 15 && qbit;"
 
 workspace 1
 exec "foot -e tmux;"
