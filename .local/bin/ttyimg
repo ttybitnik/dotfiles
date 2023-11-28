@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 
-# Filter images and remove exif data for blog posts.
+# Filter, compress and remove exif data for blog images.
 
 scale="crop=min(iw\,1920):min(ih\,1080)"
 bw="colorchannelmixer=rr=0.3:rg=0.6:rb=0.1:gr=0.3:gg=0.6:gb=0.1"
 bw+=":br=0.3:bg=0.6:bb=0.1"
 noise="hue=s=0,boxblur=lr=1.2,noise=c0s=7:allf=t"
+compress="5"
 
 main() {
     ffmpeg -i "$1" \
+	   -q:v "${compress}" \
 	   -vf "${scale}, ${bw}, ${noise}" \
 	   "ttyimg_${1}"
 
