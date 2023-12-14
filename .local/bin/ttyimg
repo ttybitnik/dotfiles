@@ -2,16 +2,31 @@
 
 # Filter, compress and remove exif data for blog images.
 
-scale="crop=min(iw\,1920):min(ih\,1080)"
+crop="crop=in_w:in_w*9/16"
+scale="scale=min(iw\,1920):min(ih\,1080)"
 bw="colorchannelmixer=rr=0.3:rg=0.6:rb=0.1:gr=0.3:gg=0.6:gb=0.1"
 bw+=":br=0.3:bg=0.6:bb=0.1"
 noise="hue=s=0,boxblur=lr=1.2,noise=c0s=7:allf=t"
 compress="5"
+scratches="blend=screen:all_opacity=0.4,format=rgb24"
+
+scratch_random() {
+    local random_frame
+    random_frame=$(shuf -i 0-63 -n 1)
+
+    ffmpeg -i "${TTY_DOTFILES}/.ttyimg_filter.mp4" \
+	   -vf "select=eq(n\,$random_frame)'" \
+	   -vframes 1 \
+	   -y "${TTY_DOTFILES}/.ttyimg_scratches.jpg"
+}
 
 main() {
+    scratch_random
+
     ffmpeg -i "$1" \
+	   -i "${TTY_DOTFILES}/.ttyimg_scratches.jpg" \
+	   -filter_complex "${crop}, ${scale}, ${bw}, ${noise}, ${scratches}" \
 	   -q:v "${compress}" \
-	   -vf "${scale}, ${bw}, ${noise}" \
 	   "ttyimg_${1}"
 
     exiftool -overwrite_original -All= "ttyimg_${1}"
