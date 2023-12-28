@@ -14,33 +14,59 @@ scratch_random() {
     local random_frame
     random_frame=$(shuf -i 0-63 -n 1)
 
-    ffmpeg -i "${TTY_DOTFILES}/.ttyimg_filter.mp4" \
-	   -vf "select=eq(n\,$random_frame)'" \
-	   -vframes 1 \
-	   -y "${TTY_DOTFILES}/.ttyimg_scratches.jpg"
+    ffmpeg -i "${TTY_DOTFILES}/${filter_file}" \
+        -vf "select=eq(n\,$random_frame)'" \
+        -vframes 1 \
+        -y "${TTY_DOTFILES}/.ttyimg_scratches.jpg"
 }
 
 main() {
-    scratch_random
+    local crop_ratio="$1"
+    shift
 
-    ffmpeg -i "$1" \
-	   -i "${TTY_DOTFILES}/.ttyimg_scratches.jpg" \
-	   -filter_complex "${crop}, ${scale}, ${bw}, ${noise}, ${scratches}" \
-	   -q:v "${compress}" \
-	   "ttyimg_${1}"
+    if [ "$crop_ratio" == "4:3" ]; then
+        crop="crop=in_h/3*4:in_h"
+	scale="scale=min(iw\,1920):min(ih\,1440)"
+	filter_file=".ttyimg_filter_4-3.mp4"
+    elif [ "$crop_ratio" == "3:4" ]; then
+        crop="crop=in_h/4*3:in_h"
+	scale="scale=min(iw\,1440):min(ih\,1920)"
+	filter_file=".ttyimg_filter_3-4.mp4"
+    elif [ "$crop_ratio" == "16:9" ]; then
+        crop="crop=in_w:in_w*9/16"
+	scale="scale=min(iw\,1920):min(ih\,1080)"
+	filter_file=".ttyimg_filter_16-9.mp4"
+    elif [ "$crop_ratio" == "9:16" ]; then
+        crop="crop=in_w:in_w*16/9"
+	scale="scale=min(iw\,1080):min(ih\,1920)"
+	filter_file=".ttyimg_filter_9-16.mp4"
+    else
+        echo "Invalid crop ratio. Choose either 4:3, 3:4, 16:9 or 9:16." >&2
+        exit 1
+    fi
 
-    exiftool -overwrite_original -All= "ttyimg_${1}"
+    while [ "$#" -gt 0 ]; do
+        local filename="$1"
+        shift
+
+        scratch_random
+
+        ffmpeg -i "$filename" \
+            -i "${TTY_DOTFILES}/.ttyimg_scratches.jpg" \
+            -filter_complex "${crop}, ${scale}, ${bw}, ${noise}, ${scratches}" \
+            -q:v "${compress}" \
+            "ttyimg_${filename}"
+
+        exiftool -overwrite_original -All= "ttyimg_${filename}"
+    done
 }
 
-if [ $# = 0 ]; then
-    printf "Usage: ttyimg [filename0] [filename1] [filename2] [...]\n" >&2
+if [ $# -lt 2 ]; then
+    printf "Usage: ttyimg [crop_ratio] [filename0] [filename1] [...]\n" >&2
     exit 1
 fi
 
-for filename in "$@"; do
-    if [ ! -f "$filename" ]; then
-	printf "Error. The file '%s' does not exist.\n" "$filename" >&2
-    else
-	main "$filename"
-    fi
-done
+crop_ratio="$1"
+shift
+
+main "$crop_ratio" "$@"
