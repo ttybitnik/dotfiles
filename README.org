@@ -160,7 +160,7 @@ To automate the process of creating symbolic links from the repository files to 
       create_symlink ".config/waybar" ".config/waybar"
       create_symlink ".config/foot" ".config/foot"
       create_symlink ".config/rofi" ".config/rofi"
-      create_symlink ".config/dunst/dunstrc-dark" ".config/dunst/dunstrc"
+      create_symlink ".config/dunst/switcher-dark" ".config/dunst/dunstrc"
       create_symlink ".config/swaylock" ".config/swaylock"
   }
 
