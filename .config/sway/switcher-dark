@@ -1,4 +1,5 @@
-client.focused		   "#98971a" "#665c54" "#ebdbb2" "#ebdbb2" "#98971a"
-client.unfocused	   "#a89984" "#3c3836" "#a89984" "#98971a" "#a89984"
-client.focused_inactive    "#a89984" "#3c3836" "#a89984" "#484e50" "#5f676a"
-client.focused_tab_title   "#a89984" "#3c3836" "#a89984"
+# man 5 sway
+client.focused		   "#979797" "#484d67" "#ffffff" "#feacd0" "#979797"
+client.unfocused	   "#606270" "#292d48" "#969696" "#606270" "#606270"
+client.focused_inactive    "#606270" "#292d48" "#969696" "#606270" "#606270"
+client.focused_tab_title   "#979797" "#484d67" "#ffffff"

@@ -1,0 +1,4 @@
+client.focused		   "#98971a" "#665c54" "#ebdbb2" "#ebdbb2" "#98971a"
+client.unfocused	   "#a89984" "#3c3836" "#a89984" "#98971a" "#a89984"
+client.focused_inactive    "#a89984" "#3c3836" "#a89984" "#484e50" "#5f676a"
+client.focused_tab_title   "#a89984" "#3c3836" "#a89984"

@@ -5,30 +5,30 @@
 }
 
 #window {
-    color: #282828;
+    color: #fbf1c7;
 }
 
 window#waybar {
-    background-color: #d5c4a1;
+    background-color: #665c54;
     /* Optional layout, uncomment the lines below */
     /* background-color: transparent; */
     /* border-radius: 5px 5px 5px 5px; */
 }
 
 window#waybar.empty {
-    background-color: #d5c4a1;
+    background-color: #665c54;
     /* background-color: transparent; */
     /* border-radius: 5px 5px 5px 5px; */
 }
 
 window#waybar.empty .modules-center {
-    background-color: #d5c4a1;
+    background-color: #665c54;
     /* background-color: transparent; */
     /* border-radius: 5px 5px 5px 5px; */
 }
 
 window#waybar.solo {
-    background-color: #d5c4a1;
+    background-color: #665c54;
     /* background-color: transparent; */
     /* border-radius: 5px 5px 5px 5px; */
 }
@@ -62,11 +62,11 @@ button:hover {
 #workspaces button {
     padding: 0 2px;
     background-color: transparent;
-    color: #3c3836;
+    color: #eddbb2;
 }
 
 #workspaces button.focused {
-    color: #282828;
+    color: #fbf1c7;
 }
 
 
@@ -92,22 +92,22 @@ button:hover {
 
 /* Modules rounded corners */ 
 .modules-left {
-    background: #d5c4a1;
-    color: #3c3836;
+    background: #665c54;
+    color: #eddbb2;
     border-radius: 0px 0px 5px 5px;
     padding: 0 4px;
 }
 
 .modules-center {
-    background-color: #d5c4a1;
-    color: #3c3836;
+    background-color: #665c54;
+    color: #eddbb2;
     border-radius: 0px 0px 5px 5px;
     padding: 0 10px;
     margin: 0 4px;
 }
 .modules-right {
-    background: #d5c4a1;
-    color: #3c3836;
+    background: #665c54;
+    color: #eddbb2;
     border-radius: 0px 0px 5px 5px;
     padding: 0 4px; /* Alternate layout: 0 10px; */
 }

@@ -14,24 +14,24 @@
     padding = 8
     horizontal_padding = 8
     origin = top-right
-    offset = 35x20
-    separator_color = "#545454"
+    offset = 30x30
+    separator_color = "#7c6f64"
     
 [urgency_low]
-    background = "#cab9b2"
-    foreground = "#000000"
-    frame_color = "#545454"
+    background = "#665c54"
+    foreground = "#eddbb2"
+    frame_color = "#7c6f64"
     timeout = 5
 
 [urgency_normal]
-    background = "#cab9b2"
-    foreground = "#000000"
-    frame_color = "#545454"
+    background = "#665c54"
+    foreground = "#eddbb2"
+    frame_color = "#7c6f64"
     timeout = 20
 
 [urgency_critical]
-    background = "#cab9b2"
-    foreground = "#000000"
-    frame_color = "#d00000"
+    background = "#665c54"
+    foreground = "#eddbb2"
+    frame_color = "#cc241d"
     timeout = 0
     
