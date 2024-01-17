@@ -94,6 +94,7 @@ bindsym $mod+p focus parent
 bindsym $mod+c focus child
 bindsym $mod+a resize set 1165 px
 bindsym $mod+Control+a resize set height 300 px
+bindsym $mod+Control+b exec killall -SIGUSR1 waybar
 
 # Scratchpad:
 bindsym $mod+Control+s move scratchpad
