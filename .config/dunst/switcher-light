@@ -10,11 +10,12 @@
     follow = mouse
     sticky_history = yes
     line_height = 0
-    separator_height = 2
+    separator_height = 1
     padding = 8
     horizontal_padding = 8
     origin = top-right
     offset = 35x20
+    frame_width = 1
     separator_color = "#545454"
     
 [urgency_low]
