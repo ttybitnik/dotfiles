@@ -5,30 +5,32 @@
 }
 
 #window {
+    font-weight: bold;
     color: #ffffff;
 }
 
 window#waybar {
     background-color: #484d67;
-    /* Optional layout, uncomment the lines below */
+    border: 1px solid #979797;
+   /* Optional layout, uncomment the lines below */
     /* background-color: transparent; */
     /* border-radius: 5px 5px 5px 5px; */
 }
 
 window#waybar.empty {
-    background-color: #484d67;
+    /* background-color: #484d67; */
     /* background-color: transparent; */
     /* border-radius: 5px 5px 5px 5px; */
 }
 
 window#waybar.empty .modules-center {
-    background-color: #484d67;
+    /* background-color: #484d67; */
     /* background-color: transparent; */
     /* border-radius: 5px 5px 5px 5px; */
 }
 
 window#waybar.solo {
-    background-color: #484d67;
+    /* background-color: #484d67; */
     /* background-color: transparent; */
     /* border-radius: 5px 5px 5px 5px; */
 }
@@ -53,6 +55,8 @@ button {
     /* Avoid rounded borders under each button name */
     border: none;
     border-radius: 0;
+    /* Mimic scroll ease behavior */
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -66,12 +70,14 @@ button:hover {
 }
 
 #workspaces button.focused {
-    color: #feacd0;
+    color: #0d0e1c;
+    background-color: #feacd0;
 }
 
 
 #workspaces button.urgent {
-    color: #ff5f5f;
+    color: #0d0e1c;
+    background-color: #ff5f5f;
 }
 
 #mode {
@@ -92,21 +98,21 @@ button:hover {
 
 /* Modules rounded corners */ 
 .modules-left {
-    background: #484d67;
+    /* background: #484d67; */
     color: #ffffff;
     border-radius: 0px 0px 5px 5px;
     padding: 0 4px;
 }
 
 .modules-center {
-    background-color: #484d67;
+    /* background-color: #484d67; */
     color: #ffffff;
     border-radius: 0px 0px 5px 5px;
     padding: 0 10px;
     margin: 0 4px;
 }
 .modules-right {
-    background: #484d67;
+    /* background: #484d67; */
     color: #ffffff;
     border-radius: 0px 0px 5px 5px;
     padding: 0 4px; /* Alternate layout: 0 10px; */
