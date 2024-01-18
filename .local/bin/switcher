@@ -21,7 +21,7 @@ switcher_changes() {
 	   "${HOME}/.config/foot/switcher"
 	ln -sf "${HOME}/.config/dotfiles/.config/rofi/switcher-light" \
 	   "${HOME}/.config/rofi/switcher.rasi"
-	ln -sf "${HOME}/.config/dotfiles/.config/dunst/dunstrc-light" \
+	ln -sf "${HOME}/.config/dotfiles/.config/dunst/switcher-light" \
 	   "${HOME}/.config/dunst/dunstrc"
 	ln -sf "${HOME}/.config/dotfiles/.config/sway/switcher-light" \
 	   "${HOME}/.config/sway/switcher"
@@ -44,7 +44,7 @@ switcher_changes() {
 	   "${HOME}/.config/foot/switcher"
 	ln -sf "${HOME}/.config/dotfiles/.config/rofi/switcher-dark" \
 	   "${HOME}/.config/rofi/switcher.rasi"
-	ln -sf "${HOME}/.config/dotfiles/.config/dunst/dunstrc-dark" \
+	ln -sf "${HOME}/.config/dotfiles/.config/dunst/switcher-dark" \
 	   "${HOME}/.config/dunst/dunstrc"
 	ln -sf "${HOME}/.config/dotfiles/.config/sway/switcher-dark" \
 	   "${HOME}/.config/sway/switcher"
