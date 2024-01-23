@@ -8,7 +8,6 @@ source tty.sh
 
 repo_paths=(
     "${HOME}/.orpheus/gnu-emacs/org"
-    "${HOME}/.orpheus/gnu-emacs/org-agenda"
     "${HOME}/.orpheus/gnu-emacs/org-roam"
 )
 
