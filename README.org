@@ -7,7 +7,7 @@
 
 This repository contains my personal collection of scripts and configuration files with symbolic links pointing from =~=.
 
-The description is structured around the custom environments I run, including a *FreeBSD* headless laptop (=tty= environment), a *Fedora* desktop with Sway (=wayland= environment/), and a *Debian* desktop with Dwm (=xorg= environment). It is worth noting that the =TTY= tools are employed across all environments.
+The description is structured around the custom environments I run, including a *FreeBSD* headless laptop (=tty= environment), a *Fedora* desktop with Sway (=wayland= environment), and a *Debian* desktop with Dwm (=xorg= environment). It is worth noting that the TTY tools are employed across all environments.
 
 **** Table of contents                                             :TOC_4:
   - [[#requirements][Requirements]]
@@ -45,7 +45,11 @@ Before using my dotfiles, change the personal environment values in =tty/.bash_p
 ** Usage
 *** Automating symbolic links
 
-To automate the process of creating symbolic links from the repository files to their respective locations, use the following commands in the dotfiles' root directory:
+To automate the process of creating symbolic links from the repository files to their respective locations, use one of the following commands in the dotfiles' /root directory/.
+
+#+begin_quote
+ℹ️ The TTY environment is automatically installed when choosing any of the graphical environment options.
+#+end_quote
 
 **** TTY environment
 #+begin_src shell
