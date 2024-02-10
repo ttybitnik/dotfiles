@@ -5,9 +5,9 @@
 
 #+html: <p align="center"><img src=".assets/switcher_demo.gif" /></p>
 
-This repository contains my personal collection of scripts and configuration files, stored in the standard repository path =~/.config/dotfiles/=, with symbolic links pointing from =~=.
+This repository contains my personal collection of scripts and configuration files with symbolic links pointing from =~=.
 
-The description is structured around the custom environments I run, including a *FreeBSD* headless laptop (/TTY environment/), a *Fedora* desktop with Sway (/Wayland environment/), and a *Debian* desktop with Dwm (/Xorg environment/). It is worth noting that the TTY tools are employed across all environments.
+The description is structured around the custom environments I run, including a *FreeBSD* headless laptop (=tty= environment), a *Fedora* desktop with Sway (=wayland= environment/), and a *Debian* desktop with Dwm (=xorg= environment). It is worth noting that the =TTY= tools are employed across all environments.
 
 **** Table of contents                                             :TOC_4:
   - [[#requirements][Requirements]]
@@ -30,7 +30,10 @@ The description is structured around the custom environments I run, including a 
 
 ** Requirements
 
-Before using my dotfiles, change the personal environment values in =.bash_profile= accordingly.
+- GNU Make
+- GNU Stow
+
+Before using my dotfiles, change the personal environment values in =tty/.bash_profile= accordingly.
 
 *** Suggestions
 
@@ -38,6 +41,42 @@ Before using my dotfiles, change the personal environment values in =.bash_profi
 | TTY Environment     | GNU Emacs (ditto), GNU Midnight Commander, GNU Lynx, GNU Parallel, GNU Privacy Guard, ClamAV, Tmux, Git, Htop, Powertop, Hyperfine, Tree, Nmcli, Yq, Pulsemixer, Spotify-tui |
 | Wayland Environment | Foot, Sway, Swaylock, Waybar, Rofi, Dunst, Kanshi, Gammastep, Wl-clipboard                                                                                                   |
 | Xorg Environment    | Urxvt, Suckless tools ([[https://github.com/ttybitnik/suckless][my builds]]), Redshift, Nitrogen, Sxhkd, Xclip, Xsettingsd                                                                                              |
+
+** Usage
+*** Automating symbolic links
+
+To automate the process of creating symbolic links from the repository files to their respective locations, use the following commands in the dotfiles' root directory:
+
+**** TTY environment
+#+begin_src shell
+make -B tty
+#+end_src
+
+**** Wayland environment
+#+begin_src shell
+make -B wayland
+#+end_src
+
+**** Xorg environment
+#+begin_src shell
+make -B xorg
+#+end_src
+
+*** Switcher
+
+To switch between light and dark modes globally, just run =switcher=. This custom script sends SIGHUP signals to the respective programs, making it easy to adapt to changes in ambient light without having to manually adjust each program's settings.
+
+*** Omni
+
+To automate system updates, run =omni=. This script checks for the availability of various package managers and executes the corresponding update commands. It ensures that every manager present in the enviroment update its packages.
+
+*** Hermes
+
+To display a MOTD with a log of last logins and a custom fortune, run =hermes=. This script is designed to be executed automatically in every interactive login shell through =hermes.service= and =.bash_profile=. For more details, check the script comments.
+
+*** Euterpe
+
+To streamline the music experience, just run =euterpe=. This script leverages tmux to attach to a session with windows related to managing system sound and media.
 
 ** Scripts
 
@@ -69,21 +108,22 @@ The following scripts are included in this repository:
 - crondrive: /bisync drives cron job/
 - crongit: /commit local repos cron job/
 
-The scripts are located in the following repository path: =./.local/bin/=.
+The scripts are located in the following repository path: =./tty/.local/bin/=.
 
 ** Configurations
 
 This repository includes configuration files for the following applications:
 
-- Bash
-- Readline
-- Git
-- Tmux
-- Curl
-- GNU Lynx
-- GNU Midnight Commander
-- Kmonad
-- Systemd
+- TTY environment
+  - Bash
+  - Readline
+  - Git
+  - Tmux
+  - Curl
+  - GNU Lynx
+  - GNU Midnight Commander
+  - Kmonad
+  - Systemd
 - Wayland environment
   - Foot
   - Sway
@@ -97,105 +137,7 @@ This repository includes configuration files for the following applications:
   - Xresources
   - Xsettingsd
 
-The configuration files are located in the following repository paths: =.=, =./.config/=, =./.local/share/=.
-
-** Usage
-*** Switcher
-
-To switch between light and dark modes globally, just run =switcher=. This custom script sends SIGHUP signals to the respective programs, making it easy to adapt to changes in ambient light without having to manually adjust each program's settings.
-
-*** Omni
-
-To automate system updates, run =omni=. This script checks for the availability of various package managers and executes the corresponding update commands. It ensures that every manager present in the enviroment update its packages.
-
-*** Hermes
-
-To display a MOTD with a log of last logins and a custom fortune, run =hermes=. This script is designed to be executed automatically in every interactive login shell through =hermes.service= and =.bash_profile=. For more details, check the script comments.
-
-*** Euterpe
-
-To streamline the music experience, just run =euterpe=. This script leverages tmux to attach to a session with windows related to managing system sound and media.
-
-*** Automating symbolic links
-
-To automate the process of creating symbolic links from the repository files to their respective locations, use the following script:
-
-#+begin_src shell
-  #!/usr/bin/env bash
-
-  # Automate the creation of symlinks for the dotfiles.
-  # This can overwrite previous config files.
-
-  create_symlink() {
-      local source
-      local target
-      source="${HOME}/.config/dotfiles/$1"
-      target="${HOME}/$2"
-
-      mkdir -p "$(dirname "$target")"
-      ln -sf "$source" "$target"
-      printf ">> %s\n" "$target"
-  }
-
-  tty_env() {
-      printf "\nTTY environment"
-      create_symlink ".local/bin" ".local/bin"
-      create_symlink ".local/share/mc/skins" ".local/share/mc/skins"
-      create_symlink ".config/lynx" ".config/lynx"
-      create_symlink ".config/kmonad/config.kbd" ".config/kmonad/config.kbd"
-      create_symlink ".config/tmux/tmux.conf" ".config/tmux/tmux.conf"
-      create_symlink ".bash_aliases" ".bash_aliases"
-      create_symlink ".bash_profile" ".bash_profile"
-      create_symlink ".bashrc" ".bashrc"
-      create_symlink ".inputrc" ".inputrc"
-      create_symlink ".curlrc" ".curlrc"
-      create_symlink ".gitconfig" ".gitconfig"
-      create_symlink ".config/mc/ini" ".config/mc/ini"
-      create_symlink ".config/systemd/user" ".config/systemd/user"
-  }
-
-  wayland_env() {
-      printf "\nSway environment"
-      create_symlink ".config/sway" ".config/sway"
-      create_symlink ".config/waybar" ".config/waybar"
-      create_symlink ".config/foot" ".config/foot"
-      create_symlink ".config/rofi" ".config/rofi"
-      create_symlink ".config/dunst/switcher-dark" ".config/dunst/dunstrc"
-      create_symlink ".config/swaylock" ".config/swaylock"
-  }
-
-  xorg_env() {
-      printf "\nDwm environment"
-      create_symlink ".local/share/dwm" ".local/share/dwm"
-      create_symlink ".config/sxhkd/sxhkdrc" ".config/sxhkd/sxhkdrc"
-      create_symlink ".config/xsettingsd/xsettingsd-dark.conf" ".config/xsettingsd/xsettingsd.conf"
-      create_symlink ".Xresources-dark" ".Xresources"
-      create_symlink ".config/urxvt" ".urxvt"
-  }
-
-  printf "Choose an environment:\n"
-  printf "1. Wayland - sway\n"
-  printf "2. Xorg - dwm\n"
-  printf "3. TTY only\n"
-  read -p "Enter your choice (1, 2 or 3): " choice
-
-  if [ "$choice" = "1" ]; then
-      wayland_env
-      tty_env
-  elif [ "$choice" = "2" ]; then
-      xorg_env
-      tty_env
-  elif [ "$choice" = "3" ]; then
-      tty_env
-  else
-      printf "Invalid choice. Exiting.\n" >&2
-      exit 1
-  fi
-
-  printf "\nAll symlinks created successfully!\n"
-#+end_src
-
-If you use *GNU Emacs*, you can execute the above code block with =C-c C-c=.
+The configuration files are located in the following repository paths: =./{environment}/.config/=, =./{environment}/.local/share/=.
 
 ** Miscellaneous
 
