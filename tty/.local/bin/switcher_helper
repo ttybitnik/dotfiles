@@ -12,15 +12,15 @@ if [ "$current_hour" -ge 6 ] || [ "$current_hour" -lt 18 ]; then
     printf "dark" > "$CUSTOM_SWITCHER"
     ln -sf "${HOME}/.emacs.d/local/switcher-day.el" \
        "${HOME}/.emacs.d/local/switcher.el"
-    ln -sf "${HOME}/.config/dotfiles/.config/foot/switcher-light" \
+    ln -sf "${TTY_DOTFILES}/wayland/.config/foot/switcher-light" \
        "${HOME}/.config/foot/switcher"
-    ln -sf "${HOME}/.config/dotfiles/.config/rofi/switcher-light" \
+    ln -sf "${TTY_DOTFILES}/wayland/.config/rofi/switcher-light" \
        "${HOME}/.config/rofi/switcher.rasi"
-    ln -sf "${HOME}/.config/dotfiles/.config/dunst/switcher-light" \
+    ln -sf "${TTY_DOTFILES}/wayland/.config/dunst/switcher-light" \
        "${HOME}/.config/dunst/dunstrc"
-    ln -sf "${HOME}/.config/dotfiles/.config/sway/switcher-light" \
+    ln -sf "${TTY_DOTFILES}/wayland/.config/sway/switcher-light" \
        "${HOME}/.config/sway/switcher"
-    ln -sf "${HOME}/.config/dotfiles/.config/waybar/switcher-light" \
+    ln -sf "${TTY_DOTFILES}/wayland/.config/waybar/switcher-light" \
        "${HOME}/.config/waybar/style.css"
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
 fi
@@ -29,15 +29,15 @@ if [ "$current_hour" -ge 18 ] || [ "$current_hour" -lt 6 ]; then
     printf "light" > "$CUSTOM_SWITCHER"
     ln -sf "${HOME}/.emacs.d/local/switcher-night.el" \
        "${HOME}/.emacs.d/local/switcher.el"
-    ln -sf "${HOME}/.config/dotfiles/.config/foot/switcher-dark" \
+    ln -sf "${TTY_DOTFILES}/wayland/.config/foot/switcher-dark" \
        "${HOME}/.config/foot/switcher"
-    ln -sf "${HOME}/.config/dotfiles/.config/rofi/switcher-dark" \
+    ln -sf "${TTY_DOTFILES}/wayland/.config/rofi/switcher-dark" \
        "${HOME}/.config/rofi/switcher.rasi"
-    ln -sf "${HOME}/.config/dotfiles/.config/dunst/switcher-dark" \
+    ln -sf "${TTY_DOTFILES}/wayland/.config/dunst/switcher-dark" \
        "${HOME}/.config/dunst/dunstrc"
-    ln -sf "${HOME}/.config/dotfiles/.config/sway/switcher-dark" \
+    ln -sf "${TTY_DOTFILES}/wayland/.config/sway/switcher-dark" \
        "${HOME}/.config/sway/switcher"
-    ln -sf "${HOME}/.config/dotfiles/.config/waybar/switcher-dark" \
+    ln -sf "${TTY_DOTFILES}/wayland/.config/waybar/switcher-dark" \
        "${HOME}/.config/waybar/style.css"
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 fi

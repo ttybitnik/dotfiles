@@ -1,2 +1,3 @@
-/.config/systemd/user/default.target.wants/
+/tty/.config/systemd/user/default.target.wants/
 /.assets/ttyimg_scratches.jpg
+/tty/.config/hermes/motd.log

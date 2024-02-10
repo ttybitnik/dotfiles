@@ -14,9 +14,9 @@ switcher_changes() {
 	       "the real tragedy of life is when men are afraid of the light."
 	printf "— Plato\n"
 
-	ln -sf "${HOME}/.config/dotfiles/.config/xsettingsd/xsettingsd-light.conf" \
+	ln -sf "${TTY_DOTFILES}/xorg/.config/xsettingsd/xsettingsd-light.conf" \
 	   "${HOME}/.config/xsettingsd/xsettingsd.conf"
-	ln -sf "${HOME}/.config/dotfiles/.Xresources-light" \
+	ln -sf "${TTY_DOTFILES}/xorg/.Xresources-light" \
 	   "${HOME}/.Xresources"
 	ln -sf "${HOME}/.emacs.d/local/switcher-day.el" \
 	   "${HOME}/.emacs.d/local/switcher.el"
@@ -28,9 +28,9 @@ switcher_changes() {
 	       "night her shadowy offspring."
 	printf "— John Milton\n"
 
-	ln -sf "${HOME}/.config/dotfiles/.config/xsettingsd/xsettingsd-dark.conf" \
+	ln -sf "${TTY_DOTFILES}/xorg/.config/xsettingsd/xsettingsd-dark.conf" \
 	   "${HOME}/.config/xsettingsd/xsettingsd.conf"
-	ln -sf "${HOME}/.config/dotfiles/.Xresources-dark" \
+	ln -sf "${TTY_DOTFILES}/xorg/.Xresources-dark" \
 	   "${HOME}/.Xresources"
 	ln -sf "${HOME}/.emacs.d/local/switcher-night.el" \
 	   "${HOME}/.emacs.d/local/switcher.el"
@@ -46,7 +46,7 @@ switcher_reload() {
     killall -HUP xsettingsd
     killall -HUP urxvt
     killall -USR1 st
-    emacsclient  --eval "(config-reload)" 1> /dev/null &    
+    emacsclient  --eval "(config-reload)" 1> /dev/null &
 }
 
 main() {

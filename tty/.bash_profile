@@ -10,7 +10,7 @@ fi
 #===============================================================================
 # Personal environment
 #-------------------------------------------------------------------------------
-export TTY_DOTFILES="${HOME}/.config/dotfiles"
+export TTY_DOTFILES="${HOME}/.orpheus/projects/dotfiles"
 export TTY_SCRIPTS="${HOME}/.local/bin"
 export TTY_GITHUB="${HOME}/.orpheus/projects"
 export TTY_WALLPAPER="${HOME}/Pictures/Wallpapers"
@@ -52,7 +52,7 @@ fi
 #-------------------------------------------------------------------------------
 # Custom environment
 #-------------------------------------------------------------------------------
-export CUSTOM_HERMES="${TTY_DOTFILES}/.config/hermes/motd.log"
+export CUSTOM_HERMES="${TTY_DOTFILES}/tty/.config/hermes/motd.log"
 export CUSTOM_SWITCHER="${TTY_DOTFILES}/.switcher_state"
 
 case "$OSTYPE" in
