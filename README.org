@@ -37,15 +37,15 @@ Before using my dotfiles, change the personal environment values in =tty/.bash_p
 
 *** Suggestions
 
-| General             | GNU Emacs ([[https://github.com/ttybitnik/emacs.d][my config]]), GNU Image Manipulation Program, Ffmpeg, Pandoc, Imv, Fzf, Ytfzf, Yt-dlp, Shotcut, Mpv, Nautilus                                                       |
-| TTY Environment     | GNU Emacs (ditto), GNU Midnight Commander, GNU Lynx, GNU Parallel, GNU Privacy Guard, ClamAV, Tmux, Git, Htop, Powertop, Hyperfine, Tree, Nmcli, Yq, Pulsemixer, Spotify-tui |
-| Wayland Environment | Foot, Sway, Swaylock, Waybar, Rofi, Dunst, Kanshi, Gammastep, Wl-clipboard                                                                                                   |
-| Xorg Environment    | Urxvt, Suckless tools ([[https://github.com/ttybitnik/suckless][my builds]]), Redshift, Nitrogen, Sxhkd, Xclip, Xsettingsd                                                                                              |
+| General             | GNU Emacs ([[https://github.com/ttybitnik/emacs.d][my config]]), GNU Image Manipulation Program, Ffmpeg, Pandoc, Imv, Fzf, Ytfzf, Yt-dlp, Shotcut, Mpv, Nautilus                                                                           |
+| TTY Environment     | GNU Emacs (ditto), GNU Midnight Commander, GNU Lynx, GNU Parallel, GNU Privacy Guard, GNU Stow, GNU Make, ClamAV, Tmux, Git, Htop, Powertop, Hyperfine, Tree, Nmcli, Yq, Pulsemixer, Spotify-tui |
+| Wayland Environment | Foot, Sway, Swaylock, Waybar, Rofi, Dunst, Kanshi, Gammastep, Wl-clipboard                                                                                                                       |
+| Xorg Environment    | Urxvt, Suckless tools ([[https://github.com/ttybitnik/suckless][my builds]]), Redshift, Nitrogen, Sxhkd, Xclip, Xsettingsd                                                                                                                  |
 
 ** Usage
 *** Automating symbolic links
 
-To automate the process of creating symbolic links from the repository files to their respective locations, use one of the following commands in the dotfiles' /root directory/.
+To automate the process of creating symbolic links from the repository files to their respective locations, use one of the following commands in the /dotfiles' root directory/.
 
 #+begin_quote
 ℹ️ The TTY environment is automatically installed when choosing any of the graphical environment options.
@@ -53,17 +53,17 @@ To automate the process of creating symbolic links from the repository files to 
 
 **** TTY environment
 #+begin_src shell
-make -B tty
+  make tty
 #+end_src
 
 **** Wayland environment
 #+begin_src shell
-make -B wayland
+  make wayland
 #+end_src
 
 **** Xorg environment
 #+begin_src shell
-make -B xorg
+  make xorg
 #+end_src
 
 *** Switcher
