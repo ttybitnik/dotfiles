@@ -5,7 +5,8 @@ Description=Switcher theme mode next session
 Type=oneshot
 RemainAfterExit=true
 Environment="TTY_DOTFILES=%h/.orpheus/projects/dotfiles"
-ExecStart=${TTY_DOTFILES}/tty/.local/bin/switcher_helper
+Environment="CUSTOM_SWITCHER=%h/.orpheus/projects/dotfiles/.switcher_state"
+ExecStart=%h/.orpheus/projects/dotfiles/tty/.local/bin/switcher_helper
 
 [Install]
 WantedBy=default.target
