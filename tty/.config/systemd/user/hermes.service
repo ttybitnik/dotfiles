@@ -4,8 +4,9 @@ Description=Hermes refresh info and MOTD
 [Service]
 Type=oneshot
 RemainAfterExit=true
-ExecStop=%h/.config/dotfiles/.local/bin/hermes
-StandardOutput=truncate:%h/.config/dotfiles/.config/hermes/motd.log
+Environment="TTY_DOTFILES=%h/.orpheus/projects/dotfiles"
+ExecStop=${TTY_DOTFILES}/tty/.local/bin/hermes
+StandardOutput=truncate:${TTY_DOTFILES}/tty/.config/hermes/motd.log
 
 [Install]
 WantedBy=default.target

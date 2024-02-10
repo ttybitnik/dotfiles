@@ -1,10 +1,11 @@
 [Unit]
-Description=Switcher light mode next session
+Description=Switcher theme mode next session
 
 [Service]
 Type=oneshot
 RemainAfterExit=true
-ExecStart=%h/.config/dotfiles/.local/bin/switcher_helper
+Environment="TTY_DOTFILES=%h/.orpheus/projects/dotfiles"
+ExecStart=${TTY_DOTFILES}/tty/.local/bin/switcher_helper
 
 [Install]
 WantedBy=default.target
