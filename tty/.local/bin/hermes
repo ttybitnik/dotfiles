@@ -4,7 +4,9 @@
 #   Required by:
 #     ~/.config/systemd/user/hermes.service
 
-cat "$(dirname "${CUSTOM_HERMES}")/logo"
+readonly MOTD="$CUSTOM_HERMES"
+
+cat "$(dirname "${MOTD}")/logo"
 printf "@%s\n\n" "$HOSTNAME"
 printf "Last logins:\n"
 lastlog -t 30 \
