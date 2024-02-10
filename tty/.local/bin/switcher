@@ -3,8 +3,10 @@
 # Switch globally between dark/light mode.
 
 readonly STATE_FILE="$CUSTOM_SWITCHER"
+readonly TTY_DOTFILES="$TTY_DOTFILES"
 
 toggle=$(cat "$STATE_FILE" 2>/dev/null)
+no_reload=false
 
 switcher_changes() {
     if [[ "$toggle" == dark ]]; then
@@ -71,10 +73,17 @@ main() {
 	toggle=light
     fi
 
+    if [ "$1" = "-nr" ]; then
+	no_reload=true
+    fi
+
     switcher_changes
+
+    if [[ "$no_reload" = false ]]; then
     switcher_reload
+    fi
 
     printf "%s" "$toggle" > "$STATE_FILE"
 }
 
-main
+main "$@"
