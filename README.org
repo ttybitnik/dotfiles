@@ -109,7 +109,7 @@ The configuration files are located in the following repository paths: =./{envir
 ** Usage
 *** Symbolic links
 
-To automate the process of creating symbolic links from the repository files to their respective locations, use one of the following commands in the /dotfiles' root directory/ =.=.
+To automate the process of creating symbolic links from the repository files to their respective locations, use one of the following commands in the /dotfiles' root directory/ =.=:
 
 #+begin_quote
 ℹ️ The TTY environment is automatically installed when choosing any of the graphical environment options.
