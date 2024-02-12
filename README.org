@@ -104,7 +104,7 @@ This repository includes configuration files for the following applications:
   - Xresources
   - Xsettingsd
 
-The configuration files are located in the following repository paths: =./{environment}/.config/=, =./{environment}/.local/share/=.
+The configuration files are located in the following repository paths: =./${environment}/.config/=, =./${environment}/.local/share/=.
 
 ** Usage
 *** Symbolic links
