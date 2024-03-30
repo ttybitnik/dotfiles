@@ -38,7 +38,7 @@ The description is structured around the custom environments I run, including a 
 
 *** Suggestions
 
-| General             | GNU Emacs ([[https://github.com/ttybitnik/emacs.d][my config]]), GNU Image Manipulation Program, Ffmpeg, Pandoc, Imv, Fzf, Ytfzf, Yt-dlp, Shotcut, Mpv, Nautilus                                                                           |
+| General             | GNU Emacs ([[https://github.com/ttybitnik/emacs.d][my config]]), GNU Image Manipulation Program, Inkscape, Ffmpeg, Pandoc, Imv, Fzf, Ytfzf, Yt-dlp, Shotcut, Mpv, Nautilus                                                                 |
 | TTY Environment     | GNU Emacs (ditto), GNU Midnight Commander, GNU Lynx, GNU Parallel, GNU Privacy Guard, GNU Stow, GNU Make, ClamAV, Tmux, Git, Htop, Powertop, Hyperfine, Tree, Nmcli, Yq, Pulsemixer, Spotify-tui |
 | Wayland Environment | Foot, Sway, Swaylock, Waybar, Rofi, Dunst, Kanshi, Gammastep, Wl-clipboard                                                                                                                       |
 | Xorg Environment    | Urxvt, Suckless tools ([[https://github.com/ttybitnik/suckless][my builds]]), Redshift, Nitrogen, Sxhkd, Xclip, Xsettingsd                                                                                                                  |
