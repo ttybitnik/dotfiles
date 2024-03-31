@@ -1,15 +1,41 @@
 #!/usr/bin/env bash
 
 # Wrapper to run  EOD (end of day) scripts.
+#   Dependencies:
+#     ~/.local/bin/ttylog
 
-printf "*****************\n Running omni... \n*****************\n"
-omni
+print_align_asterisk_box() {
+    local margin=30
+    local str="$1"
+    local str_len=${#str}
+    local str_difference=$(( margin - str_len ))
+    local str_align=$(( (str_difference / 2) - 1 )) # 1=initial border asterisk
+    local str_remainder=$(( str_difference % 2 ))
 
-printf "\n********************\n Running cronbib... \n********************\n"
-cronbib
+    if (( str_remainder == 0 )); then
+	printf "%*s\n" "$margin" '*' | tr " " "*"
+        printf "*%*s%s%*s*\n" \
+	       "$str_align" '' \
+	       "$str" "$str_align" ''
+	printf "%*s\n" "$margin" '*' | tr " " "*"
+    else
+	printf "%*s\n" "$(( margin + str_remainder ))" '*' | tr " " "*"
+        printf "*%*s%s%*s*\n" \
+	       "$(( str_align + str_remainder))" '' \
+	       "$str" \
+	       "$(( str_align + str_remainder))" ''
+	printf "%*s\n" "$(( margin + str_remainder ))" '*' | tr " " "*"
+    fi
+}
 
-printf "\n********************\n Running crongit... \n********************\n"
-crongit
+print_align_asterisk_box "Running omni..."
+ttylog omni
 
-printf "\n*********************\n Running crondrive... \n*********************\n"
-crondrive
+print_align_asterisk_box "Running cronbib..."
+ttylog cronbib
+
+print_align_asterisk_box "Running crongit..."
+ttylog crongit
+
+print_align_asterisk_box "Running crondrive..."
+ttylog crondrive
