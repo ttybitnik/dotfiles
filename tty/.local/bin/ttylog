@@ -3,6 +3,7 @@
 # Standard for logging commands (ISO 8601 and POSIX).
 
 timestamp=$(date +%Y%m%dT%H%M%S)
+nodename=$(uname -n)
 
 { printf ">> %s\n" "$*"; time -p "$@"; } 2>&1 \
-    | tee "${HOME}/.orpheus/ttylogs/${timestamp}_$1.log"
+    | tee "${HOME}/.orpheus/ttylogs/${nodename}_${timestamp}_$1.log"
