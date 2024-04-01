@@ -9,22 +9,22 @@ print_align_asterisk_box() {
     local str="$1"
     local str_len=${#str}
     local str_difference=$(( margin - str_len ))
-    local str_align=$(( (str_difference / 2) - 1 )) # 1=initial border asterisk
+    local str_offset=$(( str_difference / 2 ))
     local str_remainder=$(( str_difference % 2 ))
 
     if (( str_remainder == 0 )); then
-	printf "%*s\n" "$margin" '*' | tr " " "*"
-        printf "*%*s%s%*s*\n" \
-	       "$str_align" '' \
-	       "$str" "$str_align" ''
-	printf "%*s\n" "$margin" '*' | tr " " "*"
+	printf "%*s\n" "$margin" '=' | tr " " "="
+        printf "%*s%s%*s\n" \
+	       "$str_offset" '' \
+	       "$str" "$str_offset" ''
+	printf "%*s\n" "$margin" '=' | tr " " "="
     else
-	printf "%*s\n" "$(( margin + str_remainder ))" '*' | tr " " "*"
-        printf "*%*s%s%*s*\n" \
-	       "$(( str_align + str_remainder))" '' \
+	printf "%*s\n" "$(( margin + str_remainder ))" '=' | tr " " "="
+        printf "%*s%s%*s\n" \
+	       "$(( str_offset + str_remainder))" '' \
 	       "$str" \
-	       "$(( str_align + str_remainder))" ''
-	printf "%*s\n" "$(( margin + str_remainder ))" '*' | tr " " "*"
+	       "$(( str_offset + str_remainder))" ''
+	printf "%*s\n" "$(( margin + str_remainder ))" '=' | tr " " "="
     fi
 }
 
