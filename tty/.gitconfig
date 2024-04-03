@@ -14,11 +14,15 @@
 	whitespace = fix
 
 [alias]
-	s = status -s
+	s = status --short
 	a = add
+	b = branch
+	bl = blame
+	ap = add --patch
+	fp = format-patch
 	co = checkout
-	ca = commit -am
-	cm = commit -m
+	ca = commit --all --message
+	cm = commit --message
 	dif = diff
 	difc = diff --color-words
 	lp  = log --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=rfc
