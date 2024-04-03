@@ -33,3 +33,24 @@ tty::run_print() {
     printf "\n>> %s \n\n" "$*"
     "$@"
 }
+
+#===============================================================================
+# Check command exit code, and send a desktop notification and exit in case of
+# errors. To grab the exit code, use "err=$?" after the command to be checked.
+#-------------------------------------------------------------------------------
+# Arguments:
+#   Command executed
+#   Exit code variable to check (integer)
+#   Context error message
+# Outputs:
+#   None, only sends a desktop notification
+# Returns:
+#   Non-zero due erratic behaviour
+#===============================================================================
+tty::notify_fatal() {
+    if [ "$2" -ne 0 ]; then
+    notify-send --urgency=critical "$(basename "$1")" \
+		"Error. Execution failed: $3"
+    exit 1
+    fi
+}
