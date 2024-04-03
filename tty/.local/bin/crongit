@@ -14,6 +14,17 @@ repo_paths=(
 for p in "${repo_paths[@]}"; do
     tty::run_print cd "$p" 2> /dev/null \
 	|| tty::fatal "Error: Unable to change directory to $p"
-    tty::run_print git add -A
-    tty::run_print git commit -m "Update on $(LANG=C date)"
+
+    if [ -z "$(git status --porcelain)" ]; then
+	printf "Nothing to commit, working tree clean\n"
+	continue
+    else
+	tty::run_print git add -A
+	err=$?
+	tty::notify_fatal "$0" "$err" "git add $p"
+
+	tty::run_print git commit -m "Update on $(LANG=C date)"
+	err=$?
+	tty::notify_fatal "$0" "$err" "git commit $p"
+    fi
 done

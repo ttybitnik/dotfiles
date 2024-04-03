@@ -1,10 +1,20 @@
 #!/usr/bin/env bash
 
 # Standard for logging commands (ISO 8601 and POSIX).
+#   Dependencies:
+#     ~/.local/bin/tty.sh
+
+source tty.sh
 
 timestamp=$(date +%Y%m%dT%H%M%S)
 nodename=$(uname -n)
 logfile="${HOME}/.orpheus/ttylogs/${nodename}_${timestamp}_$1.log"
 
-{ printf ">> %s\n" "$*"; time -p "$@"; } 2>&1 \
-    | tee "$logfile" && chmod 400 "$logfile"
+{
+    printf ">> %s\n" "$*"
+    time -p "$@"
+    err=$?
+    tty::notify_fatal "ttylog $1" "$err" "$(basename "$logfile")"
+} 2>&1 | tee "$logfile" && chmod 400 "$logfile"
+
+notify-send "ttylog $1" "Execution complete: $(basename "$logfile")"

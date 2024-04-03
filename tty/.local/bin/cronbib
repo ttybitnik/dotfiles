@@ -11,7 +11,12 @@ readonly CALIBREGUI_PID="GUIPool"
 
 calibretobib () {
     tty::run_print calibredb catalog "$BIBFILE" --entry-type=mixed
+    err=$?
+    tty::notify_fatal "$0" "$err" "calibredb"
+
     tty::run_print sed -i 's/{"}/\\"/g' "$BIBFILE"
+    err=$?
+    tty::notify_fatal "$0" "$err" "sed"
 }
 
 if pgrep -x "$CALIBREGUI_PID" > /dev/null; then
