@@ -14,7 +14,7 @@
 # Returns:
 #   Non-zero due erratic behaviour
 #===============================================================================
-tty::err() {
+tty::fatal() {
     printf "%s\n" "$@" >&2
     exit 1
 }

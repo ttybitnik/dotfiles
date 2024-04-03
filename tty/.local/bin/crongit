@@ -13,7 +13,7 @@ repo_paths=(
 
 for p in "${repo_paths[@]}"; do
     tty::run_print cd "$p" 2> /dev/null \
-	|| tty::err "Error: Unable to change directory to $p"
+	|| tty::fatal "Error: Unable to change directory to $p"
     tty::run_print git add -A
     tty::run_print git commit -m "Update on $(LANG=C date)"
 done
