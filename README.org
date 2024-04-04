@@ -82,8 +82,10 @@ The following scripts are included in this repository:
 - euterpe: /audio and music management/
 - ttylog: /logging for commands/
 - ttybkp: /backup naming standard/
-- ttygpg: /encryption automation/
 - ttyeod: /end of day wrapper/
+- ttygpg: /encryption automation/
+- ttymnt: /luks devices management/
+- ttypas: /env and secrets security/
 - ttyimg: /image privacy and filtering/
 - autostart: /sway/dwm autostart/
 - vpn_bar: /vpn status and city/
