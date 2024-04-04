@@ -3,15 +3,16 @@
 # Manage LUKS devices, ensuring open/close process and supporting '<key>.gpg'.
 #   Dependencies:
 #     /etc/fstab for specifying mounting options
-#     ~/.ttymnt2 for setting privately arrays with devices info
+#     ~/.ttymnt2.gpg for setting privately arrays with devices info
 #   Arrays structure:
 #     device_name device mount_point key_path(optional)
 
-readonly DEVICES_FILE="${HOME}/.ttymnt2"
+readonly DEVICES_FILE="${HOME}/.ttymnt2.gpg"
 
 action="$1"
 device_name="$2"
-device_info=$(grep "^$device_name" "$DEVICES_FILE")
+device_gpg=$(gpg --decrypt "$DEVICES_FILE")
+device_info=$(printf "%s" "$device_gpg" | grep "^$device_name")
 
 validate() {
     if [ ! -f "$DEVICES_FILE" ]; then
