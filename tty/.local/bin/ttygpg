@@ -7,9 +7,20 @@ delete_if_exist() {
     encrypted_file="$(ls "${1}.gpg")"
 
     if [ -f "$encrypted_file" ]; then
-	printf "File '%s' encrypted successfully. Remove original file?\n\n" \
-	       "$encrypted_file"
-	rm -i "$1"
+	printf "File '%s' encrypted successfully.\n" "$encrypted_file"
+	read -r -p "Remove original file using shred (y/n)?" response
+	response=$(printf "%s" "$response" | tr '[:upper:]' '[:lower:]')
+
+	while [[ "$response" != "y" && "$response" != "n" ]]; do
+	    read -r -p "Invalid input. Remove original file (y/n)?" response
+	    response=$(printf "%s" "$response" | tr '[:upper:]' '[:lower:]')
+	done
+
+	if [ "$response" = "y" ]; then
+	    shred -z -u -v "$1"
+	else
+	    exit 0
+	fi
     else
 	printf "Error. Original file does not exist.\n" >&2
 	exit 1
