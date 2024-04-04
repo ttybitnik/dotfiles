@@ -30,6 +30,7 @@
 	lpn = log --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %s %Cgreen(%cr)%Creset - %C(magenta)%cn%Creset' --abbrev-commit --date=relative -n
 	lpd = log --pretty=format:'%Cgreen%cd%Creset %Cred%h%Creset %C(yellow)%d%Creset %s' --abbrev-commit --date=short
 	lg = log --grep
+	lf = log --follow --patch
 	lt = log --graph --oneline --decorate --all
 
 [url "git@github.com:"]
