@@ -16,9 +16,9 @@
 [alias]
 	s = status --short
 	a = add
+	ah = add --patch
 	b = branch
 	bl = blame
-	ap = add --patch
 	fp = format-patch
 	co = checkout
 	ca = commit --all --message
