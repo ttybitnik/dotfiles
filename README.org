@@ -57,6 +57,7 @@ This repository includes configuration files for the following applications:
   - GNU Midnight Commander
   - Kmonad
   - Systemd
+  - Xdg
 - Wayland environment
   - Foot
   - Sway
