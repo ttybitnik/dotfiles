@@ -24,6 +24,7 @@
 	ca = commit --all --message
 	cm = commit --message
 	dif = diff
+	difs = diff --staged
 	difc = diff --color-words
 	lp  = log --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %s %Cgreen(%cd)%Creset' --abbrev-commit --date=rfc
 	lpu = log --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %s %Cgreen(%cr)%Creset - %C(magenta)%cn%Creset' --abbrev-commit --date=relative
