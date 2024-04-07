@@ -45,11 +45,19 @@
 	pushInsteadOf = "gitlab:"
 	pushInsteadOf = "git://gitlab.com/"
 
+[url "git@git.sr.ht:~"]
+	insteadOf = "sh:"
+	insteadOf = "sr:"
+	insteadOf = "ht:"
+	pushInsteadOf = "sr.ht:"
+	pushInsteadOf = "git://git.sr.ht/"
+
 [sendemail]
 	annotate = yes
+
+[format]
+	signOff = yes
 
 # Personal
 [include]
 	path = /home/ttybitnik/.gitconfig2
-[format]
-	signOff = yes
