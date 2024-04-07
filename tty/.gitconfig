@@ -5,6 +5,7 @@
 	keepBackup = true
 
 [core]
+	editor = emacsclient -c -a emacs
 	pager = less -iXFR
 
 [color]
