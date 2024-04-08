@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Naming standard for backups.
+# Naming standard for backups (ISO 8601).
 
 sanitize_input() {
     printf "%s" "${1// /_}" \
@@ -21,8 +21,18 @@ prompt_input() {
 
 main() {
     prompt_input
+    local filename
+    local extensions
+    local modification_epoch
+    local modification_timestamp
     local new_filename
-    new_filename="${domain}_${scope}_$(date +%Y_%m_%d)_$1"
+
+    filename=$(basename -- "$1")
+    extensions="${filename#*.}"
+    modification_epoch=$(stat -c %Y "$1")
+    modification_timestamp=$(date -d "@$modification_epoch" +"%Y%m%dT%H%M%S")
+
+    new_filename="${domain}_${scope}_${modification_timestamp}.${extensions}"
 
     mv "$1" "$new_filename"
     printf "\n>> %s \n\n" "$new_filename"
