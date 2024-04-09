@@ -14,12 +14,6 @@ set $menu $rofi_cmd -theme switcher -show combi \
 ### Output configuration ###
 output * bg "$(find $TTY_WALLPAPER -type f | shuf -n 1)" fill
 
-### Idle configuration ###
-# exec swayidle -w \
-#      timeout 300 'swaylock -f -c 000000' \
-#      timeout 660 'swaymsg "output * dpms off"' \
-#      resume 'swaymsg "output * dpms on"'
-
 ### Input configuration ###
 input type:keyboard {
     xkb_layout us
