@@ -24,7 +24,7 @@ switcher_changes() {
 	ln -sf "${DOTFILES}/wayland/.config/rofi/switcher-light" \
 	   "${HOME}/.config/rofi/switcher.rasi"
 	ln -sf "${DOTFILES}/wayland/.config/dunst/switcher-light" \
-	   "${HOME}/.config/dunst/dunstrc"
+	   "${HOME}/.config/dunst/dunstrc.d/80-switcher.conf"
 	ln -sf "${DOTFILES}/wayland/.config/sway/switcher-light" \
 	   "${HOME}/.config/sway/switcher"
 	ln -sf "${DOTFILES}/wayland/.config/waybar/switcher-light" \
@@ -47,7 +47,7 @@ switcher_changes() {
 	ln -sf "${DOTFILES}/wayland/.config/rofi/switcher-dark" \
 	   "${HOME}/.config/rofi/switcher.rasi"
 	ln -sf "${DOTFILES}/wayland/.config/dunst/switcher-dark" \
-	   "${HOME}/.config/dunst/dunstrc"
+	   "${HOME}/.config/dunst/dunstrc.d/80-switcher.conf"
 	ln -sf "${DOTFILES}/wayland/.config/sway/switcher-dark" \
 	   "${HOME}/.config/sway/switcher"
 	ln -sf "${DOTFILES}/wayland/.config/waybar/switcher-dark" \

@@ -1,22 +1,6 @@
 [global]
-    format = "<b>%s</b>\n%b"
-    sort = yes
-    indicate_hidden = yes
-    alignment = center
-    word_wrap = yes
-    ignore_newline = no
-    transparency = 0
-    monitor = 0
-    follow = mouse
-    sticky_history = yes
-    line_height = 0
-    separator_height = 2
-    padding = 8
-    horizontal_padding = 8
-    origin = top-right
-    offset = 30x30
     separator_color = "#a89984"
-    
+
 [urgency_low]
     background = "#32302f"
     foreground = "#ebdbb2"

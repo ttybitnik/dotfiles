@@ -16,10 +16,9 @@ output * bg "$(find $TTY_WALLPAPER -type f | shuf -n 1)" fill
 
 ### Idle configuration ###
 # exec swayidle -w \
-#        timeout 300 'swaylock -f -c 000000' \
-#        timeout 600 'swaymsg "output * power off"' \
-#	 resume 'swaymsg "output * power on"' \
-#        before-sleep 'swaylock -f -c 000000'
+#      timeout 300 'swaylock -f -c 000000' \
+#      timeout 660 'swaymsg "output * dpms off"' \
+#      resume 'swaymsg "output * dpms on"'
 
 ### Input configuration ###
 input type:keyboard {
@@ -38,6 +37,12 @@ bindsym $mod+Control+r reload
 bindsym $mod+Control+q exec swaynag -t warning \
   -m 'You pressed the exit shortcut. Do you really want to exit sway? \
 This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+
+# Dunst:
+
+bindsym $mod+period exec dunstctl history-pop
+bindsym $mod+comma exec dunstctl close-all
+bindsym $mod+dead_grave exec dunstctl context
 
 # Moving around:
 bindsym $mod+$left focus left
