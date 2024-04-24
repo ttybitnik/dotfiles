@@ -54,9 +54,9 @@
     },
     "clock": {
 	// "timezone": "America/New_York",
-	"format": "{: %a, %d/%m/%y  %H:%M}",
+	"format": " {:%a, %d/%m/%y  %H:%M}",
 	"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-	"format-alt": "{: %H:%M}",
+	"format-alt": " {:%H:%M}",
     },
     "cpu": {
 	"min-length": 6,
@@ -138,7 +138,7 @@
 	"min-length": 15,
 	"interval": 1,
 	"exec": "$HOME/.local/bin/net_bar"
-	
+
     },
     "custom/weather": {
 	"min-length": 7,
