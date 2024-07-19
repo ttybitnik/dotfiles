@@ -2,10 +2,10 @@
 
 # Display the vpn status.
 
-vpncity="$(nordvpn status | grep "City" | sed "s/.*: //")"
+vpn="$(nmcli connection show --active | grep "vpn" | awk '{print $1, $2}')"
 
-if [[ -n "$vpncity" ]]; then
-    printf " %s" "$vpncity"
+if [[ -n "$vpn" ]]; then
+    printf " %s" "$vpn"
 else
     printf " Unsafe"
     if pgrep -x "qbittorrent" > /dev/null; then
