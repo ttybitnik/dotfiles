@@ -128,6 +128,7 @@ gaps outer 4
 
 ### Startup scripting ###
 # exec ~/.config/sway/autostart.sh
+exec "protonvpn-app;"
 exec "gpg-agent --daemon;"
 exec "gammastep -l $TTY_GEO;"
 
