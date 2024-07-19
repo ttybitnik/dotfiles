@@ -12,7 +12,7 @@ remotes[prometheus]="${HOME}/.prometheus/"
 
 for drive in "${!remotes[@]}"; do
     path="${remotes[$drive]}"
-    tty::run_print rclone bisync "$path" "${drive}:" --check-access --verbose \
+    tty::run_print rclone sync "$path" "${drive}:" --verbose \
 		   --skip-links
     err=$?
     tty::notify_fatal "$0" "$err" "rclone $drive"
