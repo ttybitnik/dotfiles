@@ -7,8 +7,8 @@
 source tty.sh
 
 repo_paths=(
-    "${HOME}/.orpheus/gnu-emacs/org"
-    "${HOME}/.orpheus/gnu-emacs/org-roam"
+    "${HOME}/Remote/orpheus/gnu-emacs/org"
+    "${HOME}/Remote/orpheus/gnu-emacs/org-roam"
 )
 
 for p in "${repo_paths[@]}"; do

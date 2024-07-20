@@ -10,9 +10,9 @@ fi
 #===============================================================================
 # Personal environment
 #-------------------------------------------------------------------------------
-export TTY_DOTFILES="${HOME}/.orpheus/projects/dotfiles"
+export TTY_DOTFILES="${HOME}/Remote/orpheus/git/dotfiles"
 export TTY_SCRIPTS="${HOME}/.local/bin"
-export TTY_GIT="${HOME}/.orpheus/projects"
+export TTY_GIT="${HOME}/Remote/orpheus/git"
 export TTY_WALLPAPER="${HOME}/Pictures/Wallpapers"
 export TTY_MOTTO="If there's a shell, there's a way."
 export TTY_CITY="Juiz de Fora"

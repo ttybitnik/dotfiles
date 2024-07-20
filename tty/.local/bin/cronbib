@@ -6,7 +6,7 @@
 
 source tty.sh
 
-readonly BIBFILE="${HOME}/.prometheus/Bibliography/general.bib"
+readonly BIBFILE="${HOME}/Remote/prometheus/bibliography/general.bib"
 readonly CALIBREGUI_PID="GUIPool"
 
 calibretobib () {

@@ -7,8 +7,8 @@
 source tty.sh
 
 declare -A remotes
-remotes[orpheus]="${HOME}/.orpheus/"
-remotes[prometheus]="${HOME}/.prometheus/"
+remotes[orpheus]="${HOME}/Remote/orpheus/"
+remotes[prometheus]="${HOME}/Remote/prometheus/"
 
 for drive in "${!remotes[@]}"; do
     path="${remotes[$drive]}"

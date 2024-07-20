@@ -8,7 +8,7 @@ source tty.sh
 
 timestamp=$(date +%Y%m%dT%H%M%S)
 nodename=$(uname -n)
-logfile="${HOME}/.orpheus/ttylogs/${nodename}_${timestamp}_$1.log"
+logfile="${HOME}/Remote/orpheus/ttylogs/${nodename}_${timestamp}_$1.log"
 
 {
     printf ">> %s\n" "$*"
