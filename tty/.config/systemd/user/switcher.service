@@ -4,9 +4,9 @@ Description=Switcher theme mode next session
 [Service]
 Type=oneshot
 RemainAfterExit=true
-Environment="TTY_DOTFILES=%h/Remote/orpheus/projects/dotfiles"
-Environment="CUSTOM_SWITCHER=%h/Remote/orpheus/projects/dotfiles/.switcher_state"
-ExecStart=%h/Remote/orpheus/projects/dotfiles/tty/.local/bin/switcher_helper
+Environment="TTY_DOTFILES=%h/Remote/orpheus/git/dotfiles"
+Environment="CUSTOM_SWITCHER=%h/Remote/orpheus/git/dotfiles/.switcher_state"
+ExecStart=%h/Remote/orpheus/git/dotfiles/tty/.local/bin/switcher_helper
 
 [Install]
 WantedBy=default.target
