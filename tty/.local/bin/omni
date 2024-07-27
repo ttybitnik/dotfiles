@@ -57,6 +57,12 @@ run_if_exists "winget" "winget upgrade --all"
 # Flatpak
 run_if_exists "flatpak" "flatpak update -y"
 
+# Snap
+run_if_exists "snap" "snap refresh"
+
+#===============================================================================
+#			  Programming Package Managers
+#===============================================================================
 # Pip
 # run_if_exists "pip" "pip list --outdated --format=json | jq '.[].name' | xargs
 # -n1 pip install -U"
