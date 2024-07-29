@@ -19,6 +19,8 @@ switcher_changes() {
 
 	ln -sf "${HOME}/.emacs.d/local/switcher-day.el" \
 	   "${HOME}/.emacs.d/local/switcher.el"
+	ln -sf "${DOTFILES}/wayland/.config/gtk-3.0/switcher-light" \
+	   "${HOME}/.config/gtk-3.0/settings.ini"
 	ln -sf "${DOTFILES}/wayland/.config/foot/switcher-light" \
 	   "${HOME}/.config/foot/switcher"
 	ln -sf "${DOTFILES}/wayland/.config/rofi/switcher-light" \
@@ -42,6 +44,8 @@ switcher_changes() {
 
 	ln -sf "${HOME}/.emacs.d/local/switcher-night.el" \
 	   "${HOME}/.emacs.d/local/switcher.el"
+	ln -sf "${DOTFILES}/wayland/.config/gtk-3.0/switcher-dark" \
+	   "${HOME}/.config/gtk-3.0/settings.ini"
 	ln -sf "${DOTFILES}/wayland/.config/foot/switcher-dark" \
 	   "${HOME}/.config/foot/switcher"
 	ln -sf "${DOTFILES}/wayland/.config/rofi/switcher-dark" \

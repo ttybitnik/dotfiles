@@ -65,6 +65,7 @@ This repository includes configuration files for the following applications:
   - Swaylock
   - Rofi
   - Dunst
+  - GTK
 - Xorg environment
   - Urxvt
   - Sxhkd
