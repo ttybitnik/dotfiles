@@ -66,16 +66,16 @@ run_if_exists "snap" "snap refresh"
 # Pip
 # run_if_exists "pip" "pip list --outdated --format=json | jq '.[].name' | xargs
 # -n1 pip install -U"
-run_if_exists "pip" "pip install pyright --upgrade"
+# run_if_exists "pip" "pip install pyright --upgrade"
 
 # Go
 # run_if_exists "go" "go get -u all"
-run_if_exists "go" "go install golang.org/x/tools/gopls@latest"
-run_if_exists "go" "go install golang.org/x/tools/cmd/goimports@latest"
-run_if_exists "go" "go install github.com/sqls-server/sqls@latest"
-run_if_exists "go" "go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest"
-run_if_exists "go" "go install github.com/goreleaser/goreleaser@latest"
-run_if_exists "go" "go install github.com/ttybitnik/diego@latest"
+# run_if_exists "go" "go install golang.org/x/tools/gopls@latest"
+# run_if_exists "go" "go install golang.org/x/tools/cmd/goimports@latest"
+# run_if_exists "go" "go install github.com/sqls-server/sqls@latest"
+# run_if_exists "go" "go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest"
+# run_if_exists "go" "go install github.com/goreleaser/goreleaser@latest"
+# run_if_exists "go" "go install github.com/ttybitnik/diego@latest"
 
 # Npm
 # run_if_exists "npm" "npm update -g"
