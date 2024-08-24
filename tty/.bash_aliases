@@ -34,6 +34,7 @@ alias yt='ytfzf --detach -f'
 #===============================================================================
 alias dotfiles='cd $TTY_DOTFILES'
 alias scripts='cd $TTY_SCRIPTS'
+alias repos='cd $TTY_GIT'
 alias dired='emacsclient -c -n -e "(dired-jump)"'
 alias magit='emacsclient -c -n -e "(progn (magit-status) (delete-other-windows))"'
 alias pomodoro='emacsclient -n -e "(pomodoro/ttybitnik)"'
