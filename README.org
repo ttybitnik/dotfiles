@@ -89,6 +89,7 @@ The following scripts are included in this repository:
 - ttymnt: /luks devices management/
 - ttypas: /env and secrets security/
 - ttyimg: /image privacy and filtering/
+- 0x0st: /share ephemeral files and snippets/
 - autostart: /sway/dwm autostart/
 - vpn_bar: /vpn status and city/
 - net_bar: /network status/

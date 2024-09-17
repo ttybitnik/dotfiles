@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+# Share ephemeral files and snippets through <https://0x0.st>.
+#   Dependencies:
+#     ~/.local/bin/tty.sh
+#     ~/.local/bin/ttylog
+
+source tty.sh
+
+if [[ ! -f "$1" ]]; then
+    printf "%s: wrong argument, not a file: %s.\n" \
+	   "$(basename "$0")" \
+	   "$1" >&2
+    exit 1
+fi
+
+if [ -n "$2" ]; then
+    if [[ "$2" =~ ^[1-9][0-9]{0,2}$ ]]; then
+	expiration="${2}"
+    else
+	printf "%s: wrong argument, expiration must be max 3-digit int: %s.\n" \
+	       "$(basename "$0")" \
+	       "$2" >&2
+	exit 1
+    fi
+else
+    expiration=24
+fi
+
+cmd=("curl" "-i" "-Ffile=@${1}" "-Fexpires=$expiration" "https://0x0.st")
+
+printf ">>"
+printf " %s" "${cmd[@]}"
+printf "\n"
+read -rp "Run the command above and share $1 for ${expiration}h? [y/N]: " confirm
+
+if [[ "$confirm" =~ ^[Yy]([Ee][Ss])?$ ]]; then
+    ttylog "${cmd[@]}"
+fi
