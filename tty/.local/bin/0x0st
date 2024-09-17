@@ -2,10 +2,7 @@
 
 # Share ephemeral files and snippets through <https://0x0.st>.
 #   Dependencies:
-#     ~/.local/bin/tty.sh
 #     ~/.local/bin/ttylog
-
-source tty.sh
 
 if [[ ! -f "$1" ]]; then
     printf "%s: wrong argument, not a file: %s.\n" \
