@@ -23,8 +23,6 @@ The description is structured around the custom environments I run, including a 
 
 ** Configurations
 
-This repository includes configuration files for the following applications:
-
 - TTY environment
   - Bash
   - Readline
@@ -53,8 +51,6 @@ This repository includes configuration files for the following applications:
 The configuration files are located in the following repository paths: =./${environment}/.config/=, =./${environment}/.local/share/=.
 
 ** Scripts
-
-The following scripts are included in this repository:
 
 - switcher: /global dark/light mode switcher/
 - omni: /universal update automation/
