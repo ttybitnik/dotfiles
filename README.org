@@ -21,6 +21,49 @@ The description is structured around the custom environments I run, including a 
 | Wayland Environment | Foot, Sway, Swaylock, Waybar, Rofi, Dunst, Kanshi, Gammastep, Wl-clipboard                                                                                                                       |
 | Xorg Environment    | Urxvt, Suckless tools ([[https://github.com/ttybitnik/suckless][my builds]]), Redshift, Nitrogen, Sxhkd, Xclip, Xsettingsd                                                                                                                  |
 
+** Usage
+
+Before using my dotfiles, change the personal environment values in =./tty/.bash_profile= accordingly.
+
+*** Symbolic links
+
+To automate the process of creating symbolic links from the repository files to their respective locations, use one of the following commands in the /dotfiles' root directory/ =.=:
+
+#+begin_quote
+ℹ️ The TTY environment is automatically installed when choosing any of the graphical environment options.
+#+end_quote
+
+**** TTY environment
+#+begin_src shell
+  make tty
+#+end_src
+
+**** Wayland environment
+#+begin_src shell
+  make wayland
+#+end_src
+
+**** Xorg environment
+#+begin_src shell
+  make xorg
+#+end_src
+
+*** Switcher
+
+To switch between light and dark modes globally, just run =switcher=. This custom script sends SIGHUP signals to the respective programs, making it easy to adapt to changes in ambient light without having to manually adjust each program's settings.
+
+*** Omni
+
+To automate system updates, run =omni=. This script checks for the availability of various package managers and executes the corresponding update commands. It ensures that every manager present in the enviroment update its packages.
+
+*** Hermes
+
+To display a MOTD with a log of last logins and a custom fortune, run =hermes=. This script is designed to be executed automatically in every interactive login shell through =hermes.service= and =.bash_profile=. For more details, check the script comments.
+
+*** Euterpe
+
+To streamline the music experience, just run =euterpe=. This script leverages tmux to attach to a session with windows related to managing system sound and media.
+
 ** Configurations
 
 - TTY environment
@@ -84,49 +127,6 @@ The configuration files are located in the following repository paths: =./${envi
 - crongit: /commit local repos cron job/
 
 The scripts are located in the following repository path: =./tty/.local/bin/=.
-
-** Usage
-
-Before using my dotfiles, change the personal environment values in =./tty/.bash_profile= accordingly.
-
-*** Symbolic links
-
-To automate the process of creating symbolic links from the repository files to their respective locations, use one of the following commands in the /dotfiles' root directory/ =.=:
-
-#+begin_quote
-ℹ️ The TTY environment is automatically installed when choosing any of the graphical environment options.
-#+end_quote
-
-**** TTY environment
-#+begin_src shell
-  make tty
-#+end_src
-
-**** Wayland environment
-#+begin_src shell
-  make wayland
-#+end_src
-
-**** Xorg environment
-#+begin_src shell
-  make xorg
-#+end_src
-
-*** Switcher
-
-To switch between light and dark modes globally, just run =switcher=. This custom script sends SIGHUP signals to the respective programs, making it easy to adapt to changes in ambient light without having to manually adjust each program's settings.
-
-*** Omni
-
-To automate system updates, run =omni=. This script checks for the availability of various package managers and executes the corresponding update commands. It ensures that every manager present in the enviroment update its packages.
-
-*** Hermes
-
-To display a MOTD with a log of last logins and a custom fortune, run =hermes=. This script is designed to be executed automatically in every interactive login shell through =hermes.service= and =.bash_profile=. For more details, check the script comments.
-
-*** Euterpe
-
-To streamline the music experience, just run =euterpe=. This script leverages tmux to attach to a session with windows related to managing system sound and media.
 
 ** License
 
