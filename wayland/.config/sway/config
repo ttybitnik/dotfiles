@@ -23,7 +23,8 @@ input type:keyboard {
 
 ### Key bindings ###
 # Basics:
-bindsym $mod+t exec $term
+bindsym $mod+t+Control exec $term
+bindsym $mod+t [app_id=foot_spterm] scratchpad show
 bindsym $mod+Control+c kill
 bindsym $mod+x exec $menu
 floating_modifier $mod normal
@@ -97,7 +98,8 @@ bindsym $mod+Control+b exec killall -SIGUSR1 waybar
 
 # Scratchpad:
 bindsym $mod+Control+s move scratchpad
-bindsym $mod+s scratchpad show
+bindsym $mod+s [app_id=org.mozilla.firefox] scratchpad show
+bindsym $mod+Shift+s scratchpad show
 
 # Resizing containers:
 mode "resize" {
