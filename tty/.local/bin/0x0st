@@ -24,7 +24,7 @@ else
     expiration=24
 fi
 
-cmd=("curl" "-i" "-Ffile=@${1}" "-Fexpires=$expiration" "https://0x0.st")
+cmd=("curl" "-A" "curl" "-i" "-Ffile=@${1}" "-Fexpires=$expiration" "https://0x0.st")
 
 printf ">>"
 printf " %s" "${cmd[@]}"
