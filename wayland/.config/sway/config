@@ -24,7 +24,7 @@ input type:keyboard {
 ### Key bindings ###
 # Basics:
 bindsym $mod+t+Control exec $term
-bindsym $mod+t [app_id=foot_spterm] scratchpad show
+bindsym $mod+t [con_mark=tty_spterm] scratchpad show
 bindsym $mod+Control+c kill
 bindsym $mod+x exec $menu
 floating_modifier $mod normal
@@ -141,13 +141,13 @@ exec "emacs;"
 exec "sleep 4 && swaymsg [app_id=emacs] move right, resize set 1165 px;"
 
 exec "foot -a foot_spterm -e tmux;"
-exec "sleep 2 && swaymsg [app_id=foot_spterm] move scratchpad;"
+exec "sleep 2 && swaymsg [app_id=foot_spterm] move scratchpad, mark tty_spterm;"
 exec "foot -a foot_term -e tmux;"
 exec "sleep 2 && swaymsg [app_id=foot_term] move workspace 2;"
 
 exec "firefox;"
-exec "sleep 3 && swaymsg [app_id=org.mozilla.firefox workspace=1] mark scr_frfx;"
-exec "sleep 3 && swaymsg [con_mark=scr_frfx] move container scratchpad;"
+exec "sleep 3 && swaymsg [app_id=org.mozilla.firefox workspace=1] mark tty_frfx;"
+exec "sleep 3 && swaymsg [con_mark=tty_frfx] move container scratchpad;"
 exec "sleep 5 && swaymsg [app_id=org.mozilla.firefox workspace=1] move workspace 3;"
 
 exec "sleep 5 && swaymsg [app_id=protonvpn-app] kill;"
