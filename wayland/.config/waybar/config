@@ -46,7 +46,8 @@
 	"show-empty": true,
 	"format-icons": ["", ""],
 	"tooltip": true,
-	"tooltip-format": "{app}: {title}"
+	"tooltip-format": "{app}: {title}",
+	"on-click": "swaymsg scratchpad show"
     },
     "tray": {
 	"icon-size": 12,
