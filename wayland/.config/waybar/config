@@ -128,7 +128,8 @@
 	    "default": "🎜"
 	},
 	"escape": true,
-	"exec": "$HOME/.local/bin/media_bar --player spotify 2> /dev/null"
+	"exec": "$HOME/.local/bin/media_bar --player spotify 2> /dev/null",
+	"on-click": "playerctl --player spotify play-pause"
     },
     "custom/vpn": {
 	"interval": 1,
