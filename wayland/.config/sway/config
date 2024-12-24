@@ -133,32 +133,36 @@ gaps outer 4
 exec "protonvpn-app;"
 exec "gpg-agent --daemon;"
 exec "gammastep -l $TTY_GEO;"
-
-workspace 1
-exec "foot -e tmux;"
-exec "sleep 2 && swaymsg [app_id=foot workspace=1] focus, splitv, mark tty_tmux;"
 exec "spotify;"
-exec "sleep 2 && swaymsg [class=Spotify] move container to mark tty_tmux, \
-	         move up, resize set height 300 px, splith, mark spt_md;"
+
+exec "foot -a foot_tmux -e tmux;"
+exec "sleep 2 && swaymsg [app_id=foot_tmux] focus, splitv;"
 exec "emacs;"
-exec "sleep 2 && swaymsg [class=Emacs] focus, move right, resize set 1165 px;"
+exec "sleep 4 && swaymsg [app_id=emacs] move right, resize set 1165 px;"
 
-workspace 2
-exec "foot -e tmux;"
+exec "foot -a foot_spterm -e tmux;"
+exec "sleep 2 && swaymsg [app_id=foot_spterm] move scratchpad;"
+exec "foot -a foot_term -e tmux;"
+exec "sleep 2 && swaymsg [app_id=foot_term] move workspace 2;"
 
-workspace 3
 exec "firefox;"
-exec "sleep 4 && swaymsg [app_id=firefox workspace=3] focus, mark scr_frfx;"
-exec "sleep 4 && swaymsg [con_mark=scr_frfx] move container scratchpad;"
+exec "sleep 3 && swaymsg [app_id=org.mozilla.firefox workspace=1] mark scr_frfx;"
+exec "sleep 3 && swaymsg [con_mark=scr_frfx] move container scratchpad;"
+exec "sleep 5 && swaymsg [app_id=org.mozilla.firefox workspace=1] move workspace 3;"
 
-workspace 1
-exec "sleep 4 && swaymsg [app_id=gcr-prompter] move container to workspace 3;"
-exec "sleep 4 && swaymsg workspace 3, focus floating;"
+exec "sleep 5 && swaymsg [app_id=protonvpn-app] kill;"
+exec "sleep 5 && swaymsg [title=\"Password Required - Mozilla Firefox\"] \
+floating enable, move workspace 5;"
+exec "sleep 5 && swaymsg [app_id=gcr-prompter] move workspace 5;"
+exec "sleep 5 && swaymsg workspace 5, focus floating;"
+workspace 4
+workspace 5
 
 ### Assign windows to workspaces ###
 for_window [title=Picture-in-Picture] move container to mark spt_md, \
 	       layout tabbed, resize set height 440 px
 assign [class="Google-chrome"] workspace 3
+assign [class="Spotify"] workspace 4
 assign [class="discord"] workspace 5
 assign [app_id="org.gnome.Nautilus"] workspace 6
 assign [class="Gimp"] workspace 7
