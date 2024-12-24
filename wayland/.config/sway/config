@@ -24,7 +24,7 @@ input type:keyboard {
 ### Key bindings ###
 # Basics:
 bindsym $mod+t+Control exec $term
-bindsym $mod+t [con_mark=tty_spterm] scratchpad show
+bindsym $mod+t [title=foot] scratchpad show
 bindsym $mod+Control+c kill
 bindsym $mod+x exec $menu
 floating_modifier $mod normal
@@ -93,7 +93,8 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+p focus parent
 bindsym $mod+c focus child
 bindsym $mod+a resize set 1165 px
-bindsym $mod+Control+a resize set height 300 px
+bindsym $mod+Shift+a resize set height 300 px
+bindsym $mod+Control+a resize set height 416 px
 bindsym $mod+Control+b exec killall -SIGUSR1 waybar
 
 # Scratchpad:
@@ -135,32 +136,33 @@ exec "gpg-agent --daemon;"
 exec "gammastep -l $TTY_GEO;"
 exec "spotify;"
 
-exec "foot -a foot_tmux -e tmux;"
-exec "sleep 2 && swaymsg [app_id=foot_tmux] focus, splitv;"
+exec "foot -a foot_pip -e tmux;"
+exec "sleep 2 && swaymsg [app_id=foot_pip] focus, splitv, mark tty_pip;"
 exec "emacs;"
 exec "sleep 4 && swaymsg [app_id=emacs] move right, resize set 1165 px;"
 
 exec "foot -a foot_spterm -e tmux;"
 exec "sleep 2 && swaymsg [app_id=foot_spterm] move scratchpad, mark tty_spterm;"
 exec "foot -a foot_term -e tmux;"
-exec "sleep 2 && swaymsg [app_id=foot_term] move workspace 2;"
+exec "sleep 2 && swaymsg [app_id=foot_term] move workspace 2, mark tty_term;"
 
 exec "firefox;"
 exec "sleep 3 && swaymsg [app_id=org.mozilla.firefox workspace=1] mark tty_frfx;"
 exec "sleep 3 && swaymsg [con_mark=tty_frfx] move container scratchpad;"
-exec "sleep 5 && swaymsg [app_id=org.mozilla.firefox workspace=1] move workspace 3;"
+exec "sleep 5 && swaymsg [app_id=org.mozilla.firefox workspace=1] \
+          move workspace 3;"
 
 exec "sleep 5 && swaymsg [app_id=protonvpn-app] kill;"
 exec "sleep 5 && swaymsg [title=\"Password Required - Mozilla Firefox\"] \
-floating enable, move workspace 5;"
+          floating enable, move workspace 5;"
 exec "sleep 5 && swaymsg [app_id=gcr-prompter] move workspace 5;"
 exec "sleep 5 && swaymsg workspace 5, focus floating;"
 workspace 4
 workspace 5
 
 ### Assign windows to workspaces ###
-for_window [title=Picture-in-Picture] move container to mark spt_md, \
-	       layout tabbed, resize set height 440 px
+for_window [title=Picture-in-Picture] move to mark tty_pip, \
+	       resize set height 416 px, move up
 assign [class="Google-chrome"] workspace 3
 assign [class="Spotify"] workspace 4
 assign [class="discord"] workspace 5
