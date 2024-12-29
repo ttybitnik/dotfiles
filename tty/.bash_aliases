@@ -13,6 +13,7 @@ alias diff='diff --color=auto --unified'
 alias vi='vim'
 alias emacs='emacsclient -c -n'
 alias mpv='mpv --no-terminal'
+alias qrencode='qrencode -t ansiutf8'
 #===============================================================================
 #				   Shortcuts
 #===============================================================================
