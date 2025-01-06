@@ -66,6 +66,9 @@ run_if_exists "snap" "snap refresh"
 # ClamAV Database
 run_if_exists "freshclam" "sudo freshclam"
 
+# GNU Emacs
+run_if_exists "emacs" "cronemacs"
+
 #===============================================================================
 #			  Programming Package Managers
 #===============================================================================
