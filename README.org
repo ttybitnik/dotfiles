@@ -123,6 +123,7 @@ The configuration files are located in the following repository paths: =./${envi
 - qbit: /qbittorrent secure launcher/
 - power_menu: /logout screen options/
 - cronbib: /calibre to bibtex cron job/
+- cronemacs: /emacs packages cron job/
 - crondrive: /bisync drives cron job/
 - crongit: /commit local repos cron job/
 

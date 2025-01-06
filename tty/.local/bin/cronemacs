@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# Cron job wrapper to log and update GNU Emacs packages.
+
+swaymsg "splitv;"
+emacsclient -c -n -e "(omni-emacs/ttybitnik)"
