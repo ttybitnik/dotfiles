@@ -17,11 +17,15 @@ logfile_trap() {
 }
 trap 'logfile_trap' EXIT
 
-{
+lambda() {
     printf ">> %s\n" "$*"
     time -p "$@"
     err=$?
-} 2>&1 > >(tee "$logfile_tmp")
+    return "$err"
+}
+
+lambda "$@" 2>&1  | tee "$logfile_tmp"
+err=${PIPESTATUS[0]}
 
 logfile_r="${HOME}/Remote/orpheus/ttylogs/${nodename}_${timestamp}_"
 logfile_r+="${1}_${err}.log.xz"
