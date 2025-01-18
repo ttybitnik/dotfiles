@@ -28,6 +28,19 @@ print_align_asterisk_box() {
     fi
 }
 
+# Prompt for sudo password only once
+sudo true
+while true; do
+    sudo true
+    sleep 60
+done &
+SUDO_ALIVE_PID=$!
+printf "** SUDO_ALIVE_PID: %d **\n" "$SUDO_ALIVE_PID"
+trap 'kill "$SUDO_ALIVE_PID"; sudo -k' EXIT
+
+print_align_asterisk_box "Running cronaide..."
+ttylog cronaide
+
 print_align_asterisk_box "Running omni..."
 ttylog omni
 

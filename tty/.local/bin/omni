@@ -7,9 +7,6 @@
 # Exit immediately if any command fails
 set -e
 
-# Prompt for sudo password only once
-sudo true
-
 run() {
     printf "\n>> %s \n\n" "$1"
     $1
@@ -58,7 +55,7 @@ run_if_exists "winget" "winget upgrade --all"
 run_if_exists "flatpak" "flatpak update -y"
 
 # Snap
-run_if_exists "snap" "snap refresh"
+run_if_exists "snap" "sudo snap refresh"
 
 #===============================================================================
 #				 Miscellaneous
