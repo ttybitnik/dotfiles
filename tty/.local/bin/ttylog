@@ -8,13 +8,28 @@ source tty.sh
 
 timestamp=$(date +%Y%m%dT%H%M%S)
 nodename=$(uname -n)
-logfile="${HOME}/Remote/orpheus/ttylogs/${nodename}_${timestamp}_$1.log"
+logfile_tmp=$(mktemp)
+
+logfile_trap (){
+    if [ -e "$logfile_tmp" ]; then
+	rm "$logfile_tmp"
+    fi
+}
+trap 'logfile_trap' EXIT
 
 {
     printf ">> %s\n" "$*"
     time -p "$@"
     err=$?
-    tty::notify_fatal "ttylog $1" "$err" "$(basename "$logfile")"
-} 2>&1 | tee "$logfile" && chmod 400 "$logfile"
+} 2>&1 > >(tee "$logfile_tmp")
 
-notify-send "ttylog $1" "Execution complete: $(basename "$logfile")"
+logfile_r="${HOME}/Remote/orpheus/ttylogs/${nodename}_${timestamp}_"
+logfile_r+="${1}_${err}.log.xz"
+tty::notify_urgent "ttylog $1" "$err" "$(basename "$logfile_r")"
+
+xz "$logfile_tmp"
+mv "${logfile_tmp}.xz" "$logfile_r"
+chmod 400 "$logfile_r"
+chcon unconfined_u:object_r:user_home_t:s0 "$logfile_r"
+
+notify-send "ttylog $1" "Execution complete: $(basename "$logfile_r")"
