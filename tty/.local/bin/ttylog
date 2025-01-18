@@ -10,7 +10,7 @@ timestamp=$(date +%Y%m%dT%H%M%S)
 nodename=$(uname -n)
 logfile_tmp=$(mktemp)
 
-logfile_trap (){
+logfile_trap() {
     if [ -e "$logfile_tmp" ]; then
 	rm "$logfile_tmp"
     fi
