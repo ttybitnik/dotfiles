@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Cron job wrapper to log and manage aide updates.
+#   Dependencies:
+#     ~/.local/bin/tty.sh
+
+source tty.sh
+
+tty::run_print sudo aide --update
+tty::run_print sudo mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
