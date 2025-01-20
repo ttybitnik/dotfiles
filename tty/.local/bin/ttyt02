@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Tmux default session wrapper for terminal 02.
+
+podman_ps='podman ps -a --size --watch 10 --format "{{.ID}} {{.Names}} {{.Size}}'
+podman_ps+=' {{.PodName}} {{.Status}}\n"'
+
+# Preamble for calling the script in a non-verbose fashion
+tmux split-window -v
+tmux swap-pane -t 0
+
+tmux rename-window @kairos
+tmux new-window -n @vertov
+tmux new-window -n @dijkstra
+tmux new-window -n @oikos
+tmux select-window -t 0
+tmux split-window -v
+tmux split-window -v
+tmux select-layout main-vertical-mirrored
+tmux send-keys -t 1 'journalctl -f' C-m
+tmux send-keys -t 2 'top -e M' C-m
+tmux send-keys -t 3 "$podman_ps" C-m
+tmux resize-pane -t 0 -L 40
+tmux select-pane -t 0

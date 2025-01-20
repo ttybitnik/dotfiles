@@ -107,6 +107,9 @@ The configuration files are located in the following repository paths: =./${envi
 - ttypas: /env and secrets security/
 - ttyimg: /image privacy and filtering/
 - ttysha: /file enumeration prevention/
+- ttyt00: /tmux wrapper/
+- ttyt01: /tmux wrapper/
+- ttyt02: /tmux wrapper/
 - 0x0st: /share ephemeral files and snippets/
 - autostart: /sway/dwm autostart/
 - vpn_bar: /vpn status and city/
