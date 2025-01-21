@@ -7,5 +7,7 @@
 source tty.sh
 
 tty::run_print sudo aureport --summary -ts this-week
-tty::run_print sudo ausearch -m FANOTIFY -ts this-week \
-	           | sudo aureport --summary --file
+
+# Command tracing via set -x because of the pipe
+set -x
+sudo ausearch -m FANOTIFY -ts this-week | sudo aureport --summary --file
