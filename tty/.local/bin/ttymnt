@@ -49,10 +49,10 @@ open_device() {
 	    sudo cryptsetup open "$device" "$device_name"
 	    sudo mount "$mount_point"
 	fi
-	printf ">> Device '%s' opened and mounted at %s.\n" \
+	printf "+> Device '%s' opened and mounted at %s.\n" \
 	       "$device_name" "$mount_point"
     else
-	printf ">> Device not found or not a block device: %s.\n" "$device" >&2
+	printf "+> Device not found or not a block device: %s.\n" "$device" >&2
 	exit 1
     fi
 }
@@ -67,10 +67,10 @@ close_device() {
     if [ -d "$mount_point" ]; then
 	sudo umount "$mount_point"
 	sudo cryptsetup close "$device_name"
-	printf ">> Device '%s' unmounted from %s and closed.\n" \
+	printf "+> Device '%s' unmounted from %s and closed.\n" \
 	       "$device_name" "$mount_point"
     else
-	printf ">> Mount point not found or not a directory: %s.\n" \
+	printf "+> Mount point not found or not a directory: %s.\n" \
 	       "$mount_point" >&2
 	exit 1
     fi
