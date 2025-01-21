@@ -26,7 +26,7 @@ fi
 
 cmd=("curl" "-A" "curl" "-i" "-Ffile=@${1}" "-Fexpires=$expiration" "https://0x0.st")
 
-printf "+>"
+printf "+"
 printf " %s" "${cmd[@]}"
 printf "\n"
 read -rp "Run the command above and share $1 for ${expiration}h? [y/N]: " confirm
