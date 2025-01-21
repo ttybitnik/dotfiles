@@ -18,7 +18,7 @@ logfile_trap() {
 trap 'logfile_trap' EXIT
 
 lambda() {
-    printf ">> %s\n" "$*"
+    printf "+> %s\n" "$*"
     time -p "$@"
     err=$?
     return "$err"
