@@ -38,6 +38,9 @@ SUDO_ALIVE_PID=$!
 printf "** SUDO_ALIVE_PID: %d **\n" "$SUDO_ALIVE_PID"
 trap 'kill "$SUDO_ALIVE_PID"; sudo -k' EXIT
 
+print_align_asterisk_box "Running cronaudit..."
+ttylog cronaudit
+
 print_align_asterisk_box "Running cronaide..."
 ttylog cronaide
 
