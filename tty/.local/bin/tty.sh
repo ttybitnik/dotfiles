@@ -30,7 +30,7 @@ tty::fatal() {
 #   Zero if command was run, non-zero on error
 #===============================================================================
 tty::run_print() {
-    printf "\n>> %s \n\n" "$*"
+    printf "\n+ %s \n\n" "$*"
     "$@"
 }
 
