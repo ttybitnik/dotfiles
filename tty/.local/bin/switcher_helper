@@ -10,12 +10,10 @@ readonly STATE_FILE="$CUSTOM_SWITCHER"
 
 current_hour=$(date +"%H")
 
-if [ "$current_hour" -ge 6 ] || [ "$current_hour" -lt 18 ]; then
+if [ "$current_hour" -ge 6 ] && [ "$current_hour" -lt 17 ]; then
     printf "dark" > "$STATE_FILE"
     "${HOME}"/.local/bin/switcher -nr
-fi
-
-if [ "$current_hour" -ge 18 ] || [ "$current_hour" -lt 6 ]; then
+else
     printf "light" > "$STATE_FILE"
     "${HOME}"/.local/bin/switcher -nr
 fi
