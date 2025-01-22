@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Cron job script to automate the exportation from Calibre to BiBTeX.
+# Cron/timer script to automate the exportation from Calibre to BiBTeX.
 #   Dependencies:
 #     ~/.local/bin/tty.sh
 

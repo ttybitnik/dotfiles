@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Cron job wrapper to log weekly audit summaries.
+# Cron/timer wrapper to log weekly audit summaries.
 #   Dependencies:
 #     ~/.local/bin/tty.sh
 

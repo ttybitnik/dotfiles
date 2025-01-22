@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Cron job script to sync changes between remote and local directories.
+# Cron/timer script to sync changes between remote and local directories.
 #   Dependencies:
 #     ~/.local/bin/tty.sh
 

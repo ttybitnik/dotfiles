@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Cron job wrapper to log and manage aide updates.
+# Cron/timer wrapper to log and manage aide updates.
 #   Dependencies:
 #     ~/.local/bin/tty.sh
 

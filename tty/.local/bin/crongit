@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Cron job script to commit/update changes from local git repos.
+# Cron/timer script to commit/update changes from local git repos.
 #   Dependencies:
 #     ~/.local/bin/tty.sh
 
