@@ -149,5 +149,7 @@
 	"format": " {}",
 	"interval": 3600,
 	"exec": "$HOME/.local/bin/weather_bar",
+	"tooltip": true,
+	"return-type": "json"
     }
 }

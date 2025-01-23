@@ -2,6 +2,43 @@
 
 # Display the weather status.
 
-weather="$(curl -s https://wttr.in/"${TTY_CITY// /+}"?format="%t\n")"
+city="${TTY_CITY// /+}"
+weather_format="Temperature+(actual):+%t,"
+weather_format+="Temperature+(feels+like):+%f,"
+weather_format+="Weather+condition:+%C,"
+weather_format+="Humidity:+%h,"
+weather_format+="Wind:+%w,"
+weather_format+="Moon+phase:+%m,"
+weather_format+="Precipitation+(mm/3+hours):+%p,"
+weather_format+="UV+index:+%u,"
+weather_format+="Location:+%l,"
+weather_format+="Last+update:+%T"
 
-printf '%5s' "$weather"
+data=$(curl -s "https://wttr.in/$city?format=$weather_format")
+
+IFS=',' read -r \
+    temp_actual \
+    temp_feels_like \
+    weather_condition \
+    humidity \
+    wind \
+    moon_phase \
+    precipitation \
+    uv_index \
+    location \
+    last_update <<< "$data"
+
+text="${temp_actual#*: }"
+
+tooltip+="$temp_actual\n"
+tooltip+="$temp_feels_like\n"
+tooltip+="$weather_condition\n"
+tooltip+="$humidity\n"
+tooltip+="$wind\n"
+tooltip+="$moon_phase\n"
+tooltip+="$precipitation\n"
+tooltip+="$uv_index\n"
+tooltip+="${location//+/ }\n"
+tooltip+="${last_update}"
+
+printf '{ "text": "%s", "tooltip": "%s" }\n' "$text" "$tooltip"
