@@ -2,6 +2,6 @@
 
 # Display the weather status.
 
-weather="$(curl -s https://wttr.in/"${TTY_CITY// /-}"?format="%t\n" | head -n 3)"
+weather="$(curl -s https://wttr.in/"${TTY_CITY// /+}"?format="%t\n")"
 
 printf '%5s' "$weather"

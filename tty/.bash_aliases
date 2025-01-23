@@ -46,7 +46,7 @@ alias fcd='cd $(find -type d | fzf)'
 alias femacs='emacs $(find -type f | fzf)'
 alias fpath='find -type f | fzf | sed 's/^..//g' \
       	        | tr -d '\n' | xclip -selection primary'
-alias weather='curl wttr.in/"${TTY_CITY// /+}" | head -n -1'
+alias weather='curl -s https://wttr.in/"${TTY_CITY// /+}" | head -n -2'
 #===============================================================================
 #				    Private
 #===============================================================================
