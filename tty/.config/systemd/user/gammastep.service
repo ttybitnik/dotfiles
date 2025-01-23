@@ -1,0 +1,18 @@
+[Unit]
+Description=Gammastep display temperature according to time of day
+Documentation=man:gammastep(1)
+
+[Service]
+Type=simple
+# Environment variables are included here as a fallback, since they
+# are imported via `systemctl --user` in `.bash_profile`.
+Environment="TTY_GEO=-23.55:-46.63"
+ExecStart=/usr/bin/gammastep -l $TTY_GEO
+ExecStop=/usr/bin/pkill gammastep
+RestartSec=10s
+StartLimitInterval=60s
+StartLimitBurst=3
+Restart=on-failure
+
+[Install]
+WantedBy=sway.target

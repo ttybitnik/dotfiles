@@ -4,6 +4,8 @@ Description=Hermes refresh info and MOTD
 [Service]
 Type=oneshot
 RemainAfterExit=true
+# Environment variables are included here as a fallback, since they
+# are imported via `systemctl --user` in `.bash_profile`.
 Environment="CUSTOM_HERMES=%h/Remote/orpheus/git/dotfiles/tty/.config/hermes/motd.log"
 ExecStop=%h/Remote/orpheus/git/dotfiles/tty/.local/bin/hermes
 StandardOutput=truncate:%h/Remote/orpheus/git/dotfiles/tty/.config/hermes/motd.log

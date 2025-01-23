@@ -1,0 +1,14 @@
+[Unit]
+Description=ProtonVPN app
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/protonvpn-app
+ExecStop=/usr/bin/pkill protonvpn-app
+RestartSec=10s
+StartLimitInterval=60s
+StartLimitBurst=3
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

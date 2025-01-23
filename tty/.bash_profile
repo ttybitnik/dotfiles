@@ -95,8 +95,9 @@ export CUSTOM_INSTALL
 #===============================================================================
 systemctl --user import-environment \
 	  PATH \
-	  TTY_WALLPAPER \
+	  TTY_GEO \
 	  TTY_MOTTO \
+	  TTY_WALLPAPER \
 	  CUSTOM_HERMES \
 	  CUSTOM_SWITCHER
 #===============================================================================

@@ -129,35 +129,36 @@ default_Border pixel 2
 gaps inner 4
 gaps outer 4
 
-### Startup scripting ###
-# exec ~/.config/sway/autostart.sh
-exec "protonvpn-app;"
-exec "gpg-agent --daemon;"
-exec "gammastep -l $TTY_GEO;"
+### Startup ###
+exec_always "systemctl --user start sway.target;"
+
 exec "spotify;"
 
-exec "foot -a foot_pip -e tmux;"
+exec "foot -a foot_pip tmux new-session -s t1;"
 exec "sleep 2 && swaymsg [app_id=foot_pip] focus, splitv, mark tty_pip;"
 exec "emacs;"
 exec "sleep 4 && swaymsg [app_id=emacs] move right, resize set 1165 px;"
 
-exec "foot -a foot_spterm -e tmux;"
+exec "foot -a foot_spterm tmux new-session -s t0;"
 exec "sleep 2 && swaymsg [app_id=foot_spterm] move scratchpad, mark tty_spterm;"
-exec "foot -a foot_term -e tmux;"
+exec "foot -a foot_term tmux new-session -s t2;"
 exec "sleep 2 && swaymsg [app_id=foot_term] move workspace 2, mark tty_term;"
+exec "sleep 5 && tmux send-keys -t t0 'ttyt00' C-m;"
+exec "sleep 5 && tmux send-keys -t t1 'ttyt01' C-m;"
+exec "sleep 5 && tmux send-keys -t t2 'ttyt02' C-m;"
 
 exec "firefox;"
-exec "sleep 3 && swaymsg [app_id=org.mozilla.firefox workspace=1] mark tty_frfx;"
-exec "sleep 3 && swaymsg [con_mark=tty_frfx] move container scratchpad;"
-exec "sleep 5 && swaymsg [app_id=org.mozilla.firefox workspace=1] \
-          move workspace 3;"
+exec "sleep 4 && swaymsg [app_id=org.mozilla.firefox workspace=1] mark tty_frfx;"
+exec "sleep 6 && swaymsg [con_mark=tty_frfx] move container scratchpad;"
+exec "sleep 6 && swaymsg [app_id=org.mozilla.firefox workspace=1]" \
+     	      	     "move workspace 3;"
 
-exec "sleep 5 && swaymsg [app_id=protonvpn-app] kill;"
-exec "sleep 5 && swaymsg [title=\"Password Required - Mozilla Firefox\"] \
-          floating enable, move workspace 5;"
-exec "sleep 5 && swaymsg [app_id=gcr-prompter] move workspace 5;"
-exec "sleep 5 && swaymsg workspace 5, focus floating;"
-workspace 4
+exec "sleep 6 && swaymsg [app_id=protonvpn-app] kill;"
+exec "sleep 6 && swaymsg [title=\"Password Required - Mozilla Firefox\"] " \
+     	             "floating enable, move workspace 5;"
+exec "sleep 6 && swaymsg [app_id=gcr-prompter] move workspace 5;"
+exec "sleep 6 && swaymsg workspace 5, focus floating;"
+
 workspace 5
 
 ### Assign windows to workspaces ###
