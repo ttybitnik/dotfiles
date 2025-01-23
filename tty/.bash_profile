@@ -27,7 +27,7 @@ export TTY_SIGNING="0xB52D1006EFAC93DF"
 export HISTCONTROL="ignoreboth"
 export EDITOR="/usr/bin/emacsclient -c -n"
 unset SSH_AGENT_PID
-export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
+export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 #-------------------------------------------------------------------------------
 # Development environment
 #-------------------------------------------------------------------------------
