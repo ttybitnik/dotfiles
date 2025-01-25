@@ -16,7 +16,7 @@ The description is structured around the custom environments I run, including a 
 
 *** Suggestions
 
-| General             | GNU Emacs ([[https://github.com/ttybitnik/emacs.d][my config]]), GNU Image Manipulation Program, Inkscape, Ffmpeg, Pandoc, Imv, Fzf, Ytfzf, Yt-dlp, Shotcut, Mpv, Thunar                                                                   |
+| General             | GNU Emacs ([[https://github.com/ttybitnik/emacs.d][my config]]), GNU Image Manipulation Program, Inkscape, Ffmpeg, Pandoc, Imv, Fzf, Ytfzf, Yt-dlp, Shotcut, Mpv, Thunar, Podman, Ansible                                                 |
 | TTY Environment     | GNU Emacs (ditto), GNU Midnight Commander, GNU Lynx, GNU Parallel, GNU Privacy Guard, GNU Stow, GNU Make, ClamAV, Tmux, Git, Htop, Powertop, Hyperfine, Tree, Nmcli, Yq, Pulsemixer, Spotify-tui |
 | Wayland Environment | Foot, Sway, Swaylock, Waybar, Rofi, Dunst, Kanshi, Gammastep, Wl-clipboard, SDDM                                                                                                                 |
 | Xorg Environment    | Urxvt, Suckless tools ([[https://github.com/ttybitnik/suckless][my builds]]), Redshift, Nitrogen, Sxhkd, Xclip, Xsettingsd                                                                                                                  |
@@ -77,6 +77,7 @@ To streamline the music experience, just run =euterpe=. This script leverages tm
   - Kmonad
   - Systemd
   - Xdg
+  - Ansible
 - Wayland environment
   - Foot
   - Sway
