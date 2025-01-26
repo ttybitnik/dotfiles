@@ -1,0 +1,12 @@
+---
+- name: Action changeme placeholder for {{ role_name }}
+  become: false
+  ansible.builtin.command:
+    cmd: /usr/bin/fortune
+  when: {{ role_name }}.changeme.fortune
+  register: {{ role_name }}.changeme.status
+
+- name: Display changeme placeholder for {{ role_name }}
+  ansible.builtin.debug:
+    var: {{ role_name }}.changeme.status
+  when: {{ role_name }}.changeme.status.changed

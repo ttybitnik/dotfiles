@@ -1,18 +1,33 @@
-# Ansible Collection - {{ namespace }}.{{ collection_name }}
+# Ansible Collection - `{{ namespace }}.{{ collection_name }}`
 
 A brief description of the collection goes here.
 
-Roles included in this collection:
+## Roles included in this collection
 
-- `{{ namespace }}.{{ collection_name }}.changeme` ([documentation](changeme))
+| Name                                             | Description                 | URL                            |
+|--------------------------------------------------|-----------------------------|--------------------------------|
+| `{{ namespace }}.{{ collection_name }}.changeme` | Lorem ipsum dolor sit amet. | [documentation][role_changeme] |
 
-Modules included in this collection:
+---
+[role_changeme]: https://github.com/ttybitnik/ansible.collection.{{ collection_name }}/blob/master/roles/changeme/README.md
 
-- `{{ namespace }}.{{ collection_name }}.changeme` ([documentation](changeme))
+## Modules included in this collection
 
-Plugins included in this collection:
+| Name                                             | Description                 | URL                              |
+|--------------------------------------------------|-----------------------------|----------------------------------|
+| `{{ namespace }}.{{ collection_name }}.changeme` | Lorem ipsum dolor sit amet. | [documentation][module_changeme] |
 
-- `{{ namespace }}.{{ collection_name }}.changeme` ([documentation](changeme))
+---
+[module_changeme]: https://github.com/ttybitnik/ansible.collection.{{ collection_name }}/blob/master/plugins/modules/changeme/README.md
+
+## Plugins included in this collection
+
+| Name                                             | Description                 | URL                              |
+|--------------------------------------------------|-----------------------------|----------------------------------|
+| `{{ namespace }}.{{ collection_name }}.changeme` | Lorem ipsum dolor sit amet. | [documentation][plugin_changeme] |
+
+---
+[plugin_changeme]: https://github.com/ttybitnik/ansible.collection.{{ collection_name }}/blob/master/plugins/changeme/changeme/README.md
 
 ## Supported operating systems
 
@@ -24,20 +39,28 @@ Plugins included in this collection:
   - Debian
 
 ## Requirements
+<!-- Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required. -->
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+None
 
 ## Installation
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+### Using `ansible-galaxy`:
 
-## Usage
+```
+ansible-galaxy collection install ttybitnik.{{ collection_name }}
+```
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+### Using `requirements.yaml`:
+
+```
+---
+collections:
+  - name: ttybitnik.{{ collection_name }}
+```
 
 ## Example playbook
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+<!-- Including an example of how to use your collection (for instance, with variables passed in as parameters) is always nice for users too: -->
 
 ```
 - hosts: servers
@@ -46,8 +69,9 @@ Including an example of how to use your role (for instance, with variables passe
 ```
 
 ## Dependencies
+<!-- A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles. -->
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None
 
 ## License
 
