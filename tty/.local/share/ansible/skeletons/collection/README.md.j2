@@ -4,7 +4,7 @@ A brief description of the collection goes here.
 
 ## Roles included in this collection
 
-| Name                                             | Description                 | URL                            |
+| Role                                             | Description                 | URL                            |
 |--------------------------------------------------|-----------------------------|--------------------------------|
 | `{{ namespace }}.{{ collection_name }}.changeme` | Lorem ipsum dolor sit amet. | [documentation][role_changeme] |
 
@@ -13,7 +13,7 @@ A brief description of the collection goes here.
 
 ## Modules included in this collection
 
-| Name                                             | Description                 | URL                              |
+| Module                                           | Description                 | URL                              |
 |--------------------------------------------------|-----------------------------|----------------------------------|
 | `{{ namespace }}.{{ collection_name }}.changeme` | Lorem ipsum dolor sit amet. | [documentation][module_changeme] |
 
@@ -22,7 +22,7 @@ A brief description of the collection goes here.
 
 ## Plugins included in this collection
 
-| Name                                             | Description                 | URL                              |
+| Plugin                                           | Description                 | URL                              |
 |--------------------------------------------------|-----------------------------|----------------------------------|
 | `{{ namespace }}.{{ collection_name }}.changeme` | Lorem ipsum dolor sit amet. | [documentation][plugin_changeme] |
 
@@ -63,9 +63,11 @@ collections:
 <!-- Including an example of how to use your collection (for instance, with variables passed in as parameters) is always nice for users too: -->
 
 ```
-- hosts: servers
+- hosts: all
   roles:
-     - { role: username.rolename, x: 42 }
+     - role: ttybitnik.{{ collection_name }}.role_name
+       vars:
+         role_name_subgroup_x: 42
 ```
 
 ## Dependencies

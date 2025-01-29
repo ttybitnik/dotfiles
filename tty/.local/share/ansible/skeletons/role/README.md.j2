@@ -41,7 +41,7 @@ collections:
 
 ### Subgroup changeme variables
 
-| Name                                | Type     | Default | Description                 |
+| Variable                            | Type     | Default | Description                 |
 |-------------------------------------|----------|---------|-----------------------------|
 | `{{ role_name }}_subgroup_changeme` | boolean  | `true`  | Whether to do stuff.        |
 | `{{ role_name }}_subgroup_changeme` | sequence | `[]`    | List of things to do stuff. |
@@ -51,9 +51,11 @@ collections:
 <!-- Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too: -->
 
 ```
-- hosts: servers
+- hosts: all
   roles:
-     - { role: username.rolename, x: 42 }
+     - role: ttybitnik.collection_name.{{ role_name }}
+       vars:
+         {{ role_name }}_subgroup_x: 42
 ```
 
 ## Dependencies
