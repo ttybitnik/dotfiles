@@ -1,6 +1,6 @@
 [Unit]
 Description=Sway compositor session
 Documentation=man:systemd.special
-BindsTo=graphical.target
-Wants=graphical.target
-After=graphical.target
+BindsTo=graphical-session.target
+Wants=graphical-session.target
+After=graphical-session.target
