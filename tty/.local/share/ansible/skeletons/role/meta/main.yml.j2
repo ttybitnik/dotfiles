@@ -4,19 +4,19 @@ galaxy_info:
   description: {{ description }}
   # company: {{ company }}
   # issue_tracker_url: {{ issue_tracker_url }}
-  license: GPL-3.0
-  min_ansible_version: {{ min_ansible_version }}
+  license: GPL-3.0-or-later
+  min_ansible_version: "{{ min_ansible_version }}"
   # min_ansible_container_version:
   platforms:
-  - name: Fedora
-    versions:
-    - all
-  - name: CentOS Stream
-    versions:
-    - all
-  - name: Debian
-    versions:
-    - all
+    - name: Fedora
+      versions:
+        - all
+    - name: EL
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
 
   galaxy_tags:
     - changeme
