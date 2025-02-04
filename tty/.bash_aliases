@@ -30,6 +30,7 @@ alias tk='tmux kill-session'
 alias cs='cryptsetup'
 alias em='emacs'
 alias yt='ytfzf --detach -f'
+alias mol='molecule'
 #===============================================================================
 #				 Functionality
 #===============================================================================
