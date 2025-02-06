@@ -3,10 +3,10 @@
   become: false
   ansible.builtin.command:
     cmd: /usr/bin/fortune
-  when: {{ role_name }}.changeme.fortune
-  register: {{ role_name }}.changeme.status
+  when: {{ role_name }}_changeme_fortune
+  register: {{ role_name }}_changeme_result
 
 - name: Display changeme placeholder for {{ role_name }}
   ansible.builtin.debug:
-    var: {{ role_name }}.changeme.status
-  when: {{ role_name }}.changeme.status.changed
+    var: {{ role_name }}_changeme_result
+  when: {{ role_name }}_changeme_result.changed
