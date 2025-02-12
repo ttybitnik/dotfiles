@@ -47,13 +47,13 @@ None
 
 ### Using `ansible-galaxy`:
 
-```
+```shell
 ansible-galaxy collection install ttybitnik.{{ collection_name }}
 ```
 
 ### Using `requirements.yml`:
 
-```
+```yaml
 ---
 collections:
   - name: ttybitnik.{{ collection_name }}
@@ -62,7 +62,8 @@ collections:
 ## Example playbook
 <!-- Including an example of how to use your collection (for instance, with variables passed in as parameters) is always nice for users too: -->
 
-```
+```yaml
+---
 - hosts: all
   roles:
      - role: ttybitnik.{{ collection_name }}.role_name
