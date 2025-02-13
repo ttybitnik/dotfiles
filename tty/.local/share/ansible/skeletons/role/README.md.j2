@@ -41,10 +41,10 @@ collections:
 
 ### Subgroup changeme variables
 
-| Variable                            | Type     | Default | Description                 |
-|-------------------------------------|----------|---------|-----------------------------|
-| `{{ role_name }}_subgroup_changeme` | boolean  | `true`  | Whether to do stuff.        |
-| `{{ role_name }}_subgroup_changeme` | sequence | `[]`    | List of things to do stuff. |
+| Variable                            | Required | Type     | Default | Description                 |
+|-------------------------------------|----------|----------|---------|-----------------------------|
+| `{{ role_name }}_subgroup_changeme` | No       | Boolean  | `true`  | Whether to do stuff.        |
+| `{{ role_name }}_subgroup_changeme` | Yes      | Sequence | `[]`    | List of things to do stuff. |
 
 
 ## Example playbook
