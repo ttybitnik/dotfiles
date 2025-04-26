@@ -40,13 +40,13 @@ open_device() {
 
     read -r device_name device mount_point key_path <<< "$device_info"
 
-    if [ -b "$device" ]; then
+    if [ -b "/dev/disk/by-uuid/$device" ]; then
 	if [ -n "$key_path" ]; then
 	    gpg -d "$key_path" \
-		| sudo cryptsetup --key-file=- open "$device" "$device_name"
+		| sudo cryptsetup --key-file=- open UUID="$device" "$device_name"
 	    sudo mount "$mount_point"
 	else
-	    sudo cryptsetup open "$device" "$device_name"
+	    sudo cryptsetup open UUID="$device" "$device_name"
 	    sudo mount "$mount_point"
 	fi
 	printf "Device '%s' opened and mounted at %s.\n" \
