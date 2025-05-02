@@ -127,7 +127,7 @@ The configuration files are located in the following repository paths: =./${envi
 - clock_bar: /date and time/
 - weather: /weather status/
 - qbit: /qbittorrent secure launcher/
-- mpvf: /wrapper for mpv and firefox/
+- mpvf: /mpv and firefox wrapper/
 - power_menu: /logout screen options/
 - cronaide: /aide checks/
 - cronaudit: /audit summaries/
