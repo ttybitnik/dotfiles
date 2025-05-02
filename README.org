@@ -86,6 +86,8 @@ To streamline the music experience, just run =euterpe=. This script leverages tm
   - Rofi
   - Dunst
   - GTK
+  - Mpv
+  - Yt-dlp
 - Xorg environment
   - Urxvt
   - Sxhkd
