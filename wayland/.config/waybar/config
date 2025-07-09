@@ -11,6 +11,7 @@
 	"sway/workspaces",
 	"sway/mode",
 	"sway/scratchpad",
+        "idle_inhibitor",
 	"tray",
 	"custom/media"
     ],
@@ -133,6 +134,13 @@
 	"on-click": "playerctl --player spotify play-pause",
 	"tooltip": true,
 	"tooltip-format": "{0}"
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
     },
     "custom/vpn": {
 	"interval": 1,
