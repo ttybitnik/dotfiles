@@ -50,6 +50,13 @@
 	"tooltip-format": "{app}: {title}",
 	"on-click": "swaymsg scratchpad show"
     },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
     "tray": {
 	"icon-size": 12,
 	"spacing": 10
@@ -134,13 +141,6 @@
 	"on-click": "playerctl --player spotify play-pause",
 	"tooltip": true,
 	"tooltip-format": "{0}"
-    },
-    "idle_inhibitor": {
-        "format": "{icon}",
-        "format-icons": {
-            "activated": "",
-            "deactivated": ""
-        }
     },
     "custom/vpn": {
 	"interval": 1,
