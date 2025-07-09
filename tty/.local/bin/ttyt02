@@ -17,8 +17,11 @@ tmux select-window -t 0
 tmux split-window -v
 tmux split-window -v
 tmux select-layout main-vertical-mirrored
+tmux split-window -t 3 -v
 tmux send-keys -t 1 'journalctl -f' C-m
 tmux send-keys -t 2 'top -e M' C-m
-tmux send-keys -t 3 "$podman_ps" C-m
+tmux send-keys -t 3 "virt-top -c qemu:///system" C-m
+tmux send-keys -t 4 "$podman_ps" C-m
 tmux resize-pane -t 0 -L 40
+tmux resize-pane -t 3 -D 2
 tmux select-pane -t 0
