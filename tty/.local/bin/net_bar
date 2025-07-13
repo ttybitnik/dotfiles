@@ -1,22 +1,32 @@
 #!/usr/bin/env bash
 
-# Display the network traffic.
+# Display the network traffic in physical interfaces (using RAM for cache).
+
+CACHE_DIR="/run/user/$(id -u)/net_bar"
+mkdir -p "$CACHE_DIR"
 
 update() {
-    local sum
-    local cache
-    sum=0
+    local sum=0
     for arg; do
-	read -r i < "$arg"
-	sum=$(( sum + i ))
+        read -r i < "$arg"
+        sum=$((sum + i))
     done
-    cache=${XDG_CACHE_HOME:-$HOME/.cache}/${1##*/}
-    [ -f "$cache" ] && read -r old < "$cache" || old=0
-    printf %d\\n "$sum" > "$cache"
-    printf %d\\n $(( sum - old ))
+    cache="$CACHE_DIR/$(basename "$1")"
+
+    local old=0
+    [[ -f "$cache" ]] && read -r old < "$cache"
+
+    if (( sum < old )); then
+        delta=$sum
+    else
+        delta=$((sum - old))
+    fi
+
+    printf "%d" "$sum" > "$cache"
+    printf "%d" "$delta"
 }
 
 rx=$(update /sys/class/net/[ew]*/statistics/rx_bytes)
 tx=$(update /sys/class/net/[ew]*/statistics/tx_bytes)
 
-printf "%4sB %4sB\\n" "$(numfmt --to=iec "$rx")" "$(numfmt --to=iec "$tx")"
+printf " %4sB  %4sB\\n" "$(numfmt --to=iec "$rx")" "$(numfmt --to=iec "$tx")"
