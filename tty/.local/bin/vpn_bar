@@ -2,12 +2,12 @@
 
 # Display the vpn status.
 
-vpn="$(nmcli connection show --active | grep "wireguard" | awk '{print $1, $2}')"
+vpn="$(networkctl list | grep "wireguard.*routable" | awk '{print $2}')"
 
 if [[ -n "$vpn" ]]; then
     printf " %s" "$vpn"
 else
-    printf " Unsafe"
+    printf " Unsecured"
     if pgrep -x "qbittorrent" > /dev/null; then
 	killall -q qbittorrent
     fi
