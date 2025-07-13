@@ -20,6 +20,8 @@
     ],
     "modules-right": [
 	"custom/vpn",
+	"custom/wlan",
+	"custom/lan",
 	"custom/net",
 	"pulseaudio",
 	"memory",
@@ -142,6 +144,14 @@
 	"on-click": "playerctl play-pause",
 	"tooltip": true,
 	"tooltip-format": "{0}"
+    },
+    "custom/wlan": {
+	"interval": 1,
+	"exec": "$HOME/.local/bin/wlan_bar"
+    },
+    "custom/lan": {
+	"interval": 1,
+	"exec": "$HOME/.local/bin/lan_bar"
     },
     "custom/vpn": {
 	"interval": 1,

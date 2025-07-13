@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Display the wlan status.
+
+wlan=$(networkctl list | grep "wlan.*routable" | awk '{print $2}')
+
+if [[ -n "$wlan" ]]; then
+    ap=$(networkctl status "$wlan" \
+	     | grep "Wi-Fi" \
+	     | sed -E 's/.*Wi-Fi access point: ([^ ]+).*/\1/')
+    printf " %s" "$ap"
+fi

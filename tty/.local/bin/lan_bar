@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Display the lan status.
+
+lan=$(networkctl list | grep -E "(ether|bridge).*routable" | awk '{print $2}')
+
+if [[ -n "$lan" ]]; then
+    printf " %s" "$lan"
+fi

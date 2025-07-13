@@ -115,8 +115,10 @@ The configuration files are located in the following repository paths: =./${envi
 - ttyt02: /tmux wrapper/
 - 0x0st: /share ephemeral files and snippets/
 - autostart: /sway/dwm autostart/
-- vpn_bar: /vpn status and city/
+- vpn_bar: /vpn status/
 - net_bar: /network status/
+- lan_bar: /lan status/
+- wlan_bar: /wlan status/
 - ram_bar: /ram usage/
 - cpu_bar: /cpu usage/
 - battery_bar: /battery status/
