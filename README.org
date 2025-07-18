@@ -5,9 +5,15 @@
 
 #+html: <p align="center"><img src=".assets/switcher_demo.gif" /></p>
 
-This repository contains my personal collection of scripts and configuration files.
+My [[https://en.wikipedia.org/wiki/Unix-like][UN*X]] environment setup, including automation scripts and configuration files for a variety of tools.
 
-The description is structured around the custom environments I run, including a *FreeBSD* headless laptop (=tty= environment), a *Fedora* desktop with Sway (=wayland= environment), and a *Debian* desktop with Dwm (=xorg= environment). It is worth noting that the TTY tools are employed across all environments.
+The repository is structured around the custom environments I run, including:
+
+- a *FreeBSD* headless laptop (=tty= environment)
+- a *Fedora* desktop with Sway (=wayland= environment)
+- a *Debian* desktop with Dwm (=xorg= environment).
+
+Note that the TTY tools are employed across all environments.
 
 ** Requirements
 
