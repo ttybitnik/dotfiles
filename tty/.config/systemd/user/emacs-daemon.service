@@ -3,7 +3,7 @@ Description=GNU Emacs daemon
 Documentation=info:emacs man:emacs(1) https://gnu.org/software/emacs/
 
 [Service]
-Type=simple
+Type=notify
 # Environment variables are included here as a fallback, since they
 # are imported via `systemctl --user` in `.bash_profile` and Sway config.
 Environment="TTY_GIT=%h/Remote/orpheus/git"
