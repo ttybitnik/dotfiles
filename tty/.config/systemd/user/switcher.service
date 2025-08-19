@@ -5,7 +5,7 @@ Description=Switcher theme mode next session
 Type=oneshot
 RemainAfterExit=true
 # Environment variables are included here as a fallback, since they
-# are imported via `systemctl --user` in `.bash_profile`.
+# are imported via `systemctl --user` in `.bash_profile` and Sway config.
 Environment="TTY_DOTFILES=%h/Remote/orpheus/git/dotfiles"
 Environment="CUSTOM_SWITCHER=%h/Remote/orpheus/git/dotfiles/.switcher_state"
 ExecStart=%h/Remote/orpheus/git/dotfiles/tty/.local/bin/switcher_helper

@@ -1,0 +1,12 @@
+[Unit]
+Description=GNU Emacs client frame
+Documentation=info:emacs man:emacsclient(1)
+After=emacs-daemon.service
+Requires=emacs-daemon.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/emacsclient --suppress-output --create-frame --eval "(dashboard-refresh-buffer)"
+
+[Install]
+WantedBy=sway.target

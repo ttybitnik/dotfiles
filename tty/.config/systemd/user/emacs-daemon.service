@@ -1,0 +1,20 @@
+[Unit]
+Description=GNU Emacs daemon
+Documentation=info:emacs man:emacs(1) https://gnu.org/software/emacs/
+
+[Service]
+Type=simple
+# Environment variables are included here as a fallback, since they
+# are imported via `systemctl --user` in `.bash_profile` and Sway config.
+Environment="TTY_GIT=%h/Remote/orpheus/git"
+Environment="TTY_NAME=Vinícius Moraes"
+Environment="TTY_EMAIL=vinicius.moraes@eternodevir.com"
+ExecStart=/usr/bin/emacs --fg-daemon
+ExecStop=/usr/bin/emacsclient --suppress-output --eval "(save-buffers-kill-emacs t)"
+RestartSec=10s
+StartLimitInterval=60s
+StartLimitBurst=3
+Restart=on-failure
+
+[Install]
+WantedBy=sway.target
