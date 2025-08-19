@@ -89,6 +89,7 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 bindsym $mod+f fullscreen
 bindsym $mod+i floating toggle
+bindsym $mod+o sticky toggle
 bindsym $mod+space focus mode_toggle
 bindsym $mod+p focus parent
 bindsym $mod+c focus child
