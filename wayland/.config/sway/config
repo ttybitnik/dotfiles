@@ -125,6 +125,13 @@ bindsym $mod+Control+g exec google-chrome
 bindsym $mod+y exec spotify
 bindsym $mod+d exec flatpak run com.discordapp.Discord
 
+# TODO: Transform this into a script for maintainbility/toggle, like 'ttypip'.
+bindsym $mod+bracketright [con_mark="tty_pip"] splitv; \
+        [title="Picture-in-Picture"] floating disable, move to mark tty_pip, \
+        resize set height 416 px, move up
+bindsym $mod+Control+bracketright [title="Picture-in-Picture"] floating enable, \
+        sticky enable, resize set 320 180, move position 1575 815
+
 ### General ###
 default_Border pixel 2
 gaps inner 4
@@ -154,7 +161,7 @@ exec_always {
 }
 
 exec "foot -a foot_pip tmux new-session -s t1;"
-exec "sleep 2 && swaymsg [app_id=foot_pip] focus, splitv, mark tty_pip;"
+exec "sleep 2 && swaymsg [app_id=foot_pip] focus, splith, mark tty_pip;"
 
 exec "foot -a foot_spterm tmux new-session -s t0;"
 exec "sleep 2 && swaymsg [app_id=foot_spterm] move scratchpad, mark tty_spterm;"
@@ -164,14 +171,9 @@ exec "sleep 5 && tmux send-keys -t t0 'ttyt00' C-m;"
 exec "sleep 5 && tmux send-keys -t t1 'ttyt01' C-m;"
 exec "sleep 5 && tmux send-keys -t t2 'ttyt02' C-m;"
 
-exec "sleep 6 && swaymsg [app_id=gcr-prompter] move workspace 5;"
-exec "sleep 6 && swaymsg workspace 5, focus floating;"
-
-workspace 5
+exec "sleep 6 && swaymsg workspace 1, focus floating;"
 
 ### Assign windows to workspaces ###
-# for_window [title=Picture-in-Picture] move to mark tty_pip, \
-#              resize set height 416 px, move up
 for_window [title="Picture-in-Picture"] floating enable, sticky enable,  \
                resize set 320 180, move position 1575 815
 assign [class="Google-chrome"] workspace 3
