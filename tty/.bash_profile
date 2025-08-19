@@ -95,10 +95,18 @@ export CUSTOM_INSTALL
 #				    Systemd
 #===============================================================================
 systemctl --user import-environment \
-	  PATH \
-	  TTY_GEO \
-	  TTY_MOTTO \
+	  TTY_DOTFILES \
+	  TTY_SCRIPTS \
+	  TTY_GIT \
 	  TTY_WALLPAPER \
+	  TTY_MOTTO \
+	  TTY_CITY \
+	  TTY_GEO \
+	  TTY_NICK \
+	  TTY_NAME \
+	  TTY_EMAIL \
+	  TTY_FINGERPRINT \
+	  TTY_SIGNING \
 	  CUSTOM_HERMES \
 	  CUSTOM_SWITCHER
 #===============================================================================

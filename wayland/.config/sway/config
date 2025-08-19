@@ -130,14 +130,30 @@ gaps inner 4
 gaps outer 4
 
 ### Startup ###
-exec_always "systemctl --user start sway.target;"
-
-exec "spotify;"
+exec_always {
+    systemctl --user import-environment \
+              TTY_DOTFILES \
+              TTY_SCRIPTS \
+              TTY_GIT \
+              TTY_WALLPAPER \
+              TTY_MOTTO \
+              TTY_CITY \
+              TTY_GEO \
+              TTY_NICK \
+              TTY_NAME \
+              TTY_EMAIL \
+              TTY_FINGERPRINT \
+              TTY_SIGNING \
+              CUSTOM_HERMES \
+              CUSTOM_SWITCHER \
+              DBUS_SESSION_BUS_ADDRESS \
+              DISPLAY \
+              WAYLAND_DISPLAY
+    systemctl --user start sway.target
+}
 
 exec "foot -a foot_pip tmux new-session -s t1;"
 exec "sleep 2 && swaymsg [app_id=foot_pip] focus, splitv, mark tty_pip;"
-exec "emacs;"
-exec "sleep 4 && swaymsg [app_id=emacs] move right, resize set 1165 px;"
 
 exec "foot -a foot_spterm tmux new-session -s t0;"
 exec "sleep 2 && swaymsg [app_id=foot_spterm] move scratchpad, mark tty_spterm;"
@@ -147,23 +163,16 @@ exec "sleep 5 && tmux send-keys -t t0 'ttyt00' C-m;"
 exec "sleep 5 && tmux send-keys -t t1 'ttyt01' C-m;"
 exec "sleep 5 && tmux send-keys -t t2 'ttyt02' C-m;"
 
-exec "firefox;"
-exec "sleep 4 && swaymsg [app_id=org.mozilla.firefox workspace=1] mark tty_frfx;"
-exec "sleep 6 && swaymsg [con_mark=tty_frfx] move container scratchpad;"
-exec "sleep 6 && swaymsg [app_id=org.mozilla.firefox workspace=1]" \
-     	      	     "move workspace 3;"
-
-exec "sleep 6 && swaymsg [app_id=protonvpn-app] kill;"
-exec "sleep 6 && swaymsg [title=\"Password Required - Mozilla Firefox\"] " \
-     	             "floating enable, move workspace 5;"
 exec "sleep 6 && swaymsg [app_id=gcr-prompter] move workspace 5;"
 exec "sleep 6 && swaymsg workspace 5, focus floating;"
 
 workspace 5
 
 ### Assign windows to workspaces ###
-for_window [title=Picture-in-Picture] move to mark tty_pip, \
-	       resize set height 416 px, move up
+# for_window [title=Picture-in-Picture] move to mark tty_pip, \
+#              resize set height 416 px, move up
+for_window [title="Picture-in-Picture"] floating enable, sticky enable,  \
+               resize set 320 180, move position 1575 815
 assign [class="Google-chrome"] workspace 3
 assign [class="Spotify"] workspace 4
 assign [class="discord"] workspace 5
@@ -177,7 +186,7 @@ assign [app_id="org.qbittorrent.qBittorrent"] workspace 9
 #  - /etc/sway/config.d
 #  - $XDG_CONFIG_HOME/sway/config.d ($HOME/.config/sway/config.d)
 include '$(/usr/libexec/sway/layered-include \
-	     "/usr/share/sway/config.d/*.conf" \
-	     "/etc/sway/config.d/*.conf" \
-	     "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'
+             "/usr/share/sway/config.d/*.conf" \
+             "/etc/sway/config.d/*.conf" \
+             "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'
 include switcher
