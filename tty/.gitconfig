@@ -4,6 +4,9 @@
 [mergetool]
 	keepBackup = true
 
+[transfer]
+	fsckObjects = true
+
 [core]
 	editor = emacsclient -c -a emacs
 	pager = less -iXFR
