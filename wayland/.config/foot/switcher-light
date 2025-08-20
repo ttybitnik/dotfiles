@@ -1,19 +1,17 @@
 # -*- conf -*-
 # Modus Operandi Tinted
 
-[cursor]
-color=fbf7f0 a60000  # <inverse foreground/background> bg-main/cursor
-
 [colors]
 # alpha=0.95
 background=fbf7f0
 foreground=000000
+cursor=fbf7f0 a60000  # <inverse foreground/background> bg-main/cursor
 
 ## Normal/regular colors (color palette 0-7)
 regular0=000000  # black fg-main
 regular1=a60000  # red
 regular2=006800  # green
-regular3=b2e4dc	 # yellow < bg-hover (tmux)
+regular3=b2e4dc  # yellow < bg-hover (tmux)
 regular4=0031a9  # blue
 regular5=721045  # magenta
 regular6=005e8b  # cyan
@@ -30,10 +28,10 @@ bright6=0000ff  # cyan
 bright7=efe9dd  # white bg-dim
 
 ## Misc colors
-selection-foreground=00000		# <inverse foreground/background> fg-region
-selection-background=c2bcb5	 	# <inverse foreground/background> bg-region
-jump-labels=000000 6f5500          	# black-on-yellow
-scrollback-indicator=000000 0000ff  	# black-on-bright-blue
-search-box-no-match=000000 a60000  	# black-on-red
-search-box-match=000000 6f5500     	# black-on-yellow
+selection-foreground=000000             # <inverse foreground/background> fg-region
+selection-background=c2bcb5             # <inverse foreground/background> bg-region
+jump-labels=000000 6f5500               # black-on-yellow
+scrollback-indicator=000000 0000ff      # black-on-bright-blue
+search-box-no-match=000000 a60000       # black-on-red
+search-box-match=000000 6f5500          # black-on-yellow
 urls=6f5500

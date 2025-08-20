@@ -1,13 +1,11 @@
 # -*- conf -*-
 # Modus Vivendi Tinted
 
-[cursor]
-color=0d0e1c f78fe7  # <inverse foreground/background> bg-main/cursor
-
 [colors]
 # alpha=0.95
 background=0d0e1c
 foreground=ffffff
+cursor=0d0e1c f78fe7  # <inverse foreground/background> bg-main/cursor
 
 ## Normal/regular colors (color palette 0-7)
 regular0=ffffff  # black fg-main
@@ -30,10 +28,10 @@ bright6=00eff0  # cyan
 bright7=1d2235  # white bg-dim
 
 ## Misc colors
-selection-foreground=ffffff		# <inverse foreground/background> fg-region
-selection-background=555a66	 	# <inverse foreground/background> bg-region
-jump-labels=ffffff d0bc00          	# black-on-yellow
-scrollback-indicator=ffffff 338fff   	# black-on-bright-blue
-search-box-no-match=ffffff ff5f59	# black-on-red
-search-box-match=ffffff d0bc00     	# black-on-yellow
+selection-foreground=ffffff             # <inverse foreground/background> fg-region
+selection-background=555a66             # <inverse foreground/background> bg-region
+jump-labels=ffffff d0bc00               # black-on-yellow
+scrollback-indicator=ffffff 338fff      # black-on-bright-blue
+search-box-no-match=ffffff ff5f59       # black-on-red
+search-box-match=ffffff d0bc00          # black-on-yellow
 urls=d0bc00
