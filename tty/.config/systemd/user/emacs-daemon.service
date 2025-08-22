@@ -10,7 +10,7 @@ Environment="TTY_GIT=%h/Remote/orpheus/git"
 Environment="TTY_NAME=Vinícius Moraes"
 Environment="TTY_EMAIL=vinicius.moraes@eternodevir.com"
 ExecStart=/usr/bin/emacs --fg-daemon
-ExecStop=/usr/bin/emacsclient --suppress-output --eval "(save-buffers-kill-emacs t)"
+ExecStop=/usr/bin/emacsclient --suppress-output --eval "(progn (setq confirm-kill-processes nil) (save-buffers-kill-emacs t))"
 RestartSec=10s
 StartLimitInterval=60s
 StartLimitBurst=3
