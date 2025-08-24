@@ -2,26 +2,43 @@
 
 # Tmux default session wrapper for terminal 02.
 
-podman_ps='podman ps -a --size --watch 10 --format "{{.ID}} {{.Names}} {{.Size}}'
+# OPT(podman): a=all s=size w=watch
+podman_ps='podman ps -a -s -w 10 --format "{{.ID}} {{.Names}} {{.Size}}'
 podman_ps+=' {{.PodName}} {{.Status}}\n"'
 
 # Preamble for calling the script in a non-verbose fashion
-tmux split-window -v
+tmux split-window
+# OPT(tmux): t=target-pane
 tmux swap-pane -t 0
 
 tmux rename-window @kairos
+# OPT(tmux): n=window-name
 tmux new-window -n @vertov
+# OPT(tmux): n=window-name
 tmux new-window -n @dijkstra
+# OPT(tmux): n=window-name
 tmux new-window -n @oikos
+# OPT(tmux): t=target-pane
 tmux select-window -t 0
-tmux split-window -v
-tmux split-window -v
+tmux split-window
+tmux split-window
 tmux select-layout main-vertical-mirrored
-tmux split-window -t 3 -v
+# OPT(tmux): t=target-pane
+tmux split-window -t 3
+# OPT(tmux): t=target-pane
+# OPT(journalctl): f=follow
 tmux send-keys -t 1 'journalctl -f' C-m
+# OPT(tmux): t=target-pane
+# OPT(top): e=scale-task-mem
 tmux send-keys -t 2 'top -e M' C-m
+# OPT(tmux): t=target-pane
+# OPT(virt-top): c=connect
 tmux send-keys -t 3 "virt-top -c qemu:///system" C-m
+# OPT(tmux): t=target-pane
 tmux send-keys -t 4 "$podman_ps" C-m
+# OPT(tmux): t=target-pane L=left
 tmux resize-pane -t 0 -L 40
+# OPT(tmux): t=target-pane D=down
 tmux resize-pane -t 3 -D 2
+# OPT(tmux): t=target-pane
 tmux select-pane -t 0

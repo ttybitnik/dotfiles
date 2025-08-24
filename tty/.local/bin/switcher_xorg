@@ -1,6 +1,10 @@
 #!/use/bin/env bash
 
 # Switch globally between dark/light mode.
+#   Dependencies:
+#     /usr/local/lib/tty.sh
+
+source /usr/local/lib/tty.sh
 
 readonly LINK_PATH="${HOME}/.Xresources"
 
@@ -14,6 +18,7 @@ switcher_changes() {
 	       "the real tragedy of life is when men are afraid of the light."
 	printf "— Plato\n"
 
+	# OPT(ln): s=symbolic f=force
 	ln -sf "${TTY_DOTFILES}/xorg/.config/xsettingsd/xsettingsd-light.conf" \
 	   "${HOME}/.config/xsettingsd/xsettingsd.conf"
 	ln -sf "${TTY_DOTFILES}/xorg/.Xresources-light" \
@@ -28,6 +33,7 @@ switcher_changes() {
 	       "night her shadowy offspring."
 	printf "— John Milton\n"
 
+	# OPT(ln): s=symbolic f=force
 	ln -sf "${TTY_DOTFILES}/xorg/.config/xsettingsd/xsettingsd-dark.conf" \
 	   "${HOME}/.config/xsettingsd/xsettingsd.conf"
 	ln -sf "${TTY_DOTFILES}/xorg/.Xresources-dark" \
@@ -35,8 +41,7 @@ switcher_changes() {
 	ln -sf "${HOME}/.emacs.d/local/switcher-night.el" \
 	   "${HOME}/.emacs.d/local/switcher.el"
     else
-	printf "The proper configuration files were not found.\n" >&2
-	exit 1
+	tty_fatal "%s: configuration files not found" "$(basename "$0")"
     fi
 }
 
@@ -46,13 +51,13 @@ switcher_reload() {
     killall -HUP xsettingsd
     killall -HUP urxvt
     killall -USR1 st
+    # OPT(emacsclient): e=eval
     emacsclient  --eval "(config-reload)" 1> /dev/null &
 }
 
 main() {
-    if [ ! -L "$LINK_PATH" ]; then
-	printf "Error: %s is not a symbolic link.\n" "$LINK_PATH" >&2
-	exit 1
+    if [[ ! -L "$LINK_PATH" ]]; then
+	tty_fatal "%s: '%s' not a symbolic link" "$(basename "$0")" "$LINK_PATH"
     fi
 
     switcher_changes

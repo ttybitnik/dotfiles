@@ -1,13 +1,16 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Cron/timer wrapper to log weekly audit summaries.
-#   Dependencies:
-#     ~/.local/bin/tty.sh
 
-source tty.sh
+: "${ROOT_CMD:=sudo}"
 
-tty::run_print sudo aureport --summary -ts week-ago
-
-# Command tracing via set -x because of the pipe
+# OPT(set): x=xtrace
 set -x
-sudo ausearch -m FANOTIFY -ts week-ago | sudo aureport --summary --file
+
+# OPT(aureport): ts=start
+"$ROOT_CMD" aureport --summary -ts week-ago
+
+# OPT(ausearch): m=message ts=start
+# OPT(aureport): f=file
+"$ROOT_CMD" ausearch -m FANOTIFY -ts week-ago \
+    | $ROOT_CMD aureport --summary -f

@@ -2,13 +2,14 @@
 
 # Display the battery status.
 
+# OPT(upower): i=show-info
 battery=$(upower -i /org/freedesktop/UPower/devices/battery_BAT1 \
 	      | grep percentage \
 	      | sed 's/[^0-9]//g')
 
-if [ "$battery" -ge 90 ]; then
+if [[ "$battery" -ge 90 ]]; then
     printf '%5s' " ${battery}%"
-elif [ "$battery" -ge 35 ]; then
+elif [[ "$battery" -ge 35 ]]; then
     printf '%5s' " ${battery}%"
 else
     printf '%5s' " ${battery}%"

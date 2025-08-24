@@ -9,6 +9,7 @@ readonly MOTD="$CUSTOM_HERMES"
 cat "$(dirname "${MOTD}")/logo"
 printf "@%s\n\n" "$HOSTNAME"
 printf "Last logins:\n"
+# OPT(lastlog): t=time
 lastlog -t 30 \
     | awk 'NR>1 { printf "%-20s %-15s %-5s %-4s %-12s %-8s %-8s\n", \
            $1, $2, $4, $5, $6, $7, $8, $9 }'

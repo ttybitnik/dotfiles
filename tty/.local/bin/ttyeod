@@ -1,26 +1,28 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Wrapper to run  EOD (end of day) scripts.
 #   Dependencies:
 #     ~/.local/bin/ttylog
 
-print_align_asterisk_box() {
-    local margin=30
-    local str="$1"
-    local str_len=${#str}
-    local str_difference=$(( margin - str_len ))
-    local str_offset=$(( str_difference / 2 ))
-    local str_remainder=$(( str_difference % 2 ))
+: "${ROOT_CMD:=sudo}"
 
-    if (( str_remainder == 0 )); then
+print_align_asterisk_box() {
+    margin=30
+    str="$1"
+    str_len=${#str}
+    str_difference=$(( margin - str_len ))
+    str_offset=$(( str_difference / 2 ))
+    str_remainder=$(( str_difference % 2 ))
+
+    if [ "$str_remainder" -eq 0 ]; then
 	printf "%*s\n" "$margin" '=' | tr " " "="
-        printf "%*s%s%*s\n" \
+	printf "%*s%s%*s\n" \
 	       "$str_offset" '' \
 	       "$str" "$str_offset" ''
 	printf "%*s\n" "$margin" '=' | tr " " "="
     else
 	printf "%*s\n" "$(( margin + str_remainder ))" '=' | tr " " "="
-        printf "%*s%s%*s\n" \
+	printf "%*s%s%*s\n" \
 	       "$(( str_offset + str_remainder))" '' \
 	       "$str" \
 	       "$(( str_offset + str_remainder))" ''
@@ -28,21 +30,30 @@ print_align_asterisk_box() {
     fi
 }
 
-# Prompt for sudo password only once
-sudo true
+cleanup() {
+    kill "$ROOT_CMD_ALIVE_PID" 2>/dev/null
+
+    if [ "$ROOT_CMD" = "sudo" ]; then
+	# OPT(sudo): k=reset-timestamp
+	sudo -k
+    fi
+}
+trap cleanup EXIT
+
+# Prompt for privellege escalation only once
+"$ROOT_CMD" true
 while true; do
-    sudo true
+    "$ROOT_CMD" true
     sleep 60
 done &
-SUDO_ALIVE_PID=$!
-printf "** SUDO_ALIVE_PID: %d **\n" "$SUDO_ALIVE_PID"
-trap 'kill "$SUDO_ALIVE_PID"; sudo -k' EXIT
+ROOT_CMD_ALIVE_PID=$!
+printf "** ROOT_CMD_ALIVE_PID: %d **\n" "$ROOT_CMD_ALIVE_PID"
 
 print_align_asterisk_box "Running cronaudit..."
 ttylog cronaudit
 
-print_align_asterisk_box "Running cronaide..."
-ttylog cronaide
+# print_align_asterisk_box "Running cronaide..."
+# ttylog cronaide
 
 print_align_asterisk_box "Running omni..."
 ttylog omni

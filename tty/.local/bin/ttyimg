@@ -1,69 +1,90 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Filter, compress and remove exif data for blog images.
+#   Dependencies:
+#     /usr/local/lib/tty.sh
+#     <https://www.gnu.org/software/coreutils/>
+
+. /usr/local/lib/tty.sh
+
+if command -v gshred >/dev/null 2>&1; then
+    SHUF_CMD="gshuf"
+else
+    SHUF_CMD="shuf"
+fi
+
+# OPT(uname): s={kernel,system}-name
+case $(uname -s) in
+    FreeBSD*|OpenBSD*|NetBSD*|Darwin*)
+	if [ "$SHUF_CMD" = "shuf" ]; then
+	    tty_fatal "%s: GNU Core Utilities not installed" "$(basename "$0")"
+	fi
+	;;
+esac
 
 crop="crop=in_w:in_w*9/16"
 scale="scale=min(iw\,1920):min(ih\,1080)"
 bw="colorchannelmixer=rr=0.3:rg=0.6:rb=0.1:gr=0.3:gg=0.6:gb=0.1"
-bw+=":br=0.3:bg=0.6:bb=0.1"
+bw="${bw}:br=0.3:bg=0.6:bb=0.1"
 noise="hue=s=0,boxblur=lr=1.2,noise=c0s=7:allf=t"
 compress="5"
 scratches="blend=screen:all_opacity=0.4,format=rgb24"
 
 scratch_random() {
-    local random_frame
-    random_frame=$(shuf -i 0-63 -n 1)
+    # OPT(shuf): i=input-rate n=head-count
+    random_frame=$("$SHUF_CMD" -i 0-63 -n 1)
 
+    # OPT(ffmpeg): i=input vf=filtergraph vframes=videoframes y=overwrite
     ffmpeg -i "${TTY_DOTFILES}/${filter_file}" \
-        -vf "select=eq(n\,$random_frame)'" \
-        -vframes 1 \
-        -y "${TTY_DOTFILES}/.assets/ttyimg_scratches.jpg"
+	   -vf "select=eq(n\,$random_frame)'" \
+	   -vframes 1 \
+	   -y "${TTY_DOTFILES}/.assets/ttyimg_scratches.jpg"
 }
 
 main() {
-    local crop_ratio="$1"
+    crop_ratio="$1"
     shift
 
-    if [ "$crop_ratio" == "4:3" ]; then
-        crop="crop=in_h/3*4:in_h"
+    if [ "$crop_ratio" = "4:3" ]; then
+	crop="crop=in_h/3*4:in_h"
 	scale="scale=min(iw\,1920):min(ih\,1440)"
 	filter_file=".assets/ttyimg_filter_4-3.mp4"
-    elif [ "$crop_ratio" == "3:4" ]; then
-        crop="crop=in_h/4*3:in_h"
+    elif [ "$crop_ratio" = "3:4" ]; then
+	crop="crop=in_h/4*3:in_h"
 	scale="scale=min(iw\,1440):min(ih\,1920)"
 	filter_file=".assets/ttyimg_filter_3-4.mp4"
-    elif [ "$crop_ratio" == "16:9" ]; then
-        crop="crop=in_w:in_w*9/16"
+    elif [ "$crop_ratio" = "16:9" ]; then
+	crop="crop=in_w:in_w*9/16"
 	scale="scale=min(iw\,1920):min(ih\,1080)"
 	filter_file=".assets/ttyimg_filter_16-9.mp4"
-    elif [ "$crop_ratio" == "9:16" ]; then
-        crop="crop=in_w:in_w*16/9"
+    elif [ "$crop_ratio" = "9:16" ]; then
+	crop="crop=in_w:in_w*16/9"
 	scale="scale=min(iw\,1080):min(ih\,1920)"
 	filter_file=".assets/ttyimg_filter_9-16.mp4"
     else
-        echo "Invalid crop ratio. Choose either 4:3, 3:4, 16:9 or 9:16." >&2
-        exit 1
+	tty_fatal "%s: invalid crop ratio: choose either 4:3, 3:4, 16:9 or 9:16" \
+		  "$(basename "$0")"
     fi
 
     while [ "$#" -gt 0 ]; do
-        local filename="$1"
-        shift
+	filename="$1"
+	shift
 
-        scratch_random
+	scratch_random
 
-        ffmpeg -i "$filename" \
-            -i "${TTY_DOTFILES}/.assets/ttyimg_scratches.jpg" \
-            -filter_complex "${crop}, ${scale}, ${bw}, ${noise}, ${scratches}" \
-            -q:v "${compress}" \
-            "ttyimg_${filename}"
+	# OPT(ffmpeg): i=input q=quality-scale
+	ffmpeg -i "$filename" \
+	       -i "${TTY_DOTFILES}/.assets/ttyimg_scratches.jpg" \
+	       -filter_complex "${crop}, ${scale}, ${bw}, ${noise}, ${scratches}" \
+	       -q:v "${compress}" \
+	       "ttyimg_${filename}"
 
-        exiftool -overwrite_original -All= "ttyimg_${filename}"
+	exiftool -overwrite_original -All= "ttyimg_${filename}"
     done
 }
 
-if [ $# -lt 2 ]; then
-    printf "Usage: ttyimg [crop_ratio] [filename0] [filename1] [...]\n" >&2
-    exit 1
+if [ "$#" -lt 2 ]; then
+    tty_usage "%s <crop_ratio> <file> [<file>...]" "$(basename "$0")"
 fi
 
 crop_ratio="$1"

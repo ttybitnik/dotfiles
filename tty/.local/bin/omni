@@ -1,19 +1,22 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Update software on a variety of OS and managers.
 #   Thanks to @branneman for sharing
 #   these functions idea.
 
-# Exit immediately if any command fails
+# OPT(set): e=errexit
 set -e
+
+: "${ROOT_CMD:=sudo}"
 
 run() {
     printf "\n+ %s \n\n" "$1"
+    # Intentionally unquoted
     $1
 }
 
 run_if_exists() {
-    if [ -x "$(command -v "$1")" ]; then
+    if command -v "$1" >/dev/null 2>&1; then
 	run "$2"
     fi
 }
@@ -22,24 +25,24 @@ run_if_exists() {
 #				    Distros
 #===============================================================================
 # Arch
-run_if_exists "pacman" "sudo pacman -Syu"
+run_if_exists "pacman" "$ROOT_CMD pacman -Syu"
 
 # Debian
-run_if_exists "apt" "sudo apt update"
-run_if_exists "apt" "sudo apt upgrade -y"
+run_if_exists "apt" "$ROOT_CMD apt update"
+run_if_exists "apt" "$ROOT_CMD apt upgrade -y"
 
 # Fedora
-run_if_exists "dnf" "sudo dnf update -y"
+run_if_exists "dnf" "$ROOT_CMD dnf update -y"
 
 # FreeBSD
-run_if_exists "pkg" "sudo pkg update"
-run_if_exists "pkg" "sudo pkg upgrade -y"
+run_if_exists "pkg" "$ROOT_CMD pkg update"
+run_if_exists "pkg" "$ROOT_CMD pkg upgrade -y"
 
 # Slackware
-run_if_exists "slackpkg" "sudo slackpkg update"
-run_if_exists "slackpkg" "sudo slackpkg upgrade-all"
-run_if_exists "sbocheck" "sudo sbocheck"
-run_if_exists "sbocheck" "sudo sboupgrade --all"
+run_if_exists "slackpkg" "$ROOT_CMD slackpkg update"
+run_if_exists "slackpkg" "$ROOT_CMD slackpkg upgrade-all"
+run_if_exists "sbocheck" "$ROOT_CMD sbocheck"
+run_if_exists "sbocheck" "$ROOT_CMD sboupgrade --all"
 
 # MacOS
 run_if_exists "brew" "brew update"
@@ -55,13 +58,13 @@ run_if_exists "winget" "winget upgrade --all"
 run_if_exists "flatpak" "flatpak update -y"
 
 # Snap
-run_if_exists "snap" "sudo snap refresh"
+run_if_exists "snap" "$ROOT_CMD snap refresh"
 
 #===============================================================================
 #				 Miscellaneous
 #===============================================================================
 # ClamAV Database
-run_if_exists "freshclam" "sudo freshclam"
+run_if_exists "freshclam" "$ROOT_CMD freshclam"
 
 # GNU Emacs
 run_if_exists "emacs" "cronemacs"

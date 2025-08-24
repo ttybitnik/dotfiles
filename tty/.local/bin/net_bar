@@ -2,11 +2,14 @@
 
 # Display the network traffic in physical interfaces (using RAM for cache).
 
+# OPT(id): u=user
 CACHE_DIR="/run/user/$(id -u)/net_bar"
+# OPT(mkdir): p=parents
 mkdir -p "$CACHE_DIR"
 
 update() {
     local sum=0
+    # OPT(read): r=no-backslashes
     for arg; do
         read -r i < "$arg"
         sum=$((sum + i))
@@ -14,6 +17,7 @@ update() {
     cache="$CACHE_DIR/$(basename "$1")"
 
     local old=0
+    # OPT(read): r=no-backslashes
     [[ -f "$cache" ]] && read -r old < "$cache"
 
     if (( sum < old )); then

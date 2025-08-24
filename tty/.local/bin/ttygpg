@@ -1,43 +1,67 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Encryption with AES256 and original file deletion.
+#   Dependencies:
+#     /usr/local/lib/tty.sh
+#     <https://www.gnu.org/software/coreutils/>
+
+. /usr/local/lib/tty.sh
+
+if command -v gshred >/dev/null 2>&1; then
+    SHRED_CMD="gshred"
+else
+    SHRED_CMD="shred"
+fi
+
+# OPT(uname): s={kernel,system}-name
+case $(uname -s) in
+    FreeBSD*|OpenBSD*|NetBSD*|Darwin*)
+	if [ "$SHRED_CMD" = "shred" ]; then
+	    tty_fatal "%s: GNU Core Utilities not installed" "$(basename "$0")"
+	fi
+	;;
+esac
 
 delete_if_exist() {
-    local encrypted_file
     encrypted_file="$(ls "${1}.gpg")"
 
     if [ -f "$encrypted_file" ]; then
-	printf "File '%s' encrypted successfully.\n" "$encrypted_file"
-	read -r -p "Remove original file using shred (y/n)?" response
+	tty_info "%s: successfully encrypted '%s'" \
+		 "$(basename "$0")" "$encrypted_file"
+	printf "Remove original file using shred (y/n)? "
+	# OPT(read): r=no-backslashes
+	read -r response
 	response=$(printf "%s" "$response" | tr '[:upper:]' '[:lower:]')
 
-	while [[ "$response" != "y" && "$response" != "n" ]]; do
-	    read -r -p "Invalid input. Remove original file (y/n)?" response
+	while [ "$response" != "y" ] && [ "$response" != "n" ]; do
+	    printf "Invalid input. Remove original file (y/n)? "
+	    # OPT(read): r=no-backslashes
+	    read -r response
 	    response=$(printf "%s" "$response" | tr '[:upper:]' '[:lower:]')
 	done
 
 	if [ "$response" = "y" ]; then
-	    shred -z -u -v "$1"
+	    # OPT(shred): z=zero u=dealloc-remove v=verbose
+	    "$SHRED_CMD" -z -u -v "$1"
 	else
 	    exit 0
 	fi
     else
-	printf "Error. Original file does not exist.\n" >&2
-	exit 1
+	tty_fatal "%s: file not found: '%s'" \
+		  "$(basename "$0")" "$encrypted_file"
     fi
 }
 
 main() {
+    # OPT(gpg): c=symmetric
     gpg -c --no-symkey-cache --cipher-algo AES256 "$1"
     delete_if_exist "$@"
 }
 
-if [ $# != 1 ]; then
-    printf "Error. Wrong number of arguments.\n" >&2
-    exit 1
+if [ "$#" -ne 1 ]; then
+    tty_fatal "%s: wrong number of arguments" "$(basename "$0")"
 elif [ ! -f "$1" ]; then
-    printf "Error. The file '%s' does not exist.\n" "$1" >&2
-    exit 1
+    tty_fatal "%s: file not found: '%s'" "$(basename "$0")" "$1"
 else
     main "$@"
 fi

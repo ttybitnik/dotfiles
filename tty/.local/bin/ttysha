@@ -1,10 +1,13 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Rename file to its SHA256 digest with desired char length (default 16).
+#   Dependencies:
+#     /usr/local/lib/tty.sh
+
+. /usr/local/lib/tty.sh
 
 if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
-    printf "Usage: %s <filename> [char_length]\n" "$(basename "$0")"
-    exit 1
+    tty_usage "%s <filename> [char_length]" "$(basename "$0")"
 fi
 
 file="$1"
@@ -13,13 +16,15 @@ char_len="${2:-16}"
 file_base="${file%.*}"
 file_extension="${file##*.}"
 
+# OPT(awk): v=var
 file_sha=$(sha256sum "$file" | awk -v len="$char_len" \
 				   '{print substr($1, 1, len)}')
 new_filename="${file_base}-${file_sha}.${file_extension}"
 
-if [[ "$file_base" =~ -[a-fA-F0-9]{${char_len}}$ ]]; then
-    printf "Error: file %s already has the SHA256 digest in its name.\n" "$file"
-    exit 1
+if expr "$file_base" : ".*-[a-fA-F0-9]\{$char_len\}$" >/dev/null; then
+    tty_fatal "%s: file already named with SHA256 digest: '%s'" \
+	      "$(basename "$0")" "$file"
 fi
 
+# OPT(mv): v=verbose
 mv -v "$file" "$new_filename"

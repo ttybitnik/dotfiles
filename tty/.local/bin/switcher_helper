@@ -8,12 +8,14 @@
 
 readonly STATE_FILE="$CUSTOM_SWITCHER"
 
-current_hour=$(date +"%H")
+current_hour=$(date +"%h")
 
-if [ "$current_hour" -ge 6 ] && [ "$current_hour" -lt 17 ]; then
+if (( current_hour >= 6 && current_hour < 17 )); then
     printf "dark" > "$STATE_FILE"
+    # OPT(switcher): nr=no-reload
     "${HOME}"/.local/bin/switcher -nr
 else
     printf "light" > "$STATE_FILE"
+    # OPT(switcher): nr=no-reload
     "${HOME}"/.local/bin/switcher -nr
 fi

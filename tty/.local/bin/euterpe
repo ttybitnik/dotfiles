@@ -2,8 +2,9 @@
 
 # Set up tmux sound related windows.
 
+# OPT(tmux): t=target-session s=session-name
 tmux attach-session -t euterpe || tmux new-session -s euterpe
 
+# OPT(tmux): n=window-name c=start-directory
 tmux new-window -n volume -c "$HOME" 'pulsemixer'
-
 tmux new-window -n spotify -c "$HOME" 'spt'

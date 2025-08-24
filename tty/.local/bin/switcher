@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
 # Switch globally between dark/light mode.
+#   Dependencies:
+#     /usr/local/lib/tty.sh
+
+source /usr/local/lib/tty.sh
 
 readonly DOTFILES="$TTY_DOTFILES"
 readonly STATE_FILE="$CUSTOM_SWITCHER"
@@ -17,6 +21,7 @@ switcher_changes() {
 	       "the real tragedy of life is when men are afraid of the light."
 	printf "— Plato\n"
 
+	# OPT(ln): s=symbolic f=force
 	ln -sf "${HOME}/.emacs.d/local/switcher-day.el" \
 	   "${HOME}/.emacs.d/local/switcher.el"
 	ln -sf "${DOTFILES}/wayland/.config/gtk-3.0/switcher-light" \
@@ -42,6 +47,7 @@ switcher_changes() {
 	       "night her shadowy offspring."
 	printf "— John Milton\n"
 
+	# OPT(ln): s=symbolic f=force
 	ln -sf "${HOME}/.emacs.d/local/switcher-night.el" \
 	   "${HOME}/.emacs.d/local/switcher.el"
 	ln -sf "${DOTFILES}/wayland/.config/gtk-3.0/switcher-dark" \
@@ -59,17 +65,24 @@ switcher_changes() {
 	gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 
     else
-	printf "The proper configuration files were not found. Check %s.\n" \
-	       "${STATE_FILE}" >&2
-	exit 1
+	tty_fatal "configuration files not found: check '%s'" "${STATE_FILE}"
     fi
 }
 
 switcher_reload() {
-    swaymsg reload
-    emacsclient --eval "(config-reload/ttybitnik)" > /dev/null 2>&1 &
-    killall -USR1 foot
-    killall dunst && dunst > /dev/null 2>&1  &
+    # OPT(emacsclient): e=eval
+    if ! swaymsg reload
+    then
+	tty_notify_error "%s: swaymsg reload failed with exit code %d" \
+			 "$(basename "$0")" "$?"
+    fi
+
+    emacsclient -e "(config-reload/ttybitnik)" >/dev/null 2>&1 &
+
+    killall -USR1 foot 2>/dev/null || true
+
+    killall dunst 2>/dev/null || true
+    dunst >/dev/null 2>&1 &
 }
 
 main() {
@@ -77,14 +90,15 @@ main() {
 	toggle=light
     fi
 
-    if [ "$1" = "-nr" ]; then
+    if [[ "$1" == "-nr" ]]; then
 	no_reload=true
     fi
 
     switcher_changes
 
     if [[ "$no_reload" = false ]]; then
-    switcher_reload
+	switcher_reload
+	tty_notify_info "%s: color scheme reloaded" "$(basename "$0")"
     fi
 
     printf "%s" "$toggle" > "$STATE_FILE"

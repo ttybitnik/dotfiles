@@ -1,10 +1,12 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Cron/timer wrapper to log and manage aide updates.
-#   Dependencies:
-#     ~/.local/bin/tty.sh
 
-source tty.sh
+: "${ROOT_CMD:=sudo}"
 
-tty::run_print sudo aide --update
-tty::run_print sudo mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
+# OPT(set): x=xtrace
+set -x
+
+# OPT(aide): u=update
+"$ROOT_CMD" aide -u
+"$ROOT_CMD" mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz

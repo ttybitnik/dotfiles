@@ -2,6 +2,7 @@
 
 # Display the lan status.
 
+# OPT(grep): E=extended-regexp
 lan=$(networkctl list | grep -E "(ether|bridge).*routable" | awk '{print $2}')
 
 if [[ -n "$lan" ]]; then

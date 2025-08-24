@@ -1,8 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Tmux default session wrapper for terminal 00.
 
 # Preamble for calling the script in a non-verbose fashion
-tmux split-window -v
+tmux split-window
+# OPT(tmux): t=target-pane
 tmux select-pane -t 0
 tmux kill-pane

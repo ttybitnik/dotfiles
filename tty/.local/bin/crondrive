@@ -1,19 +1,28 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Cron/timer script to sync changes between remote and local directories.
 #   Dependencies:
-#     ~/.local/bin/tty.sh
+#     /usr/local/lib/tty.sh
 
-source tty.sh
+. /usr/local/lib/tty.sh
 
-declare -A remotes
-remotes[orpheus]="${HOME}/Remote/orpheus/"
-remotes[prometheus]="${HOME}/Remote/prometheus/"
+for drive in orpheus prometheus; do
+    case $drive in
+	orpheus) dir="${HOME}/Remote/orpheus/" ;;
+	prometheus) dir="${HOME}/Remote/prometheus/" ;;
+        *) tty_fatal "%s: unknown drive: '%s'" "$(basename "$0")" "$drive" ;;
+    esac
 
-for drive in "${!remotes[@]}"; do
-    path="${remotes[$drive]}"
-    tty::run_print rclone sync "$path" "${drive}:" --verbose \
-		   --skip-links --exclude ".git/"
-    err=$?
-    tty::notify_fatal "$0" "$err" "rclone $drive"
+    if [ ! -d "$dir" ]; then
+	tty_fatal "%s: '%s' directory not found" \
+		  "$(basename "$0")" "$dir"
+    fi
+
+    # OPT(rclone): v=verbose
+    if ! tty_run_print rclone sync "$dir" "${drive}:" -v \
+	 --skip-links --exclude ".git/"
+    then
+	tty_notify_fatal "%s: rclone sync failed for '%s' with exit code %d" \
+			 "$(basename "$0")" "$drive" "$?"
+    fi
 done

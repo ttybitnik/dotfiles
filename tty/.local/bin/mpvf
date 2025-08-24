@@ -2,11 +2,11 @@
 
 # Wrapper script for mpv and firefox.
 
-if [ -z "$1" ]; then
-    printf "Usage: mpvf <user>\n"
-    exit 1
+if [[ -z "$1" ]]; then
+    tty_usage "%s <user>" "$(basename "$0")"
 fi
 
+# OPT(base64): d=decode
 BASE_T="$(printf "aHR0cHM6Ly93d3cudHdpdGNoLnR2" | base64 -d)"
 USR="${1}"
 URL="${BASE_T}/${USR}"

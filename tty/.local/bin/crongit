@@ -1,30 +1,39 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Cron/timer script to commit/update changes from local git repos.
 #   Dependencies:
-#     ~/.local/bin/tty.sh
+#     /usr/local/lib/tty.sh
 
-source tty.sh
+. /usr/local/lib/tty.sh
 
-repo_paths=(
-    "${HOME}/Remote/orpheus/gnu-emacs/org"
-    "${HOME}/Remote/orpheus/gnu-emacs/org-roam"
-)
+set -- \
+    "${HOME}/Remote/orpheus/gnu-emacs/org/" \
+    "${HOME}/Remote/orpheus/gnu-emacs/org-roam/"
 
-for p in "${repo_paths[@]}"; do
-    tty::run_print cd "$p" 2> /dev/null \
-	|| tty::fatal "Error: Unable to change directory to $p"
+for dir in "$@"; do
+    if ! cd "$dir"
+    then
+	tty_fatal "%s: cannot change to directory '%s'" \
+		  "$(basename "$0")" "$dir"
+    fi
 
     if [ -z "$(git status --porcelain)" ]; then
-	printf "Nothing to commit, working tree clean\n"
+	tty_info "%s: git working tree clean: nothing to commit" \
+		 "$(basename "$0")"
 	continue
     else
-	tty::run_print git add -A
-	err=$?
-	tty::notify_fatal "$0" "$err" "git add $p"
+	# OPT(git): A=all
+	if ! tty_run_print git add -A
+	then
+	    tty_fatal "%s: git add failed with exit code %d" \
+		      "$(basename "$0")" "$?"
+	fi
 
-	tty::run_print git commit -m "Update on $(LANG=C date)"
-	err=$?
-	tty::notify_fatal "$0" "$err" "git commit $p"
+	# OPT(git): m=message
+	if ! tty_run_print git commit -m "Update on $(LANG=C date)"
+	then
+	    tty_fatal "%s: git commit failed with exit code %d" \
+		      "$(basename "$0")" "$?"
+	fi
     fi
 done

@@ -2,33 +2,41 @@
 
 # Share ephemeral files and snippets through <https://0x0.st>.
 #   Dependencies:
+#     /usr/local/lib/tty.sh
 #     ~/.local/bin/ttylog
 
+source /usr/local/lib/tty.sh
+
 if [[ ! -f "$1" ]]; then
-    printf "%s: wrong argument, not a file: %s.\n" \
-	   "$(basename "$0")" \
-	   "$1" >&2
-    exit 1
+    tty_fatal "%s: invalid file '%s': must be existing regular file" \
+	      "$(basename "$0")" "$1"
 fi
 
-if [ -n "$2" ]; then
+if [[ -n "$2" ]]; then
     if [[ "$2" =~ ^[1-9][0-9]{0,2}$ ]]; then
 	expiration="${2}"
     else
-	printf "%s: wrong argument, expiration must be max 3-digit int: %s.\n" \
-	       "$(basename "$0")" \
-	       "$2" >&2
-	exit 1
+	tty_fatal "%s: invalid expiration '%s': must be 1-3 digit integer" \
+		  "$(basename "$0")" "$2"
     fi
 else
     expiration=24
 fi
 
-cmd=("curl" "-A" "curl" "-i" "-Ffile=@${1}" "-Fexpires=$expiration" "https://0x0.st")
+# OPT(curl): A=user-agent i=show-headers F=form
+cmd=(
+    "curl"
+    "-A" "curl"
+    "-i"
+    "-F" "file=@${1}"
+    "-F" "expires=$expiration"
+    "https://0x0.st"
+)
 
 printf "+"
 printf " %s" "${cmd[@]}"
 printf "\n"
+# OPT(read): r=no-backslashes p=prompt
 read -rp "Run the command above and share $1 for ${expiration}h? [y/N]: " confirm
 
 if [[ "$confirm" =~ ^[Yy]([Ee][Ss])?$ ]]; then

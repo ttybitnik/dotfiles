@@ -1,46 +1,45 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Script for handling APIs and secrets in a encrypted fashion.
 #   Dependencies:
-#     ~/.ttypas2.gpg for setting privately arrays with secrets info
-#   Arrays structure:
+#     /usr/local/lib/tty.sh
+#     ~/.ttypas2.gpg for setting secrets info
+#   Structure:
 #     service secret_path
 
-readonly PASS_PATH="${HOME}/.ttypas2.gpg"
+. /usr/local/lib/tty.sh
+
+readonly PASS_FILENAME="${HOME}/.ttypas2.gpg"
 
 validate() {
-    if [ ! -f "$PASS_PATH" ]; then
-	printf "Error: path file not found.\n" >&2
-	exit 1
+    if [ ! -f "$PASS_FILENAME" ]; then
+	tty_fatal "%s: file not found: '%s'" "$(basename "$0")" "$PASS_FILENAME"
     fi
 
-    if [ $# -ne 1 ]; then
-	printf "Usage: ttypas <service>\n" >&2
-	exit 1
+    if [ "$#" -ne 1 ]; then
+	tty_usage "%s <service>" "$(basename "$0")"
     fi
 }
 
 access() {
-    local pass_service
-    local pass_info
-    local pass_gpg
-
     pass_service="$1"
-    pass_info=$(gpg --decrypt "$PASS_PATH" | grep "^$pass_service")
+    # OPT(gpg): d=decrypt
+    pass_info=$(gpg -d "$PASS_FILENAME" | grep "^$pass_service")
 
     if [ -z "$pass_info" ]; then
-	printf "Service not found: %s.\n" "$pass_service" >&2
-	exit 1
+	tty_fatal "%s: service not found: '%s'" \
+		  "$(basename "$0")" "$pass_service"
     fi
 
     pass_gpg=$(printf "%s" "$pass_info" | awk '{print $2}')
-    gpg --decrypt "$pass_gpg"
-    err=$?
-
-    if [ $err == 0 ]; then
-    notify-send --urgency=critical "$(basename "$0") $(basename "$1")" \
-		"Password accessed"
+    # OPT(gpg): d=decrypt
+    if ! gpg -d "$pass_gpg"
+    then
+	tty_fatal "%s: gpg failed with exit code %d" "$(basename "$0")" "$?"
     fi
+
+    tty_notify_error "%s: %s password accesssed" \
+		     "$(basename "$0")" "$(basename "$1")"
 }
 
 validate "$@"

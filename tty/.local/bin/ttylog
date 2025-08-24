@@ -1,39 +1,63 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Standard for logging commands (ISO 8601 and POSIX).
 #   Dependencies:
-#     ~/.local/bin/tty.sh
+#     /usr/local/lib/tty.sh
+#     <https://www.gnu.org/software/coreutils/>
 
-source tty.sh
+. /usr/local/lib/tty.sh
 
-timestamp=$(date +%Y%m%dT%H%M%S)
+if command -v gshred >/dev/null 2>&1; then
+    DATE_CMD="gdate"
+else
+    DATE_CMD="date"
+fi
+
+# OPT(uname): s={kernel,system}-name
+case $(uname -s) in
+    FreeBSD*|OpenBSD*|NetBSD*|Darwin*)
+	if [ "$DATE_CMD" = "date" ]; then
+	    tty_fatal "%s: GNU Core Utilities not installed" "$(basename "$0")"
+	fi
+	;;
+esac
+
+timestamp=$("$DATE_CMD" +%Y%m%dT%H%M%S)
+# OPT(uname): n=nodename
 nodename=$(uname -n)
 logfile_tmp=$(mktemp)
 
-logfile_trap() {
+cleanup() {
     if [ -e "$logfile_tmp" ]; then
 	rm "$logfile_tmp"
     fi
 }
-trap 'logfile_trap' EXIT
+trap 'cleanup' EXIT
 
 lambda() {
     printf "+> %s\n" "$*"
+    # OPT(time): p=portability
     time -p "$@"
     err=$?
     return "$err"
 }
 
-lambda "$@" 2>&1  | tee "$logfile_tmp"
-err=${PIPESTATUS[0]}
+err_pipe=$(mktemp)
+(lambda "$@" 2>&1; printf "%d" "$?" > "$err_pipe") | tee "$logfile_tmp"
+err=$(cat "$err_pipe")
 
 logfile_r="${HOME}/Remote/orpheus/ttylogs/${nodename}_${timestamp}_"
-logfile_r+="${1}_${err}.log.xz"
-tty::notify_urgent "ttylog $1" "$err" "$(basename "$logfile_r")"
+logfile_r="${logfile_r}${1}_${err}.log.xz"
+
+if [ "$err" != 0 ]; then
+    tty_notify_fatal "%s: %s failed with exit code %d: '%s'" \
+		     "$(basename "$0")" "$1" "$err" "$(basename "$logfile_r")"
+fi
 
 xz "$logfile_tmp"
 mv "${logfile_tmp}.xz" "$logfile_r"
 chmod 400 "$logfile_r"
 chcon unconfined_u:object_r:user_home_t:s0 "$logfile_r"
 
-notify-send "ttylog $1" "Execution complete: $(basename "$logfile_r")"
+tty_notify_info "%s: %s execution complete: '%s'" \
+		 "$(basename "$0")" "$1" "$(basename "$logfile_r")"

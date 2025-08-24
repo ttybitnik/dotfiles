@@ -3,6 +3,7 @@
 # Display a power menu.
 
 options=$(printf "\uf023 Lock\n\uf08b Logout\n\uf021 Reboot\n\uf011 Shutdown")
+# OPT(dmnu): i=case-insensitive p=prompt
 selected=$(printf "%s" "$options" | dmenu -i -p "Select an option:")
 
 case "$selected" in

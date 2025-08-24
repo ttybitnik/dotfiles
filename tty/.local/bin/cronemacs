@@ -1,6 +1,7 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Cron/timer wrapper to log and update GNU Emacs packages.
 
 swaymsg "splitv;"
+# OPT(emacsclient): c=create-frame n=no-wait e=eval
 emacsclient -c -n -e "(omni-emacs/ttybitnik)"

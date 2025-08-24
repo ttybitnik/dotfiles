@@ -1,7 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Tmux default session wrapper for terminal 01.
 
-tmux split-window -v
+tmux split-window
+# OPT(journalctl): f=follow
 journalctl -f
+# OPT(tmux): t=target-pane
 tmux select-pane -t 1
