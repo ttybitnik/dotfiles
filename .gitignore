@@ -1,4 +1,15 @@
+.switcher_state
 /tty/.config/systemd/user/*target.wants/
 /.assets/ttyimg_scratches.jpg
 /tty/.config/hermes/motd.log
 /tty/.local/share/applications/*.cache
+
+# Symlinks
+**/*@
+# Internal symlinks
+wayland/.config/dunst/dunstrc.d/80-switcher.conf
+wayland/.config/foot/switcher
+wayland/.config/gtk-3.0/settings.ini
+wayland/.config/rofi/switcher.rasi
+wayland/.config/sway/switcher
+wayland/.config/waybar/style.css
