@@ -9,8 +9,8 @@ source /usr/local/lib/tty.sh
 readonly DOTFILES="$TTY_DOTFILES"
 readonly STATE_FILE="$CUSTOM_SWITCHER"
 
-toggle=$(cat "$STATE_FILE" 2>/dev/null)
 no_reload=false
+toggle=$(cat "$STATE_FILE" 2>/dev/null) || toggle="light"
 
 switcher_changes() {
     if [[ "$toggle" == dark ]]; then
@@ -86,10 +86,6 @@ switcher_reload() {
 }
 
 main() {
-    if [[ -z "$toggle" ]]; then
-	toggle=light
-    fi
-
     if [[ "$1" == "-nr" ]]; then
 	no_reload=true
     fi
