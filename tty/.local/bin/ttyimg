@@ -3,22 +3,18 @@
 # Filter, compress and remove exif data for blog images.
 #   Dependencies:
 #     /usr/local/lib/tty.sh
-#     <https://www.gnu.org/software/coreutils/>
 
 . /usr/local/lib/tty.sh
-
-if command -v gshred >/dev/null 2>&1; then
-    SHUF_CMD="gshuf"
-else
-    SHUF_CMD="shuf"
-fi
 
 # OPT(uname): s={kernel,system}-name
 case $(uname -s) in
     FreeBSD*|OpenBSD*|NetBSD*|Darwin*)
-	if [ "$SHUF_CMD" = "shuf" ]; then
-	    tty_fatal "%s: GNU Core Utilities not installed" "$(basename "$0")"
-	fi
+	# OPT(jot): r=random
+	_shuf0() { jot -r 1 0 63; }
+	;;
+    *)
+	# OPT(shuf): i=input-rate n=head-count
+	_shuf0() { shuf -i 0-63 -n 1; }
 	;;
 esac
 
@@ -31,8 +27,7 @@ compress="5"
 scratches="blend=screen:all_opacity=0.4,format=rgb24"
 
 scratch_random() {
-    # OPT(shuf): i=input-rate n=head-count
-    random_frame=$("$SHUF_CMD" -i 0-63 -n 1)
+    random_frame=$(_shuf0)
 
     # OPT(ffmpeg): i=input vf=filtergraph vframes=videoframes y=overwrite
     ffmpeg -i "${TTY_DOTFILES}/${filter_file}" \

@@ -3,24 +3,22 @@
 # Naming standard for backups (ISO 8601).
 #   Dependencies:
 #     /usr/local/lib/tty.sh
-#     <https://www.gnu.org/software/coreutils/>
 
 . /usr/local/lib/tty.sh
-
-if command -v gdate >/dev/null 2>&1; then
-    DATE_CMD="gdate"
-    STAT_CMD="gnustat"
-else
-    DATE_CMD="date"
-    STAT_CMD="stat"
-fi
 
 # OPT(uname): s={kernel,system}-name
 case $(uname -s) in
     FreeBSD*|OpenBSD*|NetBSD*|Darwin*)
-	if [ "$DATE_CMD" = "date" ]; then
-	    tty_fatal "%s: GNU Core Utilities not installed" "$(basename "$0")"
-	fi
+	# OPT(date): r=reference-time
+	_date0() { date -r "@$1" "+%Y%m%dT%H%M%S"; }
+	# OPT(stat): f=format
+	_stat0() { stat -f %m "$1"; }
+	;;
+    *)
+	# OPT(date): d=date
+	_date0() { date -d "@$1" "+%Y%m%dT%H%M%S"; }
+	# OPT(stat): c=format
+	_stat0() { stat -c %Y "$1"; }
 	;;
 esac
 
@@ -49,10 +47,8 @@ main() {
     prompt_input
     filename=$(basename -- "$1")
     extensions="${filename#*.}"
-    # OPT(stat): c=format
-    modification_epoch=$("$STAT_CMD" -c %Y "$1")
-    # OPT(date): d=date
-    modification_timestamp=$("$DATE_CMD" -d "@$modification_epoch" +"%Y%m%dT%H%M%S")
+    modification_epoch=$(_stat0 "$1")
+    modification_timestamp=$(_date0 "$modification_epoch")
 
     new_filename="${domain}_${scope}_${modification_timestamp}.${extensions}"
 

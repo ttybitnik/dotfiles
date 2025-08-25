@@ -3,22 +3,18 @@
 # Encryption with AES256 and original file deletion.
 #   Dependencies:
 #     /usr/local/lib/tty.sh
-#     <https://www.gnu.org/software/coreutils/>
 
 . /usr/local/lib/tty.sh
-
-if command -v gshred >/dev/null 2>&1; then
-    SHRED_CMD="gshred"
-else
-    SHRED_CMD="shred"
-fi
 
 # OPT(uname): s={kernel,system}-name
 case $(uname -s) in
     FreeBSD*|OpenBSD*|NetBSD*|Darwin*)
-	if [ "$SHRED_CMD" = "shred" ]; then
-	    tty_fatal "%s: GNU Core Utilities not installed" "$(basename "$0")"
-	fi
+	# OPT(rm): f=force v=verbose
+	_shred0() { rm -f -v "$1"; }
+	;;
+    *)
+	# OPT(shred): z=zero u=dealloc-remove v=verbose
+	_shred0() { shred -z -u -v "$1"; }
 	;;
 esac
 
@@ -28,7 +24,7 @@ delete_if_exist() {
     if [ -f "$encrypted_file" ]; then
 	tty_info "%s: file successfully encrypted: '%s'" \
 		 "$(basename "$0")" "$encrypted_file"
-	printf "Remove original file using shred (y/n)? "
+	printf "Remove original file (y/n)? "
 	# OPT(read): r=no-backslashes
 	read -r response
 	response=$(printf "%s" "$response" | tr '[:upper:]' '[:lower:]')
@@ -41,8 +37,8 @@ delete_if_exist() {
 	done
 
 	if [ "$response" = "y" ]; then
-	    # OPT(shred): z=zero u=dealloc-remove v=verbose
-	    "$SHRED_CMD" -z -u -v "$1"
+	    _shred0 "$1"
+	    tty_info "original file removed: '%s'" "$1"
 	else
 	    exit 0
 	fi

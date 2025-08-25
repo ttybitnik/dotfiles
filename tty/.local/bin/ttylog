@@ -3,26 +3,20 @@
 # Standard for logging commands (ISO 8601 and POSIX).
 #   Dependencies:
 #     /usr/local/lib/tty.sh
-#     <https://www.gnu.org/software/coreutils/>
 
 . /usr/local/lib/tty.sh
-
-if command -v gshred >/dev/null 2>&1; then
-    DATE_CMD="gdate"
-else
-    DATE_CMD="date"
-fi
 
 # OPT(uname): s={kernel,system}-name
 case $(uname -s) in
     FreeBSD*|OpenBSD*|NetBSD*|Darwin*)
-	if [ "$DATE_CMD" = "date" ]; then
-	    tty_fatal "%s: GNU Core Utilities not installed" "$(basename "$0")"
-	fi
-	;;
+	_date0() { date "+%Y%m%dT%H%M%S"; }
+        ;;
+    *)
+	_date0() { date "+%Y%m%dT%H%M%S"; }
+        ;;
 esac
 
-timestamp=$("$DATE_CMD" +%Y%m%dT%H%M%S)
+timestamp=$(_date0)
 # OPT(uname): n=nodename
 nodename=$(uname -n)
 logfile_tmp=$(mktemp)
@@ -60,4 +54,4 @@ chmod 400 "$logfile_r"
 chcon unconfined_u:object_r:user_home_t:s0 "$logfile_r"
 
 tty_notify_info "%s: %s execution complete: '%s'" \
-		 "$(basename "$0")" "$1" "$(basename "$logfile_r")"
+		"$(basename "$0")" "$1" "$(basename "$logfile_r")"
