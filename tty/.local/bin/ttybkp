@@ -57,7 +57,7 @@ main() {
     new_filename="${domain}_${scope}_${modification_timestamp}.${extensions}"
 
     mv "$1" "$new_filename"
-    tty_info "%s: new file name '%s'" "$(basename "$0")" "$new_filename"
+    tty_info "%s: new file name: '%s'" "$(basename "$0")" "$new_filename"
 }
 
 if [ "$#" -ne 1 ]; then

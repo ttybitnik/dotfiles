@@ -26,7 +26,7 @@ delete_if_exist() {
     encrypted_file="$(ls "${1}.gpg")"
 
     if [ -f "$encrypted_file" ]; then
-	tty_info "%s: successfully encrypted '%s'" \
+	tty_info "%s: file successfully encrypted: '%s'" \
 		 "$(basename "$0")" "$encrypted_file"
 	printf "Remove original file using shred (y/n)? "
 	# OPT(read): r=no-backslashes

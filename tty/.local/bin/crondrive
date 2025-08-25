@@ -10,11 +10,11 @@ for drive in orpheus prometheus; do
     case $drive in
 	orpheus) dir="${HOME}/Remote/orpheus/" ;;
 	prometheus) dir="${HOME}/Remote/prometheus/" ;;
-        *) tty_fatal "%s: unknown drive: '%s'" "$(basename "$0")" "$drive" ;;
+	*) tty_fatal "%s: unknown drive: '%s'" "$(basename "$0")" "$drive" ;;
     esac
 
     if [ ! -d "$dir" ]; then
-	tty_fatal "%s: '%s' directory not found" \
+	tty_fatal "%s: directory not found: '%s'" \
 		  "$(basename "$0")" "$dir"
     fi
 
