@@ -9,7 +9,7 @@
 
 if command -v gdate >/dev/null 2>&1; then
     DATE_CMD="gdate"
-    STAT_CMD="gstat"
+    STAT_CMD="gnustat"
 else
     DATE_CMD="date"
     STAT_CMD="stat"
