@@ -136,7 +136,8 @@ _tty_notify() {
 
     if command -v notify-send >/dev/null 2>&1; then
 	notify-send --urgency "$_tty_notify_urgency" \
-		    "${_tty_notify_prefix}" "$_tty_notify_message"
+		    "${_tty_notify_prefix} $(basename "$0")" \
+		    "$_tty_notify_message"
     else
 	_tty_log "${_tty_notify_level}" "%s" "${_tty_notify_message}"
     fi
