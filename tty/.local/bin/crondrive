@@ -9,10 +9,10 @@
 
 . /usr/local/lib/tty.sh
 
-for drive in orpheus prometheus; do
+for drive in prometheus orpheus; do
     case $drive in
-	orpheus) dir="${TTY_ORPHEUS}/" ;;
 	prometheus) dir="${TTY_PROMETHEUS}/" ;;
+	orpheus) dir="${TTY_ORPHEUS}/" ;;
 	*) tty_fatal "%s: unknown drive: '%s'" "$(basename "$0")" "$drive" ;;
     esac
 
