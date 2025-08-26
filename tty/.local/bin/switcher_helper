@@ -8,7 +8,7 @@
 
 readonly STATE_FILE="$CUSTOM_SWITCHER"
 
-current_hour=$(date +"%h")
+current_hour=$(date "+%H")
 
 if (( current_hour >= 6 && current_hour < 17 )); then
     printf "dark" > "$STATE_FILE"
