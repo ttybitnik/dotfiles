@@ -50,9 +50,3 @@ alias femacs='emacs $(find -type f | fzf)'
 alias fpath='find -type f | fzf | sed 's/^..//g' \
       	        | tr -d '\n' | xclip -selection primary'
 alias weather='curl -s https://wttr.in/"${TTY_CITY// /+}" | head -n -2'
-#===============================================================================
-#				    Private
-#===============================================================================
-if [ -f ~/.bash_aliases2 ]; then
-    . ~/.bash_aliases2
-fi

@@ -1,6 +1,8 @@
 #!/bin/sh
 
 # Standard for logging commands (ISO 8601 and POSIX).
+#   Globals:
+#     TTY_ORPHEUS
 #   Dependencies:
 #     /usr/local/lib/tty.sh
 
@@ -40,7 +42,7 @@ err_pipe=$(mktemp)
 (lambda "$@" 2>&1; printf "%d" "$?" > "$err_pipe") | tee "$logfile_tmp"
 err=$(cat "$err_pipe")
 
-logfile_r="${HOME}/Remote/orpheus/ttylogs/${nodename}_${timestamp}_"
+logfile_r="${TTY_ORPHEUS}/ttylogs/${nodename}_${timestamp}_"
 logfile_r="${logfile_r}${1}_${err}.log.xz"
 
 if [ "$err" != 0 ]; then

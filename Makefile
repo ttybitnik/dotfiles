@@ -1,4 +1,4 @@
-.PHONY: tty wayland xorg sys clean uninstall
+.PHONY: dirs tty wayland xorg sys clean uninstall
 
 ROOT_CMD   ?= sudo
 SRC_PREFIX  = tty/.local
@@ -8,7 +8,10 @@ SYS_PREFIX  = /usr/local
 SYS_BINDIR  = $(SYS_PREFIX)/bin
 SYS_LIBDIR  = $(SYS_PREFIX)/lib
 
-tty:
+dirs:
+	mkdir -p ~/.config/systemd
+
+tty: dirs
 	stow -t ~ -v tty
 	$(ROOT_CMD) install -m 644 $(SRC_LIBDIR)/tty.sh $(SYS_LIBDIR)
 

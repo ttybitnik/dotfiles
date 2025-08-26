@@ -1,3 +1,4 @@
+# Deprecated in favour of wireguard
 [Unit]
 Description=ProtonVPN app
 

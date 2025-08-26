@@ -1,22 +1,33 @@
 # .bash_profile
 #===============================================================================
+#				   Functions
+#===============================================================================
+export_maybe_path() {
+    local dir="$1"
+    [[ -d "$dir" ]] && case ":${PATH}:" in
+	*":${dir}:"*) return 1 ;;
+	*) export PATH="${PATH}:${dir}"; return 0 ;;
+    esac
+}
+#===============================================================================
 #				     System
 #===============================================================================
-if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
+if [[ -f ~/.bashrc ]]; then
+    source ~/.bashrc
+fi
+
+export_maybe_path "$HOME/.local/bin"
+export_maybe_path "$HOME/bin"
+
+if [[ -f ~/.bash.local ]]; then
+    source ~/.bash.local
 fi
 #===============================================================================
 #				  Environments
 #===============================================================================
 # Personal environment
 #-------------------------------------------------------------------------------
-export TTY_DOTFILES="${HOME}/Remote/orpheus/git/dotfiles"
-export TTY_SCRIPTS="${HOME}/.local/bin"
-export TTY_GIT="${HOME}/Remote/orpheus/git"
-export TTY_WALLPAPER="${HOME}/Pictures/Wallpapers"
 export TTY_MOTTO="If there's a shell, there's a way."
-export TTY_CITY="Juiz de Fora"
-export TTY_GEO="-23.55:-46.63"
 export TTY_NICK="ttybitnik"
 export TTY_NAME="Vinícius Moraes"
 export TTY_EMAIL="vinicius.moraes@eternodevir.com"
@@ -28,27 +39,59 @@ export TTY_SIGNING="0xB52D1006EFAC93DF"
 export HISTCONTROL="ignoreboth"
 export EDITOR="/usr/bin/emacsclient -c -n"
 unset SSH_AGENT_PID
-export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+export SSH_AUTH_SOCK
 #-------------------------------------------------------------------------------
 # Development environment
 #-------------------------------------------------------------------------------
-if  [ -x "$(command -v npm)" ]; then
-    export PATH="${PATH}:${HOME}/.npm-global/bin"
-    printf "prefix=%s/.npm-global" "${HOME}" > "${HOME}/.npmrc"
+if command -v npm >/dev/null 2>&1; then
+    export_maybe_path "${HOME}/.npm-global/bin" \
+	&& printf "prefix=%s/.npm-global\n" "${HOME}" > "${HOME}/.npmrc"
 fi
 
-if  [ -x "$(command -v go)" ]; then
+if command -v go >/dev/null 2>&1; then
+    export_maybe_path "${HOME}/.go/bin" \
+	&& export GOPATH="${HOME}/.go"
+fi
+
+if command -v cargo >/dev/null 2>&1; then
+    export_maybe_path "${HOME}/.cargo/bin"
+fi
+
+if command -v pip3 >/dev/null 2>&1; then
+    export_maybe_path "${HOME}/.pip/bin" \
+	&& export PYTHONUSERBASE="${HOME}/.pip"
+fi
+
+if command -v chicken-install >/dev/null 2>&1; then
+    export_maybe_path "${HOME}/.chicken/bin" \
+	&& export CHICKEN_INSTALL_REPOSITORY="$HOME/.chicken"
+fi
+#-------------------------------------------------------------------------------
+# Development environment
+#-------------------------------------------------------------------------------
+if command -v npm >/dev/null 2>&1; then
+    export PATH="${PATH}:${HOME}/.npm-global/bin"
+    printf "prefix=%s/.npm-global\n" "${HOME}" > "${HOME}/.npmrc"
+fi
+
+if command -v go >/dev/null 2>&1; then
     export PATH="${PATH}:${HOME}/.go/bin"
     export GOPATH="${HOME}/.go"
 fi
 
-if  [ -x "$(command -v cargo)" ]; then
+if command -v cargo >/dev/null 2>&1; then
     export PATH="${PATH}:${HOME}/.cargo/bin"
 fi
 
-if  [ -x "$(command -v pip3)" ]; then
+if command -v pip3 >/dev/null 2>&1; then
     export PATH="${PATH}:${HOME}/.pip/bin"
     export PYTHONUSERBASE="${HOME}/.pip"
+fi
+
+if command -v chicken-install >/dev/null 2>&1; then
+    export PATH="${PATH}:${HOME}/.chicken/bin"
+    export CHICKEN_INSTALL_PREFIX="$HOME/.chicken"
 fi
 #-------------------------------------------------------------------------------
 # Custom environment
@@ -56,59 +99,42 @@ fi
 export CUSTOM_HERMES="${TTY_DOTFILES}/tty/.config/hermes/motd.log"
 export CUSTOM_SWITCHER="${TTY_DOTFILES}/.switcher_state"
 
-case "$OSTYPE" in
-    solaris*) CUSTOM_SYSTEM="SOLARIS" ;;
-    darwin*)  CUSTOM_SYSTEM="OSX" ;;
-    linux*)   CUSTOM_SYSTEM="LINUX" ;;
-    bsd*)     CUSTOM_SYSTEM="BSD" ;;
-    msys*)    CUSTOM_SYSTEM="MINGW" ;;
-    cygwin*)  CUSTOM_SYSTEM="CYGWIN" ;;
-    *)        CUSTOM_SYSTEM="UNKNOWN" ;;
-esac
 case "$(uname -s)" in
-    Darwin)   CUSTOM_SYSTEM="OSX" ;;
-    Linux)    CUSTOM_SYSTEM="LINUX" ;;
-    FreeBSD)  CUSTOM_SYSTEM="FREE_BSD" ;;
-    NetBSD)   CUSTOM_SYSTEM="NET_BSD" ;;
-    OpenBSD)  CUSTOM_SYSTEM="OPEN_BSD" ;;
-    MINGW*)   CUSTOM_SYSTEM="MINGW" ;;
-    CYGWIN*)  CUSTOM_SYSTEM="CYGWIN" ;;
-    *)        CUSTOM_SYSTEM="UNKNOWN" ;;
+    SunOS*)    CUSTOM_SYSTEM="SOLARIS" ;;
+    Darwin*)   CUSTOM_SYSTEM="OSX" ;;
+    Linux*)    CUSTOM_SYSTEM="LINUX" ;;
+    FreeBSD*)  CUSTOM_SYSTEM="FREEBSD" ;;
+    NetBSD*)   CUSTOM_SYSTEM="NETBSD" ;;
+    OpenBSD*)  CUSTOM_SYSTEM="OPENBSD" ;;
+    MINGW*)    CUSTOM_SYSTEM="MINGW" ;;
+    MSYS*)     CUSTOM_SYSTEM="MINGW" ;;
+    CYGWIN*)   CUSTOM_SYSTEM="CYGWIN" ;;
+    *)         CUSTOM_SYSTEM="UNKNOWN" ;;
 esac
-if [[ "$CUSTOM_SYSTEM" == "LINUX" && \
-	  -n "$(grep '(Microsoft@Microsoft.com)' /proc/version)" ]]; then
+if [[ "$CUSTOM_SYSTEM" == "LINUX" ]] && \
+       grep -q '(Microsoft@Microsoft.com)' /proc/version 2>/dev/null; then
     CUSTOM_SYSTEM="Win11_Linux"
 fi
 export CUSTOM_SYSTEM
 
-if which brew >/dev/null 2>&1; then
+if command -v brew >/dev/null 2>&1; then
     CUSTOM_INSTALL="BREW"
-fi
-if which apt-get >/dev/null 2>&1; then
+elif command -v apt >/dev/null 2>&1; then
     CUSTOM_INSTALL="APT"
-fi
-if which yum >/dev/null 2>&1; then
+elif command -v dnf >/dev/null 2>&1; then
+    CUSTOM_INSTALL="DNF"
+elif command -v yum >/dev/null 2>&1; then
     CUSTOM_INSTALL="YUM"
+elif command -v pacman >/dev/null 2>&1; then
+    CUSTOM_INSTALL="PACMAN"
+elif command -v apk >/dev/null 2>&1; then
+    CUSTOM_INSTALL="APK"
+elif command -v pkg >/dev/null 2>&1; then
+    CUSTOM_INSTALL="PKG"
+else
+    CUSTOM_INSTALL="UNKNOWN"
 fi
 export CUSTOM_INSTALL
-#===============================================================================
-#				    Systemd
-#===============================================================================
-systemctl --user import-environment \
-	  TTY_DOTFILES \
-	  TTY_SCRIPTS \
-	  TTY_GIT \
-	  TTY_WALLPAPER \
-	  TTY_MOTTO \
-	  TTY_CITY \
-	  TTY_GEO \
-	  TTY_NICK \
-	  TTY_NAME \
-	  TTY_EMAIL \
-	  TTY_FINGERPRINT \
-	  TTY_SIGNING \
-	  CUSTOM_HERMES \
-	  CUSTOM_SWITCHER
 #===============================================================================
 #				    Startup
 #===============================================================================

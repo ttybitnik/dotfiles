@@ -2,25 +2,20 @@
 #===============================================================================
 #				     System
 #===============================================================================
-if [ -f /etc/bashrc ]; then
-    . /etc/bashrc
+if [[ -f /etc/bashrc ]]; then
+    source /etc/bashrc
 fi
-
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
-    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
-fi
-export PATH
 
 GPG_TTY=$(tty)
 export GPG_TTY
 #===============================================================================
 #				    Aliases
 #===============================================================================
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+if [[ -f ~/.bash_aliases ]]; then
+    source ~/.bash_aliases
 fi
 
-if [ -d ~/.bashrc.d ]; then
+if [[ -d ~/.bashrc.d ]]; then
     for rc in ~/.bashrc.d/*; do
 	if [ -f "$rc" ]; then
 	    . "$rc"

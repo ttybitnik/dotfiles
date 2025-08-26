@@ -63,4 +63,4 @@
 
 # Personal
 [include]
-	path = /home/ttybitnik/.gitconfig2
+	path = /home/ttybitnik/.gitconfig.local

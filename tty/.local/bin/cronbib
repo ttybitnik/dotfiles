@@ -1,12 +1,14 @@
 #!/bin/sh
 
 # Cron/timer script to automate the exportation from Calibre to BiBTeX.
+#   Globals:
+#     TTY_PROMETHEUS
 #   Dependencies:
 #     /usr/local/lib/tty.sh
 
 . /usr/local/lib/tty.sh
 
-readonly BIBFILE="${HOME}/Remote/prometheus/bibliography/general.bib"
+readonly BIBFILE="${TTY_PROMETHEUS}/bibliography/general.bib"
 readonly CALIBREGUI_PID="GUIPool"
 
 calibretobib () {

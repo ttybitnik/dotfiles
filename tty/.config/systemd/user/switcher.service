@@ -4,11 +4,11 @@ Description=Switcher theme mode next session
 [Service]
 Type=oneshot
 RemainAfterExit=true
-# Environment variables are included here as a fallback, since they
-# are imported via `systemctl --user` in `.bash_profile` and Sway config.
-Environment="TTY_DOTFILES=%h/Remote/orpheus/git/dotfiles"
-Environment="CUSTOM_SWITCHER=%h/Remote/orpheus/git/dotfiles/.switcher_state"
-ExecStart=%h/Remote/orpheus/git/dotfiles/tty/.local/bin/switcher_helper
+# Environment variables are listed here as a fallback
+# documentation. They are imported via `systemctl --user
+# import-environment` in `.bash_profile` and Sway config.
+EnvironmentFile=%h/.config/systemd/envs/switcher.env
+ExecStart=%h/.local/bin/switcher_helper
 
 [Install]
 WantedBy=default.target

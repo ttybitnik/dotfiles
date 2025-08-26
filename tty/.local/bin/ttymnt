@@ -4,7 +4,7 @@
 #   Dependencies:
 #     /usr/local/lib/tty.sh
 #     /etc/fstab for specifying mounting options
-#     ~/.ttymnt2.gpg for setting devices info
+#     ~/.ttymnt.gpg for setting devices info
 #   Structure:
 #     device_name device mount_point key_path(optional)
 
@@ -12,7 +12,7 @@
 
 : "${ROOT_CMD:=sudo}"
 
-readonly DEVICES_FILE="${HOME}/.ttymnt2.gpg"
+readonly DEVICES_FILE="${HOME}/.ttymnt.gpg"
 
 action="$1"
 device_name="$2"

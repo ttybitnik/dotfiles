@@ -1,14 +1,16 @@
 #!/bin/sh
 
 # Cron/timer script to commit/update changes from local git repos.
+#   Globals:
+#     TTY_ORPHEUS
 #   Dependencies:
 #     /usr/local/lib/tty.sh
 
 . /usr/local/lib/tty.sh
 
 set -- \
-    "${HOME}/Remote/orpheus/gnu-emacs/org/" \
-    "${HOME}/Remote/orpheus/gnu-emacs/org-roam/"
+    "${TTY_ORPHEUS}/gnu-emacs/org/" \
+    "${TTY_ORPHEUS}/gnu-emacs/org-roam/"
 
 for dir in "$@"; do
     if ! cd "$dir"

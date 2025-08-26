@@ -138,22 +138,9 @@ gaps inner 4
 gaps outer 4
 
 ### Startup ###
-exec_always {
+exec_always
+{
     systemctl --user import-environment \
-              TTY_DOTFILES \
-              TTY_SCRIPTS \
-              TTY_GIT \
-              TTY_WALLPAPER \
-              TTY_MOTTO \
-              TTY_CITY \
-              TTY_GEO \
-              TTY_NICK \
-              TTY_NAME \
-              TTY_EMAIL \
-              TTY_FINGERPRINT \
-              TTY_SIGNING \
-              CUSTOM_HERMES \
-              CUSTOM_SWITCHER \
               DBUS_SESSION_BUS_ADDRESS \
               DISPLAY \
               WAYLAND_DISPLAY

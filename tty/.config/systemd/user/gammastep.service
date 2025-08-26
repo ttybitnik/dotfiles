@@ -4,9 +4,10 @@ Documentation=man:gammastep(1)
 
 [Service]
 Type=simple
-# Environment variables are included here as a fallback, since they
-# are imported via `systemctl --user` in `.bash_profile` and Sway config.
-Environment="TTY_GEO=-23.55:-46.63"
+# Environment variables are listed here as a fallback
+# documentation. They are imported via `systemctl --user
+# import-environment` in `.bash_profile` and Sway config.
+EnvironmentFile=%h/.config/systemd/envs/gammastep.env
 ExecStart=/usr/bin/gammastep -l $TTY_GEO
 ExecStop=/usr/bin/pkill gammastep
 RestartSec=10s

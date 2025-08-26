@@ -3,13 +3,13 @@
 # Script for handling APIs and secrets in a encrypted fashion.
 #   Dependencies:
 #     /usr/local/lib/tty.sh
-#     ~/.ttypas2.gpg for setting secrets info
+#     ~/.ttypas.gpg for setting secrets info
 #   Structure:
 #     service secret_path
 
 . /usr/local/lib/tty.sh
 
-readonly PASS_FILENAME="${HOME}/.ttypas2.gpg"
+readonly PASS_FILENAME="${HOME}/.ttypas.gpg"
 
 validate() {
     if [ ! -f "$PASS_FILENAME" ]; then

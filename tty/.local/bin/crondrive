@@ -1,6 +1,9 @@
 #!/bin/sh
 
 # Cron/timer script to sync changes between remote and local directories.
+#   Globals:
+#     TTY_ORPHEUS
+#     TTY_PROMETHEUS
 #   Dependencies:
 #     /usr/local/lib/tty.sh
 
@@ -8,8 +11,8 @@
 
 for drive in orpheus prometheus; do
     case $drive in
-	orpheus) dir="${HOME}/Remote/orpheus/" ;;
-	prometheus) dir="${HOME}/Remote/prometheus/" ;;
+	orpheus) dir="${TTY_ORPHEUS}/" ;;
+	prometheus) dir="${TTY_PROMETHEUS}/" ;;
 	*) tty_fatal "%s: unknown drive: '%s'" "$(basename "$0")" "$drive" ;;
     esac
 
