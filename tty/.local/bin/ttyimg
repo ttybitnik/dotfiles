@@ -26,7 +26,8 @@ noise="hue=s=0,boxblur=lr=1.2,noise=c0s=7:allf=t"
 compress="5"
 scratches="blend=screen:all_opacity=0.4,format=rgb24"
 
-scratch_random() {
+scratch_random()
+{
     random_frame=$(_shuf0)
 
     # OPT(ffmpeg): i=input vf=filtergraph vframes=videoframes y=overwrite
@@ -36,7 +37,8 @@ scratch_random() {
 	   -y "${TTY_DOTFILES}/.assets/ttyimg_scratches.jpg"
 }
 
-main() {
+main()
+{
     crop_ratio="$1"
     shift
 

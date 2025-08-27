@@ -11,7 +11,8 @@
 
 readonly PASS_FILENAME="${HOME}/.ttypas.gpg"
 
-validate() {
+validate()
+{
     if [ ! -f "$PASS_FILENAME" ]; then
 	tty_fatal "%s: file not found: '%s'" "$(basename "$0")" "$PASS_FILENAME"
     fi
@@ -21,7 +22,8 @@ validate() {
     fi
 }
 
-access() {
+access()
+{
     pass_service="$1"
     # OPT(gpg): d=decrypt
     pass_info=$(gpg -d "$PASS_FILENAME" | grep "^$pass_service")

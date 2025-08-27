@@ -18,7 +18,8 @@ case $(uname -s) in
 	;;
 esac
 
-delete_if_exist() {
+delete_if_exist()
+{
     encrypted_file="$(ls "${1}.gpg")"
 
     if [ -f "$encrypted_file" ]; then
@@ -48,7 +49,8 @@ delete_if_exist() {
     fi
 }
 
-main() {
+main()
+{
     # OPT(gpg): c=symmetric
     gpg -c --no-symkey-cache --cipher-algo AES256 "$1"
     delete_if_exist "$@"

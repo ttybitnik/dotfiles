@@ -6,7 +6,8 @@
 
 : "${ROOT_CMD:=sudo}"
 
-print_align_asterisk_box() {
+print_align_asterisk_box()
+{
     margin=30
     str="$1"
     str_len=${#str}
@@ -30,13 +31,12 @@ print_align_asterisk_box() {
     fi
 }
 
-cleanup() {
+cleanup()
+{
     kill "$ROOT_CMD_ALIVE_PID" 2>/dev/null
 
-    if [ "$ROOT_CMD" = "sudo" ]; then
-	# OPT(sudo): k=reset-timestamp
-	sudo -k
-    fi
+    # OPT(sudo): k=reset-timestamp
+    [ "$ROOT_CMD" = "sudo" ] && sudo -k
 }
 trap cleanup EXIT
 

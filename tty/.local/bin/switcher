@@ -12,7 +12,8 @@ readonly STATE_FILE="$CUSTOM_SWITCHER"
 no_reload=false
 toggle=$(cat "$STATE_FILE" 2>/dev/null) || toggle="light"
 
-switcher_changes() {
+switcher_changes()
+{
     if [[ "$toggle" == dark ]]; then
 	toggle=light
 
@@ -69,7 +70,8 @@ switcher_changes() {
     fi
 }
 
-switcher_reload() {
+switcher_reload()
+{
     # OPT(emacsclient): e=eval
     if ! swaymsg reload
     then
@@ -85,7 +87,8 @@ switcher_reload() {
     dunst >/dev/null 2>&1 &
 }
 
-main() {
+main()
+{
     if [[ "$1" == "-nr" ]]; then
 	no_reload=true
     fi

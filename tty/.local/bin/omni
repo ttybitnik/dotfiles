@@ -9,13 +9,15 @@ set -e
 
 : "${ROOT_CMD:=sudo}"
 
-run() {
+run()
+{
     printf "\n+ %s \n\n" "$1"
     # Intentionally unquoted
     $1
 }
 
-run_if_exists() {
+run_if_exists()
+{
     if command -v "$1" >/dev/null 2>&1; then
 	run "$2"
     fi

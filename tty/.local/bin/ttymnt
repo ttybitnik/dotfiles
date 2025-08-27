@@ -20,7 +20,8 @@ device_name="$2"
 device_gpg=$(gpg -d "$DEVICES_FILE")
 device_info=$(printf "%s" "$device_gpg" | grep "^$device_name")
 
-validate() {
+validate()
+{
     if [ ! -f "$DEVICES_FILE" ]; then
 	tty_fatal "%s: device info file not found" "$(basename "$0")"
     fi
@@ -34,7 +35,8 @@ validate() {
     fi
 }
 
-open_device() {
+open_device()
+{
     device_info_open="$1"
 
     # Field splitting with heredocs since POSIX sh does not support herestring
@@ -62,7 +64,8 @@ EOF
     fi
 }
 
-close_device() {
+close_device()
+{
     device_info_close="$1"
 
     # Field splitting with heredocs since POSIX sh does not support herestring
@@ -81,7 +84,8 @@ EOF
     fi
 }
 
-main() {
+main()
+{
     case "$action" in
 	"open")
 	    open_device "$device_info"

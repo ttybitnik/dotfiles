@@ -11,7 +11,8 @@ readonly LINK_PATH="${HOME}/.Xresources"
 target_path=$(readlink "$LINK_PATH")
 filename=$(basename "$target_path")
 
-switcher_changes() {
+switcher_changes()
+{
     if [[ "$filename" == *"dark"* ]]; then
 	printf "%s\n" \
 	       "We can easily forgive a child who is afraid of the dark;" \
@@ -45,7 +46,8 @@ switcher_changes() {
     fi
 }
 
-switcher_reload() {
+switcher_reload()
+{
     xrdb -merge "${HOME}/.Xresources"
     ~/.config/suckless/dwm/patch/dwmc xrdb
     killall -HUP xsettingsd
@@ -55,7 +57,8 @@ switcher_reload() {
     emacsclient  --eval "(config-reload)" 1> /dev/null &
 }
 
-main() {
+main()
+{
     if [[ ! -L "$LINK_PATH" ]]; then
 	tty_fatal "%s: '%s' not a symbolic link" "$(basename "$0")" "$LINK_PATH"
     fi

@@ -23,13 +23,15 @@ timestamp=$(_date0)
 nodename=$(uname -n)
 logfile_tmp=$(mktemp)
 
-cleanup() {
+cleanup()
+{
     [ -e "$logfile_tmp" ] && rm -- "$logfile_tmp"
     [ -e "$err_pipe_tmp" ] && rm -- "$err_pipe_tmp"
 }
 trap 'cleanup' EXIT
 
-lambda() {
+lambda()
+{
     printf "+> %s\n" "$*"
     # OPT(time): p=portability
     time -p "$@"

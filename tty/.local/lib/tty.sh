@@ -67,7 +67,8 @@ readonly TTY_LOG_DEBUG=0
 # Returns:
 #   Exits with status 1 if log level is FATAL, otherwise 0
 #-------------------------------------------------------------------------------
-_tty_log() {
+_tty_log()
+{
     _tty_log_level="$1"
     shift
     _tty_log_format="$1"
@@ -109,7 +110,8 @@ _tty_log() {
 # Returns:
 #   Exits with status 1 if log level is FATAL, otherwise 0
 #-------------------------------------------------------------------------------
-_tty_notify() {
+_tty_notify()
+{
     _tty_notify_level="$1"
     shift
     _tty_notify_format="$1"
@@ -314,7 +316,8 @@ tty_notify_fatal() { _tty_notify "${TTY_LOG_FATAL}" "$@"; }
 #   tty_usage "scriptname <required> [optional]"
 #   tty_usage "%s <required> [optional]" "$(basename "$0")"
 #-------------------------------------------------------------------------------
-tty_usage() {
+tty_usage()
+{
     _tty_usage_format="$1"
     shift
 
@@ -339,7 +342,8 @@ tty_usage() {
 #   tty_run_print ls -la directory/dir
 #   tty_run_print grep -r "pattern" file.txt
 #-------------------------------------------------------------------------------
-tty_run_print() {
+tty_run_print()
+{
     printf "\n+ %s \n\n" "$*"
     "$@"
 }

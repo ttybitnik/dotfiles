@@ -11,7 +11,8 @@
 readonly BIBFILE="${TTY_PROMETHEUS}/bibliography/general.bib"
 readonly CALIBREGUI_PID="GUIPool"
 
-calibretobib () {
+calibretobib ()
+{
     if ! tty_run_print calibredb catalog "$BIBFILE"
     then
 	tty_notify_fatal "%s: calibredb catalog failed with exit code %d" \

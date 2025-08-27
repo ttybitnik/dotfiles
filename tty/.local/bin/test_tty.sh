@@ -7,11 +7,13 @@
 TESTS_PASSED=0
 TESTS_TOTAL=0
 
-test_inc() {
+test_inc()
+{
     TESTS_TOTAL=$((TESTS_TOTAL + 1))
 }
 
-test_pass() {
+test_pass()
+{
     TESTS_PASSED=$((TESTS_PASSED + 1))
     test_inc
 }
@@ -122,9 +124,7 @@ printf "%s\n" "----------------------"
 printf "%s\n" "ERROR HANDLING TESTING"
 printf "%s\n" "----------------------"
 
-simulate_failure() {
-    return 1
-}
+simulate_failure() { return 1; }
 
 printf "%s\n" "Testing error handling..."
 if simulate_failure; then
@@ -145,11 +145,11 @@ printf "%s\n" "-----------------"
 
 for level in DEBUG INFO WARN ERROR FATAL; do
     case $level in
-        DEBUG) lvl=$TTY_LOG_DEBUG ;;
-        INFO)  lvl=$TTY_LOG_INFO ;;
-        WARN)  lvl=$TTY_LOG_WARN ;;
-        ERROR) lvl=$TTY_LOG_ERROR ;;
-        FATAL) lvl=$TTY_LOG_FATAL ;;
+	DEBUG) lvl=$TTY_LOG_DEBUG ;;
+	INFO)  lvl=$TTY_LOG_INFO ;;
+	WARN)  lvl=$TTY_LOG_WARN ;;
+	ERROR) lvl=$TTY_LOG_ERROR ;;
+	FATAL) lvl=$TTY_LOG_FATAL ;;
     esac
 
     printf "Testing %s level (%s):\n" "$level" "$lvl"
