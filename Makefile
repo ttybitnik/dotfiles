@@ -41,7 +41,7 @@ help:
 	@echo "  wayland   - Stow wayland environment for user (requires tty)"
 	@echo "  xorg      - Stow xorg environment for user (requires tty)"
 	@echo "  install   - Install selected scripts and libs for system"
-	@echo ""
+	@echo
 	@echo "Cleaning targets:"
 	@echo "  clean     - Unstow all configurations"
 	@echo "  uninstall - Remove installed scripts and libs for system"
