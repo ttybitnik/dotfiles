@@ -1,6 +1,8 @@
 #!/bin/sh
 
 # Naming standard for backups (ISO 8601).
+#   Installation:
+#     system-wide (rerun 'make install' to reflect changes)
 #   Dependencies:
 #     /usr/local/lib/tty.sh
 

@@ -1,6 +1,8 @@
 #!/bin/sh
 
 # Rename file to its SHA256 digest with desired char length (default 16).
+#   Installation:
+#     system-wide (rerun 'make install' to reflect changes)
 #   Dependencies:
 #     /usr/local/lib/tty.sh
 

@@ -1,31 +1,29 @@
-.PHONY: dirs tty wayland xorg sys clean uninstall
+.PHONY: tty wayland xorg install clean uninstall help __dirs
 
-ROOT_CMD   ?= sudo
-SRC_PREFIX  = tty/.local
-SRC_BINDIR  = $(SRC_PREFIX)/bin
-SRC_LIBDIR  = $(SRC_PREFIX)/lib
-SYS_PREFIX  = /usr/local
-SYS_BINDIR  = $(SYS_PREFIX)/bin
-SYS_LIBDIR  = $(SYS_PREFIX)/lib
+ROOT_CMD  ?= sudo
+SRC_PREFIX = tty/.local
+SYS_PREFIX = /usr/local
 
-dirs:
-	mkdir -p ~/.config/systemd
+SRC_LIBDIR = $(SRC_PREFIX)/lib
+SRC_BINDIR = $(SRC_PREFIX)/bin
+SYS_LIBDIR = $(SYS_PREFIX)/lib
+SYS_BINDIR = $(SYS_PREFIX)/bin
 
-tty: dirs
-	stow -t ~ -v tty
-	$(ROOT_CMD) install -m 644 $(SRC_LIBDIR)/tty.sh $(SYS_LIBDIR)
+SYS_LIB_BASENAMES = tty.sh
+SYS_BIN_BASENAMES = ttybkp ttysha
+SYS_LIB_FILES     = $(addprefix $(SYS_LIBDIR)/,$(SYS_LIB_BASENAMES))
+SYS_BIN_FILES     = $(addprefix $(SYS_BINDIR)/,$(SYS_BIN_BASENAMES))
+
+tty: __dirs $(SYS_LIB_FILES)
+	stow -t ~ -v $@
 
 wayland: tty
-	stow -t ~ -v wayland
+	stow -t ~ -v $@
 
 xorg: tty
-	stow -t ~ -v xorg
+	stow -t ~ -v $@
 
-sys:
-	$(ROOT_CMD) install -m 644 $(SRC_LIBDIR)/tty.sh $(SYS_LIBDIR)
-
-	$(ROOT_CMD) install -m 755 $(SRC_BINDIR)/ttybkp $(SYS_BINDIR)
-	$(ROOT_CMD) install -m 755 $(SRC_BINDIR)/ttysha $(SYS_BINDIR)
+install: $(SYS_LIB_FILES) $(SYS_BIN_FILES)
 
 clean:
 	stow -D -t ~ -v tty
@@ -33,7 +31,26 @@ clean:
 	stow -D -t ~ -v xorg
 
 uninstall:
-	$(ROOT_CMD) $(RM) $(SYS_LIBDIR)/tty.sh
+	$(ROOT_CMD) $(RM) $(SYS_LIB_FILES)
+	$(ROOT_CMD) $(RM) $(SYS_BIN_FILES)
 
-	$(ROOT_CMD) $(RM) $(SYS_BINDIR)/ttybkp
-	$(ROOT_CMD) $(RM) $(SYS_BINDIR)/ttysha
+help:
+	@echo "Configuration targets:"
+	@echo "  tty       - Stow tty environment for user and install shell"
+	@echo "              scripts lib for system"
+	@echo "  wayland   - Stow wayland environment for user (requires tty)"
+	@echo "  xorg      - Stow xorg environment for user (requires tty)"
+	@echo "  install   - Install selected scripts and libs for system"
+	@echo ""
+	@echo "Cleaning targets:"
+	@echo "  clean     - Unstow all configurations"
+	@echo "  uninstall - Remove installed scripts and libs for system"
+
+__dirs:
+	mkdir -p ~/.config/systemd
+
+$(SYS_LIBDIR)/%: $(SRC_LIBDIR)/%
+	$(ROOT_CMD) install -m 644 $< $@
+
+$(SYS_BINDIR)/%: $(SRC_BINDIR)/%
+	$(ROOT_CMD) install -m 755 $< $@
