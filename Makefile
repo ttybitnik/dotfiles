@@ -1,18 +1,22 @@
 .PHONY: tty wayland xorg install clean uninstall help __dirs
 
-ROOT_CMD  ?= sudo
-SRC_PREFIX = tty/.local
-SYS_PREFIX = /usr/local
+RM       := rm -f
+INSTALL  := install
+MKDIR    := mkdir
+ROOT_CMD := sudo
 
-SRC_LIBDIR = $(SRC_PREFIX)/lib
-SRC_BINDIR = $(SRC_PREFIX)/bin
-SYS_LIBDIR = $(SYS_PREFIX)/lib
-SYS_BINDIR = $(SYS_PREFIX)/bin
+SRC_PREFIX := tty/.local
+SYS_PREFIX := /usr/local
 
-SYS_LIB_BASENAMES = tty.sh
-SYS_BIN_BASENAMES = ttybkp ttysha
-SYS_LIB_FILES     = $(addprefix $(SYS_LIBDIR)/,$(SYS_LIB_BASENAMES))
-SYS_BIN_FILES     = $(addprefix $(SYS_BINDIR)/,$(SYS_BIN_BASENAMES))
+SRC_LIBDIR := $(SRC_PREFIX)/lib
+SRC_BINDIR := $(SRC_PREFIX)/bin
+SYS_LIBDIR := $(SYS_PREFIX)/lib
+SYS_BINDIR := $(SYS_PREFIX)/bin
+
+SYS_LIB_BASENAMES := tty.sh
+SYS_BIN_BASENAMES := ttybkp ttysha
+SYS_LIB_FILES     := $(addprefix $(SYS_LIBDIR)/,$(SYS_LIB_BASENAMES))
+SYS_BIN_FILES     := $(addprefix $(SYS_BINDIR)/,$(SYS_BIN_BASENAMES))
 
 tty: __dirs $(SYS_LIB_FILES)
 	stow -t ~ -v $@
@@ -31,8 +35,8 @@ clean:
 	stow -D -t ~ -v xorg
 
 uninstall:
-	$(ROOT_CMD) $(RM) $(SYS_LIB_FILES)
-	$(ROOT_CMD) $(RM) $(SYS_BIN_FILES)
+	$(ROOT_CMD) $(RM) -- $(SYS_LIB_FILES)
+	$(ROOT_CMD) $(RM) -- $(SYS_BIN_FILES)
 
 help:
 	@echo "Configuration targets:"
@@ -47,10 +51,10 @@ help:
 	@echo "  uninstall - Remove installed scripts and libs for system"
 
 __dirs:
-	mkdir -p ~/.config/systemd
+	$(MKDIR) -p ~/.config/systemd
 
 $(SYS_LIBDIR)/%: $(SRC_LIBDIR)/%
-	$(ROOT_CMD) install -m 644 $< $@
+	$(ROOT_CMD) $(INSTALL) -m 644 -- $< $@
 
 $(SYS_BINDIR)/%: $(SRC_BINDIR)/%
-	$(ROOT_CMD) install -m 755 $< $@
+	$(ROOT_CMD) $(INSTALL) -m 755 -- $< $@

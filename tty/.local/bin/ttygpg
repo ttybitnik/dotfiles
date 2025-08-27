@@ -10,11 +10,11 @@
 case $(uname -s) in
     FreeBSD*|OpenBSD*|NetBSD*|Darwin*)
 	# OPT(rm): f=force v=verbose
-	_shred0() { rm -f -v "$1"; }
+	_shred0() { rm -f -v -- "$1"; }
 	;;
     *)
 	# OPT(shred): z=zero u=dealloc-remove v=verbose
-	_shred0() { shred -z -u -v "$1"; }
+	_shred0() { shred -z -u -v -- "$1"; }
 	;;
 esac
 

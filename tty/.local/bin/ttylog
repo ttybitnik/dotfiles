@@ -12,10 +12,10 @@
 case $(uname -s) in
     FreeBSD*|OpenBSD*|NetBSD*|Darwin*)
 	_date0() { date "+%Y%m%dT%H%M%S"; }
-        ;;
+	;;
     *)
 	_date0() { date "+%Y%m%dT%H%M%S"; }
-        ;;
+	;;
 esac
 
 timestamp=$(_date0)
@@ -24,9 +24,8 @@ nodename=$(uname -n)
 logfile_tmp=$(mktemp)
 
 cleanup() {
-    if [ -e "$logfile_tmp" ]; then
-	rm "$logfile_tmp"
-    fi
+    [ -e "$logfile_tmp" ] && rm -- "$logfile_tmp"
+    [ -e "$err_pipe_tmp" ] && rm -- "$err_pipe_tmp"
 }
 trap 'cleanup' EXIT
 
@@ -38,9 +37,9 @@ lambda() {
     return "$err"
 }
 
-err_pipe=$(mktemp)
-(lambda "$@" 2>&1; printf "%d" "$?" > "$err_pipe") | tee "$logfile_tmp"
-err=$(cat "$err_pipe")
+err_pipe_tmp=$(mktemp)
+(lambda "$@" 2>&1; printf "%d" "$?" > "$err_pipe_tmp") | tee "$logfile_tmp"
+err=$(cat "$err_pipe_tmp")
 
 logfile_r="${TTY_ORPHEUS}/ttylogs/${nodename}_${timestamp}_"
 logfile_r="${logfile_r}${1}_${err}.log.xz"
