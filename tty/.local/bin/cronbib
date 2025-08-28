@@ -13,15 +13,13 @@ readonly CALIBREGUI_PID="GUIPool"
 
 calibretobib ()
 {
-    if ! tty_run_print calibredb catalog "$BIBFILE"
-    then
+    if ! tty_run_print calibredb catalog "$BIBFILE"; then
 	tty_notify_fatal "%s: calibredb catalog failed with exit code %d" \
 			 "$(basename "$0")" "$?"
     fi
 
     # OPT(sed): i=in-place
-    if ! tty_run_print sed -i 's/{"}/\\"/g' "$BIBFILE"
-    then
+    if ! tty_run_print sed -i 's/{"}/\\"/g' "$BIBFILE"; then
 	tty_notify_fatal "%s: sed failed with exit code %d" \
 			 "$(basename "$0")" "$?"
     fi

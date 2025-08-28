@@ -13,8 +13,7 @@ set -- \
     "${TTY_ORPHEUS}/gnu-emacs/org-roam/"
 
 for dir in "$@"; do
-    if ! cd "$dir"
-    then
+    if ! cd "$dir"; then
 	tty_fatal "%s: cannot change to directory '%s'" \
 		  "$(basename "$0")" "$dir"
     fi
@@ -25,15 +24,13 @@ for dir in "$@"; do
 	continue
     else
 	# OPT(git): A=all
-	if ! tty_run_print git add -A
-	then
+	if ! tty_run_print git add -A; then
 	    tty_fatal "%s: git add failed with exit code %d" \
 		      "$(basename "$0")" "$?"
 	fi
 
 	# OPT(git): m=message
-	if ! tty_run_print git commit -m "Update on $(LANG=C date)"
-	then
+	if ! tty_run_print git commit -m "Update on $(LANG=C date)"; then
 	    tty_fatal "%s: git commit failed with exit code %d" \
 		      "$(basename "$0")" "$?"
 	fi

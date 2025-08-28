@@ -73,8 +73,7 @@ switcher_changes()
 switcher_reload()
 {
     # OPT(emacsclient): e=eval
-    if ! swaymsg reload
-    then
+    if ! swaymsg reload; then
 	tty_notify_error "%s: swaymsg reload failed with exit code %d" \
 			 "$(basename "$0")" "$?"
     fi
