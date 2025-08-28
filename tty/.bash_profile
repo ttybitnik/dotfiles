@@ -69,32 +69,6 @@ if command -v chicken-install >/dev/null 2>&1; then
 	&& export CHICKEN_INSTALL_REPOSITORY="$HOME/.chicken"
 fi
 #-------------------------------------------------------------------------------
-# Development environment
-#-------------------------------------------------------------------------------
-if command -v npm >/dev/null 2>&1; then
-    export PATH="${PATH}:${HOME}/.npm-global/bin"
-    printf "prefix=%s/.npm-global\n" "${HOME}" > "${HOME}/.npmrc"
-fi
-
-if command -v go >/dev/null 2>&1; then
-    export PATH="${PATH}:${HOME}/.go/bin"
-    export GOPATH="${HOME}/.go"
-fi
-
-if command -v cargo >/dev/null 2>&1; then
-    export PATH="${PATH}:${HOME}/.cargo/bin"
-fi
-
-if command -v pip3 >/dev/null 2>&1; then
-    export PATH="${PATH}:${HOME}/.pip/bin"
-    export PYTHONUSERBASE="${HOME}/.pip"
-fi
-
-if command -v chicken-install >/dev/null 2>&1; then
-    export PATH="${PATH}:${HOME}/.chicken/bin"
-    export CHICKEN_INSTALL_PREFIX="$HOME/.chicken"
-fi
-#-------------------------------------------------------------------------------
 # Custom environment
 #-------------------------------------------------------------------------------
 export CUSTOM_HERMES="${TTY_DOTFILES}/tty/.config/hermes/motd.log"
