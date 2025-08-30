@@ -15,12 +15,6 @@
 readonly DEVICES_FILE="${HOME}/.ttymnt.gpg"
 readonly SCRIPT="${0##*/}"
 
-action="$1"
-device_name="$2"
-# OPT(gpg): d=decrypt
-device_gpg=$(gpg -d "$DEVICES_FILE")
-device_info=$(printf "%s" "$device_gpg" | grep "^$device_name")
-
 validate()
 {
     if [ ! -f "$DEVICES_FILE" ]; then
@@ -98,6 +92,12 @@ main()
 	    ;;
     esac
 }
+
+action="$1"
+device_name="$2"
+# OPT(gpg): d=decrypt
+device_gpg=$(gpg -d "$DEVICES_FILE")
+device_info=$(printf "%s" "$device_gpg" | grep "^$device_name")
 
 validate "$@"
 main

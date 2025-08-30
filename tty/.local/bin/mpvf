@@ -7,10 +7,10 @@ if [[ -z "$1" ]]; then
 fi
 
 # OPT(base64): d=decode
-BASE_T="$(printf "aHR0cHM6Ly93d3cudHdpdGNoLnR2" | base64 -d)"
-USR="${1}"
-URL="${BASE_T}/${USR}"
-CHAT="${BASE_T}/popout/$USR/chat?popout="
+base_t="$(printf "aHR0cHM6Ly93d3cudHdpdGNoLnR2" | base64 -d)"
+usr="${1}"
+url="${base_t}/${usr}"
+chat="${base_t}/popout/$usr/chat?popout="
 
-mpv "$URL" &> /dev/null &
-firefox --new-window "$CHAT" &> /dev/null &
+mpv "$url" &> /dev/null &
+firefox --new-window "$chat" &> /dev/null &

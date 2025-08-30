@@ -20,18 +20,6 @@ case $(uname -s) in
 	;;
 esac
 
-timestamp=$(_date0)
-# OPT(uname): n=nodename
-nodename=$(uname -n)
-logfile_tmp=$(mktemp)
-
-cleanup()
-{
-    [ -e "$logfile_tmp" ] && rm -- "$logfile_tmp"
-    [ -e "$err_pipe_tmp" ] && rm -- "$err_pipe_tmp"
-}
-trap 'cleanup' EXIT
-
 lambda()
 {
     printf "+> %s\n" "$*"
@@ -41,10 +29,21 @@ lambda()
     return "$err"
 }
 
+cleanup()
+{
+    [ -e "$logfile_tmp" ] && rm -- "$logfile_tmp"
+    [ -e "$err_pipe_tmp" ] && rm -- "$err_pipe_tmp"
+}
+
+trap 'cleanup' EXIT
+logfile_tmp=$(mktemp)
 err_pipe_tmp=$(mktemp)
 (lambda "$@" 2>&1; printf "%d" "$?" > "$err_pipe_tmp") | tee "$logfile_tmp"
 err=$(cat "$err_pipe_tmp")
 
+timestamp=$(_date0)
+# OPT(uname): n=nodename
+nodename=$(uname -n)
 logfile_r="${TTY_ORPHEUS}/ttylogs/${nodename}_${timestamp}_"
 logfile_r="${logfile_r}${1}_${err}.log.xz"
 

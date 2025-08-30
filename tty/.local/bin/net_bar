@@ -3,9 +3,7 @@
 # Display the network traffic in physical interfaces (using RAM for cache).
 
 # OPT(id): u=user
-CACHE_DIR="/run/user/$(id -u)/net_bar"
-# OPT(mkdir): p=parents
-mkdir -p "$CACHE_DIR"
+readonly CACHE_DIR="/run/user/$(id -u)/net_bar"
 
 update()
 {
@@ -30,6 +28,9 @@ update()
     printf "%d" "$sum" > "$cache"
     printf "%d" "$delta"
 }
+
+# OPT(mkdir): p=parents
+mkdir -p "$CACHE_DIR"
 
 rx=$(update /sys/class/net/[ew]*/statistics/rx_bytes)
 tx=$(update /sys/class/net/[ew]*/statistics/tx_bytes)
