@@ -9,9 +9,6 @@ source /usr/local/lib/tty.sh
 readonly LINK_PATH="${HOME}/.Xresources"
 readonly SCRIPT="${0##*/}"
 
-target_path=$(readlink "$LINK_PATH")
-filename="${target_path##*/}"
-
 switcher_changes()
 {
     if [[ "$filename" == *"dark"* ]]; then
@@ -58,14 +55,12 @@ switcher_reload()
     emacsclient  --eval "(config-reload)" 1> /dev/null &
 }
 
-main()
-{
-    if [[ ! -L "$LINK_PATH" ]]; then
-	tty_fatal "%s: '%s' not a symbolic link" "$(basename "$0")" "$LINK_PATH"
-    fi
+target_path=$(readlink "$LINK_PATH")
+filename="${target_path##*/}"
 
-    switcher_changes
-    switcher_reload
-}
+if [[ ! -L "$LINK_PATH" ]]; then
+    tty_fatal "%s: '%s' not a symbolic link" "$SCRIPT" "$LINK_PATH"
+fi
 
-main
+switcher_changes
+switcher_reload

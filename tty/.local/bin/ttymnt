@@ -77,22 +77,6 @@ EOF
     fi
 }
 
-main()
-{
-    case "$action" in
-	"open")
-	    open_device "$device_info"
-	    ;;
-	"close")
-	    close_device "$device_info"
-	    ;;
-	*)
-	    tty_error "%s: invalid action: '%s'" "$SCRIPT" "$action"
-	    tty_usage "%s <open|close> <device_name>" "$SCRIPT"
-	    ;;
-    esac
-}
-
 action="$1"
 device_name="$2"
 # OPT(gpg): d=decrypt
@@ -100,4 +84,16 @@ device_gpg=$(gpg -d "$DEVICES_FILE")
 device_info=$(printf "%s" "$device_gpg" | grep "^$device_name")
 
 validate "$@"
-main
+
+case "$action" in
+    "open")
+	open_device "$device_info"
+	;;
+    "close")
+	close_device "$device_info"
+	;;
+    *)
+	tty_error "%s: invalid action: '%s'" "$SCRIPT" "$action"
+	tty_usage "%s <open|close> <device_name>" "$SCRIPT"
+	;;
+esac
