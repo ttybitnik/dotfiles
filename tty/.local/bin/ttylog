@@ -8,6 +8,8 @@
 
 . /usr/local/lib/tty.sh
 
+readonly SCRIPT="${0##*/}"
+
 # OPT(uname): s={kernel,system}-name
 case $(uname -s) in
     FreeBSD*|OpenBSD*|NetBSD*|Darwin*)
@@ -48,7 +50,7 @@ logfile_r="${logfile_r}${1}_${err}.log.xz"
 
 if [ "$err" != 0 ]; then
     tty_notify_fatal "%s: %s failed with exit code %d: '%s'" \
-		     "$(basename "$0")" "$1" "$err" "$(basename "$logfile_r")"
+		     "$SCRIPT" "$1" "$err" "${logfile_r##*/}"
 fi
 
 xz "$logfile_tmp"
@@ -57,4 +59,4 @@ chmod 400 "$logfile_r"
 chcon unconfined_u:object_r:user_home_t:s0 "$logfile_r"
 
 tty_notify_info "%s: %s execution complete: '%s'" \
-		"$(basename "$0")" "$1" "$(basename "$logfile_r")"
+		"$SCRIPT" "$1" "${logfile_r##*/}"

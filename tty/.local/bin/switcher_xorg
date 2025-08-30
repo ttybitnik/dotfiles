@@ -7,9 +7,10 @@
 source /usr/local/lib/tty.sh
 
 readonly LINK_PATH="${HOME}/.Xresources"
+readonly SCRIPT="${0##*/}"
 
 target_path=$(readlink "$LINK_PATH")
-filename=$(basename "$target_path")
+filename="${target_path##*/}"
 
 switcher_changes()
 {
@@ -42,7 +43,7 @@ switcher_changes()
 	ln -sf "${HOME}/.emacs.d/local/switcher-night.el" \
 	   "${HOME}/.emacs.d/local/switcher.el"
     else
-	tty_fatal "%s: configuration files not found" "$(basename "$0")"
+	tty_fatal "%s: configuration files not found" "$SCRIPT"
     fi
 }
 

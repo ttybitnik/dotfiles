@@ -138,7 +138,7 @@ _tty_notify()
 
     if command -v notify-send >/dev/null 2>&1; then
 	notify-send --urgency "$_tty_notify_urgency" \
-		    "${_tty_notify_prefix} $(basename "$0")" \
+		    "${_tty_notify_prefix} ${0##*/}" \
 		    "$_tty_notify_message"
 	_tty_log "${_tty_notify_level}" "%s" "${_tty_notify_message}"
     else
@@ -162,8 +162,8 @@ _tty_notify()
 #   Writes formatted message to stdout
 #
 # Examples:
-#   tty_debug "%s: variables values: x=%d, y=%s" "$(basename "$0")" "$x" "$y"
-#   tty_debug "%s: %s called with %d arguments" "$(basename "$0")" "$func" "$#"
+#   tty_debug "%s: variables values: x=%d, y=%s" "${0##*/}" "$x" "$y"
+#   tty_debug "%s: %s called with %d arguments" "${0##*/}" "$func" "$#"
 #-------------------------------------------------------------------------------
 tty_debug() { _tty_log "${TTY_LOG_DEBUG}" "$@"; }
 
@@ -176,8 +176,8 @@ tty_debug() { _tty_log "${TTY_LOG_DEBUG}" "$@"; }
 #   Writes formatted message to stdout
 #
 # Examples:
-#   tty_info "%s: processing file: '%s'" "$(basename "$0")" "$filename"
-#   tty_info "%s: operation completed successfully" "$(basename "$0")"
+#   tty_info "%s: processing file: '%s'" "${0##*/}" "$filename"
+#   tty_info "%s: operation completed successfully" "${0##*/}"
 #-------------------------------------------------------------------------------
 tty_info() { _tty_log "${TTY_LOG_INFO}" "$@"; }
 
@@ -190,8 +190,8 @@ tty_info() { _tty_log "${TTY_LOG_INFO}" "$@"; }
 #   Writes formatted message to stderr
 #
 # Examples:
-#   tty_warn "%s: disk space low: %dMB remaining" "$(basename "$0")" "$fspace"
-#   tty_warn "%s: deprecated API endpoint: '%s'" "$(basename "$0")" "$endpoint"
+#   tty_warn "%s: disk space low: %dMB remaining" "${0##*/}" "$fspace"
+#   tty_warn "%s: deprecated API endpoint: '%s'" "${0##*/}" "$endpoint"
 #-------------------------------------------------------------------------------
 tty_warn() { _tty_log "${TTY_LOG_WARN}" "$@"; }
 
@@ -204,8 +204,8 @@ tty_warn() { _tty_log "${TTY_LOG_WARN}" "$@"; }
 #   Writes formatted message to stderr
 #
 # Examples:
-#   tty_error "%s: failed to connect to database: '%s'" "$(basename "$0")" "$?"
-#   tty_error "%s: invalid action: '%s'" "$(basename "$0")" "$action"
+#   tty_error "%s: failed to connect to database: '%s'" "${0##*/}" "$?"
+#   tty_error "%s: invalid action: '%s'" "${0##*/}" "$action"
 #-------------------------------------------------------------------------------
 tty_error() { _tty_log "${TTY_LOG_ERROR}" "$@"; }
 
@@ -220,8 +220,8 @@ tty_error() { _tty_log "${TTY_LOG_ERROR}" "$@"; }
 #   Exits script with status 1
 #
 # Examples:
-#   tty_fatal "%s: sed failed with exited code %d" "$(basename "$0")" "$?"
-#   tty_fatal "%s: file not found: '%s'" "$(basename "$0")" "$filename"
+#   tty_fatal "%s: sed failed with exited code %d" "${0##*/}" "$?"
+#   tty_fatal "%s: file not found: '%s'" "${0##*/}" "$filename"
 #-------------------------------------------------------------------------------
 tty_fatal() { _tty_log "${TTY_LOG_FATAL}" "$@"; }
 
@@ -235,8 +235,8 @@ tty_fatal() { _tty_log "${TTY_LOG_FATAL}" "$@"; }
 #   writes formatted message to stdout if notify-send is unavailable
 #
 # Examples:
-#   tty_notify_debug "%s: debug information: '%s'" "$(basename "$0")" "$data"
-#   tty_notify_debug "%s: process ID: '%d'" "$(basename "$0")" "$$"
+#   tty_notify_debug "%s: debug information: '%s'" "${0##*/}" "$data"
+#   tty_notify_debug "%s: process ID: '%d'" "${0##*/}" "$$"
 #-------------------------------------------------------------------------------
 tty_notify_debug() { _tty_notify "${TTY_LOG_DEBUG}" "$@"; }
 
@@ -250,8 +250,8 @@ tty_notify_debug() { _tty_notify "${TTY_LOG_DEBUG}" "$@"; }
 #   writes formatted message to stdout if notify-send is unavailable
 #
 # Examples:
-#   tty_notify_info "%s: download completed: '%s'" "$(basename "$0")" "$tar"
-#   tty_notify_info "%s: system backup started" "$(basename "$0")"
+#   tty_notify_info "%s: download completed: '%s'" "${0##*/}" "$tar"
+#   tty_notify_info "%s: system backup started" "${0##*/}"
 #-------------------------------------------------------------------------------
 tty_notify_info() { _tty_notify "${TTY_LOG_INFO}" "$@"; }
 
@@ -265,8 +265,8 @@ tty_notify_info() { _tty_notify "${TTY_LOG_INFO}" "$@"; }
 #   writes formatted message to stderr if notify-send is unavailable
 #
 # Examples:
-#   tty_notify_warn "%s: high memory usage: %dMB" "$(basename "$0")" "$mem"
-#   tty_notify_warn "%s: network connection unstable" "$(basename "$0")"
+#   tty_notify_warn "%s: high memory usage: %dMB" "${0##*/}" "$mem"
+#   tty_notify_warn "%s: network connection unstable" "${0##*/}"
 #-------------------------------------------------------------------------------
 tty_notify_warn() { _tty_notify "${TTY_LOG_WARN}" "$@"; }
 
@@ -280,8 +280,8 @@ tty_notify_warn() { _tty_notify "${TTY_LOG_WARN}" "$@"; }
 #   writes formatted message to stderr if notify-send is unavailable
 #
 # Examples:
-#   tty_notify_error "%s: sync failed: '%s'" "$(basename "$0")" "$location"
-#   tty_notify_error "%s: disconnected after %ds" "$(basename "$0")" "$seconds"
+#   tty_notify_error "%s: sync failed: '%s'" "${0##*/}" "$location"
+#   tty_notify_error "%s: disconnected after %ds" "${0##*/}" "$seconds"
 #-------------------------------------------------------------------------------
 tty_notify_error() { _tty_notify "${TTY_LOG_ERROR}" "$@"; }
 
@@ -297,8 +297,8 @@ tty_notify_error() { _tty_notify "${TTY_LOG_ERROR}" "$@"; }
 #   Exits script with status 1
 #
 # Examples:
-#   tty_notify_fatal "%s: ls failed with exited code %d" "$(basename "$0")" "$?"
-#   tty_notify_fatal "%s: connection lost: cannot continue" "$(basename "$0")"
+#   tty_notify_fatal "%s: ls failed with exited code %d" "${0##*/}" "$?"
+#   tty_notify_fatal "%s: connection lost: cannot continue" "${0##*/}"
 #-------------------------------------------------------------------------------
 tty_notify_fatal() { _tty_notify "${TTY_LOG_FATAL}" "$@"; }
 
@@ -315,7 +315,7 @@ tty_notify_fatal() { _tty_notify "${TTY_LOG_FATAL}" "$@"; }
 #
 # Examples:
 #   tty_usage "scriptname <required> [optional]"
-#   tty_usage "%s <required> [optional]" "$(basename "$0")"
+#   tty_usage "%s <required> [optional]" "${0##*/}"
 #-------------------------------------------------------------------------------
 tty_usage()
 {

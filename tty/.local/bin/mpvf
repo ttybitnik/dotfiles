@@ -3,7 +3,7 @@
 # Wrapper script for mpv and firefox.
 
 if [[ -z "$1" ]]; then
-    tty_usage "%s <user>" "$(basename "$0")"
+    tty_usage "%s <user>" "${0##*/}"
 fi
 
 # OPT(base64): d=decode

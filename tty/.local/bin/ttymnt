@@ -13,6 +13,7 @@
 : "${ROOT_CMD:=sudo}"
 
 readonly DEVICES_FILE="${HOME}/.ttymnt.gpg"
+readonly SCRIPT="${0##*/}"
 
 action="$1"
 device_name="$2"
@@ -23,15 +24,15 @@ device_info=$(printf "%s" "$device_gpg" | grep "^$device_name")
 validate()
 {
     if [ ! -f "$DEVICES_FILE" ]; then
-	tty_fatal "%s: device info file not found" "$(basename "$0")"
+	tty_fatal "%s: device info file not found" "$SCRIPT"
     fi
 
     if [ -z "$device_info" ]; then
-	tty_fatal "%s: device not found: '%s'" "$(basename "$0")" "$device_name"
+	tty_fatal "%s: device not found: '%s'" "$SCRIPT" "$device_name"
     fi
 
     if [ "$#" -ne 2 ]; then
-	tty_usage "%s <open|close> <device_name>" "$(basename "$0")"
+	tty_usage "%s <open|close> <device_name>" "$SCRIPT"
     fi
 }
 
@@ -57,10 +58,9 @@ EOF
 	    "$ROOT_CMD" mount "$mount_point"
 	fi
 	tty_info "%s: device '%s' opened: '%s'" \
-		 "$(basename "$0")" "$device_name" "$mount_point"
+		 "$SCRIPT" "$device_name" "$mount_point"
     else
-	tty_fatal "%s: block device not found: '%s'" \
-		  "$(basename "$0")" "$device"
+	tty_fatal "%s: block device not found: '%s'" "$SCRIPT" "$device"
     fi
 }
 
@@ -77,10 +77,9 @@ EOF
 	"$ROOT_CMD" umount "$mount_point"
 	"$ROOT_CMD" cryptsetup close "$device_name"
 	tty_info "%s: device '%s' unmonted and closed: '%s'" \
-		 "$(basename "$0")" "$device_name" "$mount_point"
+		 "$SCRIPT" "$device_name" "$mount_point"
     else
-	tty_fatal "%s: invalid mount point: '%s'" \
-		  "$(basename "$0")" "$mount_point"
+	tty_fatal "%s: invalid mount point: '%s'" "$SCRIPT" "$mount_point"
     fi
 }
 
@@ -94,8 +93,8 @@ main()
 	    close_device "$device_info"
 	    ;;
 	*)
-	    tty_error "%s: invalid action: '%s'" "$(basename "$0")" "$action"
-	    tty_usage "%s <open|close> <device_name>" "$(basename "$0")"
+	    tty_error "%s: invalid action: '%s'" "$SCRIPT" "$action"
+	    tty_usage "%s <open|close> <device_name>" "$SCRIPT"
 	    ;;
     esac
 }

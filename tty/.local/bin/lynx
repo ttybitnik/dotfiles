@@ -11,20 +11,20 @@ source /usr/local/lib/tty.sh
 
 lynxbin=/usr/bin/lynx
 
-if ! command -v "$lynxbin" >/dev/null 2>&1 ;
-   lynxbin=/usr/local/bin/lynx
+if ! command -v "$lynxbin" >/dev/null 2>&1; then
+    lynxbin=/usr/local/bin/lynx
 fi
 
-   if [[ -e "$HOME/.config/lynx/lynx.cfg" ]]; then
-       export LYNX_CFG="$HOME/.config/lynx/lynx.cfg"
-   fi
+if [[ -e "$HOME/.config/lynx/lynx.cfg" ]]; then
+    export LYNX_CFG="$HOME/.config/lynx/lynx.cfg"
+fi
 
-   if [[ -e "$HOME/.config/lynx/lynx.lss" ]]; then
-       export LYNX_LSS="$HOME/.config/lynx/lynx.lss"
-   fi
+if [[ -e "$HOME/.config/lynx/lynx.lss" ]]; then
+    export LYNX_LSS="$HOME/.config/lynx/lynx.lss"
+fi
 
-   if ! command -v "$lynxbin" >/dev/null 2>&1; then
-       tty_fatal "%s: 'lynx' not found: please install GNU Lynx" "$(basename "$0")"
-   fi
+if ! command -v "$lynxbin" >/dev/null 2>&1; then
+    tty_fatal "%s: 'lynx' not found: please install GNU Lynx" "${0##*/}"
+fi
 
-   exec "$lynxbin" "$@"
+exec "$lynxbin" "$@"

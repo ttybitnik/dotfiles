@@ -10,18 +10,18 @@
 
 readonly BIBFILE="${TTY_PROMETHEUS}/bibliography/general.bib"
 readonly CALIBREGUI_PID="GUIPool"
+readonly SCRIPT="${0##*/}"
 
 calibretobib ()
 {
     if ! tty_run_print calibredb catalog "$BIBFILE"; then
 	tty_notify_fatal "%s: calibredb catalog failed with exit code %d" \
-			 "$(basename "$0")" "$?"
+			 "$SCRIPT" "$?"
     fi
 
     # OPT(sed): i=in-place
     if ! tty_run_print sed -i 's/{"}/\\"/g' "$BIBFILE"; then
-	tty_notify_fatal "%s: sed failed with exit code %d" \
-			 "$(basename "$0")" "$?"
+	tty_notify_fatal "%s: sed failed with exit code %d" "$SCRIPT" "$?"
     fi
 }
 

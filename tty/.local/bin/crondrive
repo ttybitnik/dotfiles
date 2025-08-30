@@ -9,16 +9,17 @@
 
 . /usr/local/lib/tty.sh
 
+readonly SCRIPT="${0##*/}"
+
 for drive in prometheus orpheus; do
     case $drive in
 	prometheus) dir="${TTY_PROMETHEUS}/" ;;
 	orpheus) dir="${TTY_ORPHEUS}/" ;;
-	*) tty_fatal "%s: unknown drive: '%s'" "$(basename "$0")" "$drive" ;;
+	*) tty_fatal "%s: unknown drive: '%s'" "$SCRIPT" "$drive" ;;
     esac
 
     if [ ! -d "$dir" ]; then
-	tty_fatal "%s: directory not found: '%s'" \
-		  "$(basename "$0")" "$dir"
+	tty_fatal "%s: directory not found: '%s'" "$SCRIPT" "$dir"
     fi
 
     # OPT(rclone): v=verbose
@@ -26,6 +27,6 @@ for drive in prometheus orpheus; do
 	 --skip-links --exclude ".git/"
     then
 	tty_notify_fatal "%s: rclone sync failed for '%s' with exit code %d" \
-			 "$(basename "$0")" "$drive" "$?"
+			 "$SCRIPT" "$drive" "$?"
     fi
 done

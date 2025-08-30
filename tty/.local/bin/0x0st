@@ -7,9 +7,11 @@
 
 source /usr/local/lib/tty.sh
 
+readonly SCRIPT="${0##*/}"
+
 if [[ ! -f "$1" ]]; then
     tty_fatal "%s: invalid file '%s': must be existing regular file" \
-	      "$(basename "$0")" "$1"
+	      "$SCRIPT" "$1"
 fi
 
 if [[ -n "$2" ]]; then
@@ -17,7 +19,7 @@ if [[ -n "$2" ]]; then
 	expiration="${2}"
     else
 	tty_fatal "%s: invalid expiration '%s': must be 1-3 digit integer" \
-		  "$(basename "$0")" "$2"
+		  "$SCRIPT" "$2"
     fi
 else
     expiration=24

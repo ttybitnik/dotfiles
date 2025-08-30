@@ -15,7 +15,7 @@ update()
 	read -r i < "$arg"
 	sum=$((sum + i))
     done
-    cache="$CACHE_DIR/$(basename "$1")"
+    cache="$CACHE_DIR/${1##*/}"
 
     local old=0
     # OPT(read): r=no-backslashes

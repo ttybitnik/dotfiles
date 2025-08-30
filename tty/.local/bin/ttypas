@@ -10,15 +10,16 @@
 . /usr/local/lib/tty.sh
 
 readonly PASS_FILENAME="${HOME}/.ttypas.gpg"
+readonly SCRIPT="${0##*/}"
 
 validate()
 {
     if [ ! -f "$PASS_FILENAME" ]; then
-	tty_fatal "%s: file not found: '%s'" "$(basename "$0")" "$PASS_FILENAME"
+	tty_fatal "%s: file not found: '%s'" "$SCRIPT" "$PASS_FILENAME"
     fi
 
     if [ "$#" -ne 1 ]; then
-	tty_usage "%s <service>" "$(basename "$0")"
+	tty_usage "%s <service>" "$SCRIPT"
     fi
 }
 
@@ -29,18 +30,16 @@ access()
     pass_info=$(gpg -d "$PASS_FILENAME" | grep "^$pass_service")
 
     if [ -z "$pass_info" ]; then
-	tty_fatal "%s: service not found: '%s'" \
-		  "$(basename "$0")" "$pass_service"
+	tty_fatal "%s: service not found: '%s'" "$SCRIPT" "$pass_service"
     fi
 
     pass_gpg=$(printf "%s" "$pass_info" | awk '{print $2}')
     # OPT(gpg): d=decrypt
     if ! gpg -d "$pass_gpg"; then
-	tty_fatal "%s: gpg failed with exit code %d" "$(basename "$0")" "$?"
+	tty_fatal "%s: gpg failed with exit code %d" "$SCRIPT" "$?"
     fi
 
-    tty_notify_error "%s: %s password accesssed" \
-		     "$(basename "$0")" "$(basename "$1")"
+    tty_notify_error "%s: %s password accesssed" "$SCRIPT" "${1##*/}"
 }
 
 validate "$@"

@@ -6,6 +6,8 @@
 
 . /usr/local/lib/tty.sh
 
+readonly SCRIPT="${0##*/}"
+
 # OPT(uname): s={kernel,system}-name
 case $(uname -s) in
     FreeBSD*|OpenBSD*|NetBSD*|Darwin*)
@@ -60,7 +62,7 @@ main()
 	filter_file=".assets/ttyimg_filter_9-16.mp4"
     else
 	tty_fatal "%s: invalid crop ratio: choose either 4:3, 3:4, 16:9 or 9:16" \
-		  "$(basename "$0")"
+		  "$SCRIPT"
     fi
 
     while [ "$#" -gt 0 ]; do
@@ -81,7 +83,7 @@ main()
 }
 
 if [ "$#" -lt 2 ]; then
-    tty_usage "%s <crop_ratio> <file> [<file>...]" "$(basename "$0")"
+    tty_usage "%s <crop_ratio> <file> [<file>...]" "$SCRIPT"
 fi
 
 crop_ratio="$1"

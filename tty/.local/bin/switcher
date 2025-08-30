@@ -8,6 +8,7 @@ source /usr/local/lib/tty.sh
 
 readonly DOTFILES="$TTY_DOTFILES"
 readonly STATE_FILE="$CUSTOM_SWITCHER"
+readonly SCRIPT="${0##*/}"
 
 no_reload=false
 toggle=$(cat "$STATE_FILE" 2>/dev/null) || toggle="light"
@@ -75,7 +76,7 @@ switcher_reload()
     # OPT(emacsclient): e=eval
     if ! swaymsg reload; then
 	tty_notify_error "%s: swaymsg reload failed with exit code %d" \
-			 "$(basename "$0")" "$?"
+			 "$SCRIPT" "$?"
     fi
 
     emacsclient -e "(config-reload/ttybitnik)" >/dev/null 2>&1 &

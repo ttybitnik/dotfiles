@@ -8,31 +8,29 @@
 
 . /usr/local/lib/tty.sh
 
+readonly SCRIPT="${0##*/}"
+
 set -- \
     "${TTY_ORPHEUS}/gnu-emacs/org/" \
     "${TTY_ORPHEUS}/gnu-emacs/org-roam/"
 
 for dir in "$@"; do
     if ! cd "$dir"; then
-	tty_fatal "%s: cannot change to directory '%s'" \
-		  "$(basename "$0")" "$dir"
+	tty_fatal "%s: cannot change to directory '%s'" "$SCRIPT" "$dir"
     fi
 
     if [ -z "$(git status --porcelain)" ]; then
-	tty_info "%s: git working tree clean: nothing to commit" \
-		 "$(basename "$0")"
+	tty_info "%s: git working tree clean: nothing to commit" "$SCRIPT"
 	continue
     else
 	# OPT(git): A=all
 	if ! tty_run_print git add -A; then
-	    tty_fatal "%s: git add failed with exit code %d" \
-		      "$(basename "$0")" "$?"
+	    tty_fatal "%s: git add failed with exit code %d" "$SCRIPT" "$?"
 	fi
 
 	# OPT(git): m=message
 	if ! tty_run_print git commit -m "Update on $(LANG=C date)"; then
-	    tty_fatal "%s: git commit failed with exit code %d" \
-		      "$(basename "$0")" "$?"
+	    tty_fatal "%s: git commit failed with exit code %d" "$SCRIPT" "$?"
 	fi
     fi
 done
