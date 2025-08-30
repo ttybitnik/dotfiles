@@ -84,7 +84,7 @@ file_ext="${filename#*.}"
 
 # OPT(cut): c=characters
 if ! file_sha=$(sha256sum "$filename" | cut -c 1-"$length"); then
-    tty_notify_fatal "%s: file_sha pipe failed with exit code %d" "$SCRIPT" "$?"
+    tty_notify_fatal "%s: file_sha pipe failed with non-zero exit code" "$SCRIPT"
 fi
 
 if [ "$print" -eq 1 ]; then

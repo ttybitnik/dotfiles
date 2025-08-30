@@ -72,8 +72,8 @@ switcher_reload()
 {
     # OPT(emacsclient): e=eval
     if ! swaymsg reload; then
-	tty_notify_error "%s: swaymsg reload failed with exit code %d" \
-			 "$SCRIPT" "$?"
+	tty_notify_error "%s: swaymsg reload failed with non-zero exit code" \
+			 "$SCRIPT"
     fi
 
     emacsclient -e "(config-reload/ttybitnik)" >/dev/null 2>&1 &

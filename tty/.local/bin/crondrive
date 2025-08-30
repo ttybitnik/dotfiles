@@ -26,7 +26,6 @@ for drive in prometheus orpheus; do
     if ! tty_run_print rclone sync "$dir" "${drive}:" -v \
 	 --skip-links --exclude ".git/"
     then
-	tty_notify_fatal "%s: rclone sync failed for '%s' with exit code %d" \
-			 "$SCRIPT" "$drive" "$?"
+	tty_notify_fatal "%s: rclone sync failed for '%s'" "$SCRIPT" "$drive"
     fi
 done

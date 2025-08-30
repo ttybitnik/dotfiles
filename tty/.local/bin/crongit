@@ -25,12 +25,12 @@ for dir in "$@"; do
     else
 	# OPT(git): A=all
 	if ! tty_run_print git add -A; then
-	    tty_fatal "%s: git add failed with exit code %d" "$SCRIPT" "$?"
+	    tty_fatal "%s: git add failed with non-zero exit code" "$SCRIPT"
 	fi
 
 	# OPT(git): m=message
 	if ! tty_run_print git commit -m "Update on $(LANG=C date)"; then
-	    tty_fatal "%s: git commit failed with exit code %d" "$SCRIPT" "$?"
+	    tty_fatal "%s: git commit failed with non-zero exit code" "$SCRIPT"
 	fi
     fi
 done

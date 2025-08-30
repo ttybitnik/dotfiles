@@ -36,7 +36,7 @@ access()
     pass_gpg=$(printf "%s" "$pass_info" | awk '{print $2}')
     # OPT(gpg): d=decrypt
     if ! gpg -d -- "$pass_gpg"; then
-	tty_fatal "%s: gpg failed with exit code %d" "$SCRIPT" "$?"
+	tty_fatal "%s: gpg failed with non-zero exit code" "$SCRIPT"
     fi
 
     tty_notify_error "%s: %s password accesssed" "$SCRIPT" "${1##*/}"
