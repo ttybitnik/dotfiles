@@ -5,6 +5,7 @@
 #     system-wide (rerun 'make install' to reflect changes)
 #   Dependencies:
 #     /usr/local/lib/tty.sh
+#     ~/.local/bin/ttysha
 
 . /usr/local/lib/tty.sh
 
