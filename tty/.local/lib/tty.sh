@@ -140,6 +140,7 @@ _tty_notify()
 	notify-send --urgency "$_tty_notify_urgency" \
 		    "${_tty_notify_prefix} $(basename "$0")" \
 		    "$_tty_notify_message"
+	_tty_log "${_tty_notify_level}" "%s" "${_tty_notify_message}"
     else
 	_tty_log "${_tty_notify_level}" "%s" "${_tty_notify_message}"
     fi
@@ -325,7 +326,7 @@ tty_usage()
     # shellcheck disable=SC2059
     printf "${_tty_usage_format}" "$@" >&2
     printf "\n" >&2
-    exit 1
+    exit 2
 }
 
 #-------------------------------------------------------------------------------
