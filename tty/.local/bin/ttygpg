@@ -56,6 +56,6 @@ elif [ ! -f "$1" ]; then
     tty_fatal "%s: file not found: '%s'" "$SCRIPT" "$1"
 else
     # OPT(gpg): c=symmetric
-    gpg -c --no-symkey-cache --cipher-algo AES256 "$1"
+    gpg -c --no-symkey-cache --cipher-algo AES256 -- "$1"
     delete_if_exist "$@"
 fi

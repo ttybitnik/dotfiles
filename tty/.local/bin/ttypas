@@ -27,7 +27,7 @@ access()
 {
     pass_service="$1"
     # OPT(gpg): d=decrypt
-    pass_info=$(gpg -d "$PASS_FILENAME" | grep "^$pass_service")
+    pass_info=$(gpg -d -- "$PASS_FILENAME" | grep "^$pass_service")
 
     if [ -z "$pass_info" ]; then
 	tty_fatal "%s: service not found: '%s'" "$SCRIPT" "$pass_service"
@@ -35,7 +35,7 @@ access()
 
     pass_gpg=$(printf "%s" "$pass_info" | awk '{print $2}')
     # OPT(gpg): d=decrypt
-    if ! gpg -d "$pass_gpg"; then
+    if ! gpg -d -- "$pass_gpg"; then
 	tty_fatal "%s: gpg failed with exit code %d" "$SCRIPT" "$?"
     fi
 

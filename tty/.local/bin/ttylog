@@ -52,10 +52,10 @@ if [ "$err" != 0 ]; then
 		     "$SCRIPT" "$1" "$err" "${logfile_r##*/}"
 fi
 
-xz "$logfile_tmp"
-mv "${logfile_tmp}.xz" "$logfile_r"
-chmod 400 "$logfile_r"
-chcon unconfined_u:object_r:user_home_t:s0 "$logfile_r"
+xz -- "$logfile_tmp"
+mv -- "${logfile_tmp}.xz" "$logfile_r"
+chmod 400 -- "$logfile_r"
+chcon unconfined_u:object_r:user_home_t:s0 -- "$logfile_r"
 
 tty_notify_info "%s: %s execution complete: '%s'" \
 		"$SCRIPT" "$1" "${logfile_r##*/}"

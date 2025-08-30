@@ -78,7 +78,7 @@ while [ "$#" -gt 0 ]; do
 	   -i "${TTY_DOTFILES}/.assets/ttyimg_scratches.jpg" \
 	   -filter_complex "${crop}, ${scale}, ${bw}, ${noise}, ${scratches}" \
 	   -q:v "${compress}" \
-	   "ttyimg_${filename}"
+	   -- "ttyimg_${filename}"
 
-    exiftool -overwrite_original -All= "ttyimg_${filename}"
+    exiftool -overwrite_original -All= -- "ttyimg_${filename}"
 done

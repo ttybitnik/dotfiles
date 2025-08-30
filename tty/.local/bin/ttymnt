@@ -43,13 +43,13 @@ EOF
     if [ -b "/dev/disk/by-uuid/$device" ]; then
 	if [ -n "$key_path" ]; then
 	    # OPT(gpg): d=decrypt
-	    gpg -d "$key_path" \
+	    gpg -d -- "$key_path" \
 		| "$ROOT_CMD" cryptsetup --key-file=- open \
 			      UUID="$device" "$device_name"
-	    "$ROOT_CMD" mount "$mount_point"
+	    "$ROOT_CMD" mount -- "$mount_point"
 	else
 	    "$ROOT_CMD" cryptsetup open UUID="$device" "$device_name"
-	    "$ROOT_CMD" mount "$mount_point"
+	    "$ROOT_CMD" mount -- "$mount_point"
 	fi
 	tty_info "%s: device '%s' opened: '%s'" \
 		 "$SCRIPT" "$device_name" "$mount_point"
@@ -68,7 +68,7 @@ $device_info_close
 EOF
 
     if [ -d "$mount_point" ]; then
-	"$ROOT_CMD" umount "$mount_point"
+	"$ROOT_CMD" umount -- "$mount_point"
 	"$ROOT_CMD" cryptsetup close "$device_name"
 	tty_info "%s: device '%s' unmonted and closed: '%s'" \
 		 "$SCRIPT" "$device_name" "$mount_point"
@@ -80,7 +80,7 @@ EOF
 action="$1"
 device_name="$2"
 # OPT(gpg): d=decrypt
-device_gpg=$(gpg -d "$DEVICES_FILE")
+device_gpg=$(gpg -d -- "$DEVICES_FILE")
 device_info=$(printf "%s" "$device_gpg" | grep "^$device_name")
 
 validate "$@"

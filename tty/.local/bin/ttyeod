@@ -33,13 +33,13 @@ print_align_asterisk_box()
 
 cleanup()
 {
-    kill "$ROOT_CMD_ALIVE_PID" 2>/dev/null
+    kill -- "$ROOT_CMD_ALIVE_PID" 2>/dev/null
 
     # OPT(sudo): k=reset-timestamp
     [ "$ROOT_CMD" = "sudo" ] && sudo -k
 }
-trap cleanup EXIT
 
+trap cleanup EXIT
 # Prompt for privellege escalation only once
 "$ROOT_CMD" true
 while true; do

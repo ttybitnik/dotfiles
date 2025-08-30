@@ -15,7 +15,7 @@ set -- \
     "${TTY_ORPHEUS}/gnu-emacs/org-roam/"
 
 for dir in "$@"; do
-    if ! cd "$dir"; then
+    if ! cd -- "$dir"; then
 	tty_fatal "%s: cannot change to directory '%s'" "$SCRIPT" "$dir"
     fi
 

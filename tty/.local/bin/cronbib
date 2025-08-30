@@ -9,7 +9,7 @@
 . /usr/local/lib/tty.sh
 
 readonly BIBFILE="${TTY_PROMETHEUS}/bibliography/general.bib"
-readonly CALIBREGUI_PID="GUIPool"
+readonly CALIBREGUI_PROC="GUIPool"
 readonly SCRIPT="${0##*/}"
 
 calibretobib ()
@@ -26,9 +26,9 @@ calibretobib ()
 }
 
 # OPT(pgrep): x=exact
-if pgrep -x "$CALIBREGUI_PID" > /dev/null; then
+if pgrep -x "$CALIBREGUI_PROC" > /dev/null; then
     # OPT(pkill): x=exact
-    pkill -x "$CALIBREGUI_PID"
+    pkill -x -- "$CALIBREGUI_PROC"
     sleep 3
     calibretobib
 else
