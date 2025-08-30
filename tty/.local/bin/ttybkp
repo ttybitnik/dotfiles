@@ -9,6 +9,8 @@
 
 . /usr/local/lib/tty.sh
 
+readonly SCRIPT="${0##*/}"
+
 # OPT(uname): s={kernel,system}-name
 case $(uname -s) in
     FreeBSD*|OpenBSD*|NetBSD*|Darwin*)
@@ -27,8 +29,9 @@ esac
 
 sanitize_input()
 {
+    _input=$1
     # OPT(tr): c=complement d=delete
-    printf "%s" "$1" \
+    printf "%s" "$_input" \
 	| tr ' ' '_' \
 	| tr '[:upper:]' '[:lower:]' \
 	| tr -cd '[:alnum:]_'
@@ -37,10 +40,10 @@ sanitize_input()
 prompt_input()
 {
     printf "Enter elements separated by spaces if needed.\n"
-    printf "Technology name: "
+    printf "Domain name: "
     # OPT(read): r=no-backslashes
     read -r input_domain
-    printf "Specific info: "
+    printf "Scope: "
     # OPT(read): r=no-backslashes
     read -r input_scope
 
@@ -48,24 +51,36 @@ prompt_input()
     scope=$(sanitize_input "$input_scope")
 }
 
-main()
-{
-    prompt_input
-    filename=$(basename -- "$1")
-    extensions="${filename#*.}"
-    modification_epoch=$(_stat0 "$1")
-    modification_timestamp=$(_date0 "$modification_epoch")
-
-    new_filename="${domain}_${scope}_${modification_timestamp}.${extensions}"
-
-    mv "$1" "$new_filename"
-    tty_info "%s: new file name: '%s'" "$(basename "$0")" "$new_filename"
-}
-
 if [ "$#" -ne 1 ]; then
-    tty_fatal "%s: wrong number of arguments" "$(basename "$0")"
-elif [ ! -f "$1" ]; then
-    tty_fatal "%s: file not found: '%s'" "$(basename "$0")" "$1"
+    tty_fatal "%s: wrong number of arguments" "$SCRIPT"
+fi
+
+filename="$1"
+if [ ! -f "$filename" ]; then
+    tty_fatal "%s: file not found: '%s'" "$SCRIPT" "$filename"
+fi
+
+prompt_input
+file_basename="${filename##*/}"
+file_ext="${file_basename#*.}"
+
+if ! mod_epoch=$(_stat0 "$filename"); then
+    tty_notify_fatal "%s: _stat0 failed with non-zero exit code" "$SCRIPT"
+fi
+
+if ! mod_timestamp=$(_date0 "$mod_epoch"); then
+    tty_notify_fatal "%s: _date0 failed with non-zero exit code" "$SCRIPT"
+fi
+
+# OPT(ttysha): l=length p=print
+if ! file_sha=$(ttysha -l 16 -p "$filename"); then
+    tty_notify_fatal "%s: ttysha failed with non-zero exit code" "$SCRIPT"
+fi
+
+new_filename="${domain}_${scope}_${mod_timestamp}_${file_sha}.${file_ext}"
+if mv -- "$filename" "$new_filename"; then
+    tty_info "%s: new file name: '%s' -> '%s'" \
+	     "$SCRIPT" "$filename" "$new_filename"
 else
-    main "$@"
+    tty_notify_fatal "%s: mv failed with exit code %d" "$SCRIPT" "$?"
 fi
