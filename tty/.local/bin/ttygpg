@@ -22,7 +22,7 @@ esac
 
 delete_if_exist()
 {
-    encrypted_file="$(ls "${1}.gpg")"
+    encrypted_file=$(ls "${1}.gpg")
 
     if [ -f "$encrypted_file" ]; then
 	tty_info "%s: file successfully encrypted: '%s'" \

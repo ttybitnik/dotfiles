@@ -7,7 +7,7 @@ if [[ -z "$1" ]]; then
 fi
 
 # OPT(base64): d=decode
-base_t="$(printf "aHR0cHM6Ly93d3cudHdpdGNoLnR2" | base64 -d)"
+base_t=$(printf "aHR0cHM6Ly93d3cudHdpdGNoLnR2" | base64 -d)
 usr="${1}"
 url="${base_t}/${usr}"
 chat="${base_t}/popout/$usr/chat?popout="

@@ -2,7 +2,7 @@
 
 # Display the vpn status.
 
-vpn="$(networkctl list | grep "wireguard.*routable" | awk '{print $2}')"
+vpn=$(networkctl list | grep "wireguard.*routable" | awk '{print $2}')
 
 if [[ -n "$vpn" ]]; then
     printf " %s" "$vpn"

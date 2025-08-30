@@ -2,6 +2,6 @@
 
 # Display the current date and time.
 
-time="$(date '+%d/%m/%y, %a %H:%M')"
+time=$(date '+%d/%m/%y, %a %H:%M')
 
 printf "%s" "$time"
