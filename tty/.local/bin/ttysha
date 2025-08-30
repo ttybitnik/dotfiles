@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Rename file to its SHA256 digest with desired char length (default 16).
+# Rename file appending its SHA256 digest.
 #   Installation:
 #     system-wide (rerun 'make install' to reflect changes)
 #   Dependencies:
@@ -8,25 +8,101 @@
 
 . /usr/local/lib/tty.sh
 
-if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
-    tty_usage "%s <filename> [char_length]" "$(basename "$0")"
+readonly DEFAULT_LENGTH=16
+readonly DEFAULT_SEPARATOR="-"
+readonly DEFAULT_PRINT=0
+readonly SCRIPT="${0##*/}"
+
+print_help() {
+    cat <<EOF
+Usage: $SCRIPT [-l length] [-s separator] [-p] <file>
+
+Rename file appending its SHA256 digest.
+
+Options:
+  -l <length>      Length of hash characters (default "$DEFAULT_LENGTH").
+  -s <separator>   Separator character (default "$DEFAULT_SEPARATOR").
+  -p               Print hash file name to stdout instead of renaming.
+  -h               Display this help.
+EOF
+}
+
+while getopts ":l:s:ph" opt; do
+    case $opt in
+	l)
+	    OPT_LENGTH="$OPTARG"
+	    ;;
+	s)
+	    OPT_SEPARATOR="$OPTARG"
+	    ;;
+	p)
+	    OPT_PRINT=1
+	    ;;
+	h)
+	    print_help
+	    exit 0
+	    ;;
+	\?)
+	    trap print_help EXIT
+	    tty_fatal "%s: invalid option: '-%s'" "$SCRIPT" "$OPTARG"
+	    ;;
+	:)
+	    trap print_help EXIT
+	    tty_fatal "%s: option requires an argument: '-%s'" \
+		      "$SCRIPT" "$OPTARG"
+	    ;;
+    esac
+done
+shift $(( OPTIND - 1 ))
+
+if [ "$#" -ne 1 ]; then
+    trap print_help EXIT
+    tty_fatal "%s: wrong number of arguments" "$SCRIPT"
 fi
 
-file="$1"
-char_len="${2:-16}"
-
-file_base="${file%.*}"
-file_extension="${file##*.}"
-
-# OPT(awk): v=var
-file_sha=$(sha256sum "$file" | awk -v len="$char_len" \
-				   '{print substr($1, 1, len)}')
-new_filename="${file_base}-${file_sha}.${file_extension}"
-
-if expr "$file_base" : ".*-[a-fA-F0-9]\{$char_len\}$" >/dev/null; then
-    tty_fatal "%s: file already named with SHA256 digest: '%s'" \
-	      "$(basename "$0")" "$file"
+filename="$1"
+if [ ! -f "$filename" ]; then
+    tty_fatal "%s: file not found: '%s'" "$SCRIPT" "$filename"
 fi
 
-# OPT(mv): v=verbose
-mv -v "$file" "$new_filename"
+length="${OPT_LENGTH:-$DEFAULT_LENGTH}"
+if [ "$length" -lt 1 ] || [ "$length" -gt 64 ]; then
+    tty_fatal "%s: invalid length '%s': must be an integer from 1 to 64" \
+	      "$SCRIPT" "$length"
+fi
+
+separator="${OPT_SEPARATOR:-$DEFAULT_SEPARATOR}"
+if [ "${#separator}" -ne 1 ]; then
+    tty_fatal "%s: invalid separator '%s': must be a single character" \
+	      "$SCRIPT" "$separator"
+fi
+
+print="${OPT_PRINT:-$DEFAULT_PRINT}"
+
+file_basename_noext="${filename%.*}"
+file_ext="${filename#*.}"
+
+# OPT(cut): c=characters
+if ! file_sha=$(sha256sum "$filename" | cut -c 1-"$length"); then
+    tty_notify_fatal "%s: file_sha pipe failed with exit code %d" "$SCRIPT" "$?"
+fi
+
+if [ "$print" -eq 1 ]; then
+    printf "%s" "$file_sha"
+    [ -t 0 ] && printf "\n"
+    exit 0
+fi
+
+regexp_sha=".*${separator}[a-fA-F0-9]\{$length\}$"
+if expr "$file_basename_noext" : "$regexp_sha" >/dev/null; then
+    tty_fatal "%s: file already named with %d characters SHA256 digest: '%s'" \
+	      "$SCRIPT" "$length" "$filename"
+fi
+
+new_filename="${file_basename_noext}${separator}${file_sha}.${file_ext}"
+if mv -- "$filename" "$new_filename"; then
+    tty_info "%s: new file name: '%s' -> '%s'" \
+	     "$SCRIPT" "$filename" "$new_filename"
+else
+    tty_notify_fatal "%s: mv failed with exit code %d" "$SCRIPT" "$?"
+fi
