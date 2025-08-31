@@ -79,9 +79,6 @@ fi
 
 print="${OPT_PRINT:-$DEFAULT_PRINT}"
 
-file_basename_noext="${filename%.*}"
-file_ext="${filename#*.}"
-
 # OPT(cut): c=characters
 if ! file_sha=$(sha256sum "$filename" | cut -c 1-"$length"); then
     tty_notify_fatal "%s: file_sha pipe failed with non-zero exit code" "$SCRIPT"
@@ -93,6 +90,11 @@ if [ "$print" -eq 1 ]; then
     exit 0
 fi
 
+file_dir_or_basename="${filename%/*}"
+file_basename="${filename##*/}"
+file_basename_noext="${file_basename%.*}"
+file_ext="${file_basename#*.}"
+
 regexp_sha=".*${separator}[a-fA-F0-9]\{$length\}$"
 if expr "$file_basename_noext" : "$regexp_sha" >/dev/null; then
     tty_fatal "%s: file already named with %d characters SHA256 digest: '%s'" \
@@ -100,6 +102,11 @@ if expr "$file_basename_noext" : "$regexp_sha" >/dev/null; then
 fi
 
 new_filename="${file_basename_noext}${separator}${file_sha}.${file_ext}"
+if [ ! "$file_dir_or_basename" = "$file_basename" ]; then
+    file_dir=${file_dir_or_basename}
+    new_filename="${file_dir}/${new_filename}"
+fi
+
 if mv -- "$filename" "$new_filename"; then
     tty_info "%s: new file name: '%s' -> '%s'" \
 	     "$SCRIPT" "$filename" "$new_filename"
