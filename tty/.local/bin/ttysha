@@ -13,7 +13,8 @@ readonly DEFAULT_SEPARATOR="-"
 readonly DEFAULT_PRINT=0
 readonly SCRIPT="${0##*/}"
 
-print_help() {
+print_help()
+{
     cat <<EOF
 Usage: $SCRIPT [-l length] [-s separator] [-p] <file>
 
