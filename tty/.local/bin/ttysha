@@ -92,7 +92,7 @@ fi
 
 file_dir_or_basename="${filename%/*}"
 file_basename="${filename##*/}"
-file_basename_noext="${file_basename%.*}"
+file_basename_noext="${file_basename%%.*}"
 file_ext="${file_basename#*.}"
 
 regexp_sha=".*${separator}[a-fA-F0-9]\{$length\}$"
