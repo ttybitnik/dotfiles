@@ -2,6 +2,7 @@
 
 # Cron/timer script to sync changes between remote and local directories.
 #   Globals:
+#     TTY_ARGO
 #     TTY_ORPHEUS
 #     TTY_PROMETHEUS
 #   Dependencies:
@@ -11,8 +12,9 @@
 
 readonly SCRIPT="${0##*/}"
 
-for drive in prometheus orpheus; do
+for drive in argo prometheus orpheus; do
     case $drive in
+	argo) dir="${TTY_ARGO}/" ;;
 	prometheus) dir="${TTY_PROMETHEUS}/" ;;
 	orpheus) dir="${TTY_ORPHEUS}/" ;;
 	*) tty_fatal "%s: unknown drive: '%s'" "$SCRIPT" "$drive" ;;
@@ -24,7 +26,7 @@ for drive in prometheus orpheus; do
 
     # OPT(rclone): v=verbose
     if ! tty_run_print rclone sync "$dir" "${drive}:" -v \
-	 --skip-links --exclude ".git/"
+	 --skip-links --exclude ".git/" "$1" "$2"
     then
 	tty_notify_fatal "%s: rclone sync failed for '%s'" "$SCRIPT" "$drive"
     fi

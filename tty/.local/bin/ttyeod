@@ -65,4 +65,4 @@ print_align_asterisk_box "Running crongit..."
 ttylog crongit
 
 print_align_asterisk_box "Running crondrive..."
-ttylog crondrive
+ttylog crondrive_local
