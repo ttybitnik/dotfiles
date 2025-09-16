@@ -54,6 +54,11 @@ To automate the process of creating symbolic links from the repository files to 
   make xorg
 #+end_src
 
+
+*** Papyrus
+
+To create paper-based backups of important files, run =papyrus=. This script handles compression, chunking, and QR code generation while preserving file metadata and integrity through SHA-256 for physical printing and storage. It provides a long-term cold backup for critical/small files.
+
 *** Switcher
 
 To switch between light and dark modes globally, just run =switcher=. This custom script sends SIGHUP signals to the respective programs, making it easy to adapt to changes in ambient light without having to manually adjust each program's settings.
@@ -70,81 +75,82 @@ To display a MOTD with a log of last logins and a custom fortune, run =hermes=. 
 
 To streamline the music experience, just run =euterpe=. This script leverages tmux to attach to a session with windows related to managing system sound and media.
 
-** Configurations
-
-- TTY environment
-  - Bash
-  - Readline
-  - Git
-  - Tmux
-  - Curl
-  - GNU Lynx
-  - GNU Midnight Commander
-  - Kmonad
-  - Systemd
-  - Xdg
-  - Ansible
-- Wayland environment
-  - Foot
-  - Sway
-  - Waybar
-  - Swaylock
-  - Rofi
-  - Dunst
-  - GTK
-  - Mpv
-  - Yt-dlp
-- Xorg environment
-  - Urxvt
-  - Sxhkd
-  - Xresources
-  - Xsettingsd
-
-The configuration files are located in the following repository paths: =./${environment}/.config/=, =./${environment}/.local/share/=.
-
 ** Scripts
 
-- switcher: /global dark/light mode switcher/
-- omni: /universal update automation/
-- hermes: /custom motd/
+- 0x0st: /share ephemeral files and snippets/
+- autostart: /sway/dwm autostart/
+- battery_bar: /battery status/
+- clock_bar: /date and time/
+- cpu_bar: /cpu usage/
+- cronaide: /aide checks/
+- cronaudit: /audit summaries/
+- cronbib: /calibre to bibtex/
+- crondrive: /bisync drives/
+- cronemacs: /emacs packages updates/
+- crongit: /commit local repos/
 - euterpe: /audio and music management/
-- ttylog: /logging for commands/
+- hermes: /custom motd/
+- lan_bar: /lan status/
+- media_bar: /media status/
+- mpvf: /mpv and firefox wrapper/
+- net_bar: /network status/
+- omni: /universal update automation/
+- papyrus: /paper-based backups/
+- power_menu: /logout screen options/
+- qbit: /qbittorrent secure launcher/
+- ram_bar: /ram usage/
+- switcher: /global dark/light mode switcher/
 - ttybkp: /backup naming standard/
 - ttyeod: /end of day wrapper/
 - ttygpg: /encryption automation/
+- ttyimg: /image privacy and filtering/
+- ttylog: /logging for commands/
 - ttymnt: /luks devices management/
 - ttypas: /env and secrets security/
-- ttyimg: /image privacy and filtering/
 - ttysha: /file enumeration prevention/
 - ttyt00: /tmux wrapper/
 - ttyt01: /tmux wrapper/
 - ttyt02: /tmux wrapper/
-- 0x0st: /share ephemeral files and snippets/
-- autostart: /sway/dwm autostart/
-- vpn_bar: /vpn status/
-- net_bar: /network status/
-- lan_bar: /lan status/
-- wlan_bar: /wlan status/
-- ram_bar: /ram usage/
-- cpu_bar: /cpu usage/
-- battery_bar: /battery status/
 - volume_bar: /volume status/
-  - volume_up: /raise volume/
   - volume_down: /lower volume/
-- media_bar: /media status/
-- clock_bar: /date and time/
+  - volume_up: /raise volume/
+- vpn_bar: /vpn status/
 - weather: /weather status/
-- qbit: /qbittorrent secure launcher/
-- mpvf: /mpv and firefox wrapper/
-- power_menu: /logout screen options/
-- cronaide: /aide checks/
-- cronaudit: /audit summaries/
-- cronbib: /calibre to bibtex/
-- cronemacs: /emacs packages updates/
-- crondrive: /bisync drives/
-- crongit: /commit local repos/
+- wlan_bar: /wlan status/
 
 The scripts are located in the following repository path: =./tty/.local/bin/=.
+
+** Configurations
+
+- TTY environment
+  - Ansible
+  - Bash
+  - Curl
+  - Git
+  - GNU Lynx
+  - GNU Midnight Commander
+  - Kmonad
+  - Readline
+  - Systemd
+  - Tmux
+  - Xdg
+- Wayland environment
+  - Dunst
+  - Foot
+  - GTK
+  - Mpv
+  - Rofi
+  - Sway
+  - Swaylock
+  - Waybar
+  - Yt-dlp
+- Xorg environment
+  - Sxhkd
+  - Urxvt
+  - Xresources
+  - Xsettingsd
+
+The configuration files are located in the following repository paths: =./${environment}/.config/=, =./${environment}/.local/share/=.
 
 ** License
 

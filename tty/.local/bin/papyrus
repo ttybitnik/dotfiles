@@ -1,0 +1,386 @@
+#!/bin/sh
+
+# Paper-based long-term cold backup for critical/small files via QR codes.
+#   Dependencies:
+#     /usr/local/lib/tty.sh
+# TODO: Perhaps implement this script as a standalone project.
+
+. /usr/local/lib/tty.sh
+
+readonly SCRIPT="${0##*/}"
+readonly DEFAULT_RESTORE=0
+readonly DEFAULT_DEBUG=0
+
+readonly COMPRESSION_LEVEL=9
+readonly CHUNK_SIZE=2900
+
+readonly QRCODE_SIZE="1000x1000"
+readonly PAPER_WIDTH=2100
+readonly PAPER_HEIGHT=2970
+readonly PAPER_SIZE="${PAPER_WIDTH}x${PAPER_HEIGHT}"
+
+readonly MONTAGE_FONT="Noto-Sans-Mono"
+readonly MONTAGE_SKIP_LINES=33
+readonly MONTAGE_PIXELS_LINE=50
+readonly MONTAGE_TOP_PADDING=$((MONTAGE_SKIP_LINES * MONTAGE_PIXELS_LINE))
+readonly MONTAGE_MAX_HEIGHT=$((PAPER_HEIGHT - MONTAGE_TOP_PADDING))
+
+display_help()
+{
+    cat <<EOF
+Usage: $SCRIPT [-r image] [-d] <file>
+
+Paper-based long-term cold backup for critical/small files via QR codes.
+
+Options:
+  -r <image>       Restore data from QR codes (experimental).
+  -d               Debug mode.
+  -h               Display this help.
+EOF
+}
+
+write_base()
+{
+    cat >"$base_tmp" <<EOF
+File:	${file_name}
+Type:	${file_type%%[,-]*}
+Size:	${file_size} bytes
+Gzip:	${compressed_size} bytes
+Chunks:	${chunk_count} of maximum ${CHUNK_SIZE} bytes
+Access: ${file_access}
+Modify: ${file_modify}
+Change: ${file_change}
+Birth:	${file_birth}
+Hash:	${file_sha%% *}
+
+INSTRUCTIONS
+0. Take clear photos or scans of this $SCRIPT QR codes
+1. Extract QR code data: zbarimg --raw -q -Sbinary QR-*.jpg >> restored_data
+2. Decompress restored data: gzip -c -d restored_data > original_file
+3. Verify integrity: sha256sum original_file
+
+Alternatively, simplify the above with '$SCRIPT -r <image>' (experimental).
+
+Archived/encrypted files may require additional steps.
+Check the file type and original extension as a hint.
+
+DESCRIPTION
+EOF
+    {
+        printf "%b\n" "$input_desc"
+        printf "\n"
+        printf "QR CODES (%d total)\n" "${chunk_count}"
+    } >>"$base_tmp"
+}
+
+print_base()
+{
+    print_header=$(printf "PAPYRUS %.7s" "$file_sha")
+    # OPT(pr): h=header
+    pr -h "$print_header" "$base_tmp" >"$print_tmp"
+
+    cat "$print_tmp"
+
+    [ "$debug" -eq 1 ] && return 0
+
+    printf "Print base layer above (y/n)? "
+    # OPT(read): r=no-backslashes
+    read -r response
+    response=$(printf "%s" "$response" | tr '[:upper:]' '[:lower:]')
+    while [ "$response" != "y" ] && [ "$response" != "n" ]; do
+        printf "Invalid input. Print base layer (y/n)? "
+        # OPT(read): r=no-backslashes
+        read -r response
+        response=$(printf "%s" "$response" | tr '[:upper:]' '[:lower:]')
+    done
+    if [ "$response" = "y" ]; then
+        tty_info "%s: base layer printing submitted" "$SCRIPT"
+        lp "$print_tmp"
+    fi
+}
+
+print_qrcode()
+{
+    [ "$debug" -eq 1 ] && return 0
+
+    printf "Reinsert the base layer page in the exact same orientation.\n"
+
+    xdg-open "$qrcode_final" &
+
+    printf "Ready to print QR code layer (y/n)? "
+    # OPT(read): r=no-backslashes
+    read -r response
+    response=$(printf "%s" "$response" | tr '[:upper:]' '[:lower:]')
+    while [ "$response" != "y" ] && [ "$response" != "n" ]; do
+        printf "Invalid input. Ready to print QR code layer (y/n)? "
+        # OPT(read): r=no-backslashes
+        read -r response
+        response=$(printf "%s" "$response" | tr '[:upper:]' '[:lower:]')
+    done
+    if [ "$response" = "y" ]; then
+        tty_info "%s: QR code layer printing submitted" "$SCRIPT"
+        lp "$qrcode_final"
+    fi
+}
+
+read_desc()
+{
+    cat >"$desc_tmp" <<EOF
+
+# Enter the file description above. Max 5 lines.
+# Lines starting with '#' are ignored.
+# Save and exit when done.
+EOF
+    if ! xdg-open "$desc_tmp"; then
+        tty_fatal "%s: xdg-open failed with non-zero exit code" "$SCRIPT"
+    fi
+    # OPT(sed): i=in-place
+    sed -i '/^#/d' "$desc_tmp"
+
+    if [ ! -s "$desc_tmp" ] || [ -z "$(tr -d '[:space:]' <"$desc_tmp")" ]; then
+        input_desc="\n\n\n\n"
+    else
+        # OPT(fmt): s=split-only w=width
+        input_desc=$(fmt -s -w 72 <"$desc_tmp" | head -5)
+    fi
+}
+
+compress_file()
+{
+    # OPT(gzip): c=stdout
+    if ! gzip -c -"$COMPRESSION_LEVEL" "$filename" >"$compressed_tmp"; then
+        tty_notify_fatal "%s: gzip failed with non-zero exit code" "$SCRIPT"
+    fi
+
+    compressed_size=$(stat --printf "%s" "$compressed_tmp")
+}
+
+split_file()
+{
+    # OPT(split): b=bytes d=numeric
+    if ! split -b "$CHUNK_SIZE" -d "$compressed_tmp" "$dir_tmp/chunk-"; then
+        tty_notify_fatal "%s: split failed with non-zero exit code" "$SCRIPT"
+    fi
+
+    chunk_count=$(find "$dir_tmp" -name "chunk-*" | wc -l)
+}
+
+write_qrcode()
+{
+    chunk_files=$(find "$dir_tmp" -name "chunk-*" | sort)
+
+    chunk_index=1
+    for chunk_file in $chunk_files; do
+        qrcode_output="${dir_tmp}/QR-${chunk_index}.png"
+        # OPT(qrencode): t=type s=size m=margin 8=8bit o=output
+        if ! qrencode \
+            -t PNG \
+            -s 6 \
+            -m 0 \
+            -8 \
+            -o "$qrcode_output" <"$chunk_file"; then
+            tty_notify_fatal "%s: qrencode failed for chunk %d" \
+                "$SCRIPT" "$chunk_index"
+        fi
+        chunk_index=$((chunk_index + 1))
+    done
+
+    qrcode_files=$(find "$dir_tmp" -name "QR-*.png" 2>/dev/null | sort)
+    if [ -z "$qrcode_files" ]; then
+        tty_notify_fatal "%s: no QR code files found: '%s'" \
+            "$SCRIPT" "$dir_tmp"
+    fi
+
+    montage_output="${dir_tmp}/QR-montage.png"
+
+    # shellcheck disable=SC2086
+    if ! montage \
+        -font "$MONTAGE_FONT" \
+        -pointsize 24 \
+        -label '%t' \
+        $qrcode_files \
+        -background white \
+        -geometry "${QRCODE_SIZE}+25+25" \
+        "$montage_output"; then
+        tty_notify_fatal "%s: montage failed with non-zero exit code" "$SCRIPT"
+    fi
+
+    if ! magick \
+        "$montage_output" \
+        -resize "${PAPER_WIDTH}x${MONTAGE_MAX_HEIGHT}>" \
+        "$montage_output"; then
+        tty_notify_fatal "%s: magick failed with non-zero exit code" "$SCRIPT"
+    fi
+
+    if [ ! -f "$montage_output" ]; then
+        tty_notify_fatal "%s: montage output file not created: '%s'" \
+            "$SCRIPT" "$montage_output"
+    fi
+
+    qrcode_final="${dir_tmp}/QR-final.png"
+    if ! magick \
+        "$montage_output" \
+        -background white \
+        -splice "0x${MONTAGE_TOP_PADDING}" \
+        -gravity north \
+        -extent "$PAPER_SIZE" \
+        "$qrcode_final"; then
+        tty_notify_fatal "%s: magick(1) failed with non-zero exit code" "$SCRIPT"
+    fi
+}
+
+restore_data()
+{
+    # OPT(zbarimg): S=symbology q=quiet
+    if ! zbarimg \
+        -Sdisable \
+        -Sqrcode.enable \
+        -Sbinary \
+        --raw \
+        -q "$filename" >"$restored_tmp"; then
+        tty_notify_fatal "%s: zbarimg failed with non-zero exit code" "$SCRIPT"
+    fi
+
+    printf "Enter the original filename (e.g., basename.txt.gpg): "
+    # OPT(read): r=no-backslashes
+    read -r original_filename
+    if [ -z "$original_filename" ]; then
+        tty_fatal "%s: invalid original filename: cannot be empty" "$SCRIPT"
+    fi
+
+    # OPT(gzip): d=decompress c=stdout
+    if ! gzip -c -d "$restored_tmp" >"$original_filename"; then
+        tty_notify_fatal "%s: gzip failed with non-zero exit code" "$SCRIPT"
+    fi
+
+    tty_info "%s: file restored: '%s'" "$SCRIPT" "$original_filename"
+
+    if restore_sha=$(sha256sum "$original_filename"); then
+        tty_info "%s: file restored hash: '%s'" "$SCRIPT" "${restore_sha%% *}"
+    else
+        tty_notify_fatal "%s: sha256sum(1) failed with non-zero exit code" \
+            "$SCRIPT"
+    fi
+}
+
+cleanup()
+{
+    [ "$debug" -ne 1 ] && [ -d "$dir_tmp" ] && rm -- "$dir_tmp"/*
+    [ "$debug" -ne 1 ] && [ -d "$dir_tmp" ] && rmdir -- "$dir_tmp"
+}
+
+while getopts ":r:dh" opt; do
+    case $opt in
+        r)
+            OPT_RESTORE=1
+            ;;
+        d)
+            OPT_DEBUG=1
+            ;;
+        h)
+            display_help
+            exit 0
+            ;;
+        \?)
+            trap display_help EXIT
+            tty_fatal "%s: invalid option: '-%s'" "$SCRIPT" "$OPTARG"
+            ;;
+        :)
+            trap display_help EXIT
+            tty_fatal "%s: option requires an argument: '-%s'" \
+                "$SCRIPT" "$OPTARG"
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+if [ "$#" -ne 1 ]; then
+    trap display_help EXIT
+    tty_fatal "%s: wrong number of arguments" "$SCRIPT"
+fi
+
+filename="$1"
+if [ ! -f "$filename" ]; then
+    tty_fatal "%s: file not found: '%s'" "$SCRIPT" "$filename"
+fi
+
+for dep in gzip bc qrencode magick zbarimg split; do
+    if ! command -v "$dep" >/dev/null 2>&1; then
+        tty_fatal "%s: required dependency not found: '%s'" "$SCRIPT" "$dep"
+    fi
+done
+
+debug="${OPT_DEBUG:-$DEFAULT_DEBUG}"
+
+trap cleanup EXIT
+umask 077
+if [ "$debug" -eq 1 ]; then
+    # OPT(mktemp): d=directory t=template p=path
+    dir_tmp=$(mktemp -d -t "${SCRIPT}".XXXXXXXXXX -p .)
+else
+    # OPT(mktemp): d=directory t=template
+    dir_tmp=$(mktemp -d -t "${SCRIPT}".XXXXXXXXXX)
+fi
+readonly dir_tmp
+
+restore="${OPT_RESTORE:-$DEFAULT_RESTORE}"
+if [ "$restore" -eq 1 ]; then
+    restored_tmp="${dir_tmp}/restored.gz"
+    restore_data
+    exit 0
+fi
+
+if ! file_stat=$(stat --printf "%n|%s|%x|%y|%z|%w" "$filename"); then
+    tty_notify_fatal "%s: stat failed with non-zero exit code" "$SCRIPT"
+fi
+# OPT(read): r=no-backslashes
+IFS='|' read -r file_name file_size file_access file_modify file_change file_birth <<EOF
+$file_stat
+EOF
+
+# OPT(file): b=brief
+if ! file_type=$(file -b "$filename"); then
+    tty_notify_fatal "%s: file failed with non-zero exit code" "$SCRIPT"
+fi
+
+if ! file_sha=$(sha256sum "$filename"); then
+    tty_notify_fatal "%s: sha256sum failed with non-zero exit code" "$SCRIPT"
+fi
+
+compressed_tmp="${dir_tmp}/compressed.gz"
+if ! compress_file; then
+    tty_notify_fatal "%s: compress_file failed with non-zero exit code" "$SCRIPT"
+fi
+
+if ! split_file; then
+    tty_notify_fatal "%s: split_file failed with non-zero exit code" "$SCRIPT"
+fi
+
+desc_tmp="${dir_tmp}/desc.txt"
+if ! read_desc; then
+    tty_notify_fatal "%s: read_desc failed with non-zero exit code" "$SCRIPT"
+fi
+
+base_tmp="${dir_tmp}/base.txt"
+if ! write_base; then
+    tty_notify_fatal "%s: write_base failed with non-zero exit code" "$SCRIPT"
+fi
+
+if ! write_qrcode; then
+    tty_notify_fatal "%s: write_qrcode failed with non-zero exit code" "$SCRIPT"
+fi
+
+print_tmp="${dir_tmp}/print.txt"
+if ! print_base; then
+    tty_notify_fatal "%s: print_base failed with non-zero exit code" "$SCRIPT"
+fi
+
+if ! print_qrcode; then
+    tty_notify_fatal "%s: print_qrcode failed with non-zero exit code" "$SCRIPT"
+fi
+
+if [ "$debug" -eq 1 ]; then
+    tty_info "%s: debug mode: temporary files preserved '%s'" \
+        "$SCRIPT" "$dir_tmp"
+    xdg-open "$qrcode_final" &
+fi
