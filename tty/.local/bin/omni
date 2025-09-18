@@ -12,7 +12,7 @@ set -e
 run()
 {
     printf "\n+ %s \n\n" "$1"
-    # Intentionally unquoted
+    # shellcheck disable=SC2086
     $1
 }
 
