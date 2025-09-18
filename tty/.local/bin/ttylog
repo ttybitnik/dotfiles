@@ -44,7 +44,7 @@ err=$(cat "$err_pipe_tmp")
 timestamp=$(_date0)
 # OPT(uname): n=nodename
 nodename=$(uname -n)
-logfile_r="${TTY_ORPHEUS}/ttylogs/${nodename}_${timestamp}_"
+logfile_r="${TTY_ORPHEUS}/Temp/ttylogs/${nodename}_${timestamp}_"
 logfile_r="${logfile_r}${1}_${err}.log.xz"
 
 if [ "$err" != 0 ]; then

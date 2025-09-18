@@ -8,7 +8,7 @@
 
 . /usr/local/lib/tty.sh
 
-readonly BIBFILE="${TTY_PROMETHEUS}/bibliography/general.bib"
+readonly BIBFILE="${TTY_PROMETHEUS}/Library/general.bib"
 readonly CALIBREGUI_PROC="GUIPool"
 readonly SCRIPT="${0##*/}"
 

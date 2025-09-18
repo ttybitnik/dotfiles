@@ -11,8 +11,8 @@
 readonly SCRIPT="${0##*/}"
 
 set -- \
-    "${TTY_ORPHEUS}/gnu-emacs/org/" \
-    "${TTY_ORPHEUS}/gnu-emacs/org-roam/"
+    "${TTY_ORPHEUS}/Projects/Emacs/org/" \
+    "${TTY_ORPHEUS}/Projects/Emacs/org-roam/"
 
 for dir in "$@"; do
     if ! cd -- "$dir"; then
