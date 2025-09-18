@@ -24,6 +24,7 @@ for drive in argo prometheus orpheus; do
 	tty_fatal "%s: directory not found: '%s'" "$SCRIPT" "$dir"
     fi
 
+    # TODO: Add health check using check to validate remote files.
     # OPT(rclone): v=verbose
     if ! tty_run_print rclone sync "$dir" "${drive}:" -v \
 	 --skip-links --exclude ".git/" "$1" "$2"
