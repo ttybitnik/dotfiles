@@ -12,35 +12,35 @@ readonly SCRIPT="${0##*/}"
 switcher_changes()
 {
     if [[ "$filename" == *"dark"* ]]; then
-	printf "%s\n" \
-	       "We can easily forgive a child who is afraid of the dark;" \
-	       "the real tragedy of life is when men are afraid of the light."
-	printf "— Plato\n"
+        printf "%s\n" \
+               "We can easily forgive a child who is afraid of the dark;" \
+               "the real tragedy of life is when men are afraid of the light."
+        printf "— Plato\n"
 
-	# OPT(ln): s=symbolic f=force
-	ln -sf "${TTY_DOTFILES}/xorg/.config/xsettingsd/xsettingsd-light.conf" \
-	   "${HOME}/.config/xsettingsd/xsettingsd.conf"
-	ln -sf "${TTY_DOTFILES}/xorg/.Xresources-light" \
-	   "${HOME}/.Xresources"
-	ln -sf "${HOME}/.emacs.d/local/switcher-day.el" \
-	   "${HOME}/.emacs.d/local/switcher.el"
+        # OPT(ln): s=symbolic f=force
+        ln -sf "${TTY_DOTFILES}/xorg/.config/xsettingsd/xsettingsd-light.conf" \
+            "${HOME}/.config/xsettingsd/xsettingsd.conf"
+        ln -sf "${TTY_DOTFILES}/xorg/.Xresources-light" \
+            "${HOME}/.Xresources"
+        ln -sf "${HOME}/.emacs.d/local/switcher-day.el" \
+            "${HOME}/.emacs.d/local/switcher.el"
 
     elif [[ "$filename" == *"light"* ]]; then
-	printf "%s\n" \
-	       "Darkness now rose, as daylight" \
-	       "sunk, and brought in low'ring" \
-	       "night her shadowy offspring."
-	printf "— John Milton\n"
+        printf "%s\n" \
+               "Darkness now rose, as daylight" \
+               "sunk, and brought in low'ring" \
+               "night her shadowy offspring."
+        printf "— John Milton\n"
 
-	# OPT(ln): s=symbolic f=force
-	ln -sf "${TTY_DOTFILES}/xorg/.config/xsettingsd/xsettingsd-dark.conf" \
-	   "${HOME}/.config/xsettingsd/xsettingsd.conf"
-	ln -sf "${TTY_DOTFILES}/xorg/.Xresources-dark" \
-	   "${HOME}/.Xresources"
-	ln -sf "${HOME}/.emacs.d/local/switcher-night.el" \
-	   "${HOME}/.emacs.d/local/switcher.el"
+        # OPT(ln): s=symbolic f=force
+        ln -sf "${TTY_DOTFILES}/xorg/.config/xsettingsd/xsettingsd-dark.conf" \
+            "${HOME}/.config/xsettingsd/xsettingsd.conf"
+        ln -sf "${TTY_DOTFILES}/xorg/.Xresources-dark" \
+            "${HOME}/.Xresources"
+        ln -sf "${HOME}/.emacs.d/local/switcher-night.el" \
+            "${HOME}/.emacs.d/local/switcher.el"
     else
-	tty_fatal "%s: configuration files not found" "$SCRIPT"
+        tty_fatal "%s: configuration files not found" "$SCRIPT"
     fi
 }
 
@@ -52,7 +52,7 @@ switcher_reload()
     killall -HUP urxvt
     killall -USR1 st
     # OPT(emacsclient): e=eval
-    emacsclient  --eval "(config-reload)" 1> /dev/null &
+    emacsclient  --eval "(config-reload)" 1>/dev/null &
 }
 
 target_path=$(readlink "$LINK_PATH")

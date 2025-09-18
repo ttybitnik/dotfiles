@@ -77,21 +77,21 @@ _tty_log()
     [ "${_tty_log_level}" -lt "${TTY_LOG_LEVEL}" ] && return 0
 
     case "${_tty_log_level}" in
-	"${TTY_LOG_DEBUG}") _tty_log_prefix="[DEBUG]" ;;
-	"${TTY_LOG_INFO}")  _tty_log_prefix="[INFO]"  ;;
-	"${TTY_LOG_WARN}")  _tty_log_prefix="[WARN]"  ;;
-	"${TTY_LOG_ERROR}") _tty_log_prefix="[ERROR]" ;;
-	"${TTY_LOG_FATAL}") _tty_log_prefix="[FATAL]" ;;
-	*)                  _tty_log_prefix="[?????]" ;;
+        "${TTY_LOG_DEBUG}")     _tty_log_prefix="[DEBUG]" ;;
+        "${TTY_LOG_INFO}")      _tty_log_prefix="[INFO]"  ;;
+        "${TTY_LOG_WARN}")      _tty_log_prefix="[WARN]"  ;;
+        "${TTY_LOG_ERROR}")     _tty_log_prefix="[ERROR]" ;;
+        "${TTY_LOG_FATAL}")     _tty_log_prefix="[FATAL]" ;;
+        *)                      _tty_log_prefix="[?????]" ;;
     esac
 
     # shellcheck disable=SC2059
     _tty_log_message=$(printf "${_tty_log_format}" "$@")
 
     if [ "${_tty_log_level}" -ge "${TTY_LOG_WARN}" ]; then
-	printf "%s %s\n" "${_tty_log_prefix}" "${_tty_log_message}" >&2
+        printf "%s %s\n" "${_tty_log_prefix}" "${_tty_log_message}" >&2
     else
-	printf "%s %s\n" "${_tty_log_prefix}" "${_tty_log_message}"
+        printf "%s %s\n" "${_tty_log_prefix}" "${_tty_log_message}"
     fi
 
     [ "${_tty_log_level}" -eq "${TTY_LOG_FATAL}" ] && exit 1
@@ -120,12 +120,12 @@ _tty_notify()
     [ "${_tty_notify_level}" -lt "${TTY_LOG_LEVEL}" ] && return 0
 
     case "${_tty_notify_level}" in
-	"${TTY_LOG_DEBUG}") _tty_notify_prefix="[DEBUG]" ;;
-	"${TTY_LOG_INFO}")  _tty_notify_prefix="[INFO]"  ;;
-	"${TTY_LOG_WARN}")  _tty_notify_prefix="[WARN]"  ;;
-	"${TTY_LOG_ERROR}") _tty_notify_prefix="[ERROR]" ;;
-	"${TTY_LOG_FATAL}") _tty_notify_prefix="[FATAL]" ;;
-	*)                  _tty_notify_prefix="[?????]" ;;
+        "${TTY_LOG_DEBUG}")     _tty_notify_prefix="[DEBUG]" ;;
+        "${TTY_LOG_INFO}")      _tty_notify_prefix="[INFO]"  ;;
+        "${TTY_LOG_WARN}")      _tty_notify_prefix="[WARN]"  ;;
+        "${TTY_LOG_ERROR}")     _tty_notify_prefix="[ERROR]" ;;
+        "${TTY_LOG_FATAL}")     _tty_notify_prefix="[FATAL]" ;;
+        *)                      _tty_notify_prefix="[?????]" ;;
     esac
 
     # shellcheck disable=SC2059
@@ -133,16 +133,16 @@ _tty_notify()
 
     _tty_notify_urgency="normal"
     if [ "${_tty_notify_level}" -ge "${TTY_LOG_WARN}" ]; then
-	_tty_notify_urgency="critical"
+        _tty_notify_urgency="critical"
     fi
 
     if command -v notify-send >/dev/null 2>&1; then
-	notify-send --urgency "$_tty_notify_urgency" \
-		    "${_tty_notify_prefix} ${0##*/}" \
-		    "$_tty_notify_message"
-	_tty_log "${_tty_notify_level}" "%s" "${_tty_notify_message}"
+        notify-send --urgency "$_tty_notify_urgency" \
+                    "${_tty_notify_prefix} ${0##*/}" \
+                    "$_tty_notify_message"
+        _tty_log "${_tty_notify_level}" "%s" "${_tty_notify_message}"
     else
-	_tty_log "${_tty_notify_level}" "%s" "${_tty_notify_message}"
+        _tty_log "${_tty_notify_level}" "%s" "${_tty_notify_message}"
     fi
 
     [ "${_tty_notify_level}" -eq "${TTY_LOG_FATAL}" ] && exit 1
@@ -165,7 +165,10 @@ _tty_notify()
 #   tty_debug "%s: variables values: x=%d, y=%s" "${0##*/}" "$x" "$y"
 #   tty_debug "%s: %s called with %d arguments" "${0##*/}" "$func" "$#"
 #-------------------------------------------------------------------------------
-tty_debug() { _tty_log "${TTY_LOG_DEBUG}" "$@"; }
+tty_debug()
+{
+    _tty_log "${TTY_LOG_DEBUG}" "$@"
+}
 
 #-------------------------------------------------------------------------------
 # Logs a message at INFO level.
@@ -179,7 +182,10 @@ tty_debug() { _tty_log "${TTY_LOG_DEBUG}" "$@"; }
 #   tty_info "%s: processing file: '%s'" "${0##*/}" "$filename"
 #   tty_info "%s: operation completed successfully" "${0##*/}"
 #-------------------------------------------------------------------------------
-tty_info() { _tty_log "${TTY_LOG_INFO}" "$@"; }
+tty_info()
+{
+    _tty_log "${TTY_LOG_INFO}" "$@"
+}
 
 #-------------------------------------------------------------------------------
 # Logs a message at WARN level.
@@ -193,7 +199,10 @@ tty_info() { _tty_log "${TTY_LOG_INFO}" "$@"; }
 #   tty_warn "%s: disk space low: %dMB remaining" "${0##*/}" "$fspace"
 #   tty_warn "%s: deprecated API endpoint: '%s'" "${0##*/}" "$endpoint"
 #-------------------------------------------------------------------------------
-tty_warn() { _tty_log "${TTY_LOG_WARN}" "$@"; }
+tty_warn()
+{
+    _tty_log "${TTY_LOG_WARN}" "$@"
+}
 
 #-------------------------------------------------------------------------------
 # Logs a message at ERROR level.
@@ -207,7 +216,10 @@ tty_warn() { _tty_log "${TTY_LOG_WARN}" "$@"; }
 #   tty_error "%s: failed to connect to database: '%s'" "${0##*/}" "$?"
 #   tty_error "%s: invalid action: '%s'" "${0##*/}" "$action"
 #-------------------------------------------------------------------------------
-tty_error() { _tty_log "${TTY_LOG_ERROR}" "$@"; }
+tty_error()
+{
+    _tty_log "${TTY_LOG_ERROR}" "$@"
+}
 
 #-------------------------------------------------------------------------------
 # Logs a message at FATAL level and exits the script.
@@ -223,7 +235,10 @@ tty_error() { _tty_log "${TTY_LOG_ERROR}" "$@"; }
 #   tty_fatal "%s: sed failed with exited code %d" "${0##*/}" "$?"
 #   tty_fatal "%s: file not found: '%s'" "${0##*/}" "$filename"
 #-------------------------------------------------------------------------------
-tty_fatal() { _tty_log "${TTY_LOG_FATAL}" "$@"; }
+tty_fatal()
+{
+    _tty_log "${TTY_LOG_FATAL}" "$@"
+}
 
 #-------------------------------------------------------------------------------
 # Sends a notification at DEBUG level.
@@ -238,7 +253,10 @@ tty_fatal() { _tty_log "${TTY_LOG_FATAL}" "$@"; }
 #   tty_notify_debug "%s: debug information: '%s'" "${0##*/}" "$data"
 #   tty_notify_debug "%s: process ID: '%d'" "${0##*/}" "$$"
 #-------------------------------------------------------------------------------
-tty_notify_debug() { _tty_notify "${TTY_LOG_DEBUG}" "$@"; }
+tty_notify_debug()
+{
+    _tty_notify "${TTY_LOG_DEBUG}" "$@"
+}
 
 #-------------------------------------------------------------------------------
 # Sends a notification at INFO level.
@@ -253,7 +271,10 @@ tty_notify_debug() { _tty_notify "${TTY_LOG_DEBUG}" "$@"; }
 #   tty_notify_info "%s: download completed: '%s'" "${0##*/}" "$tar"
 #   tty_notify_info "%s: system backup started" "${0##*/}"
 #-------------------------------------------------------------------------------
-tty_notify_info() { _tty_notify "${TTY_LOG_INFO}" "$@"; }
+tty_notify_info()
+{
+    _tty_notify "${TTY_LOG_INFO}" "$@"
+}
 
 #-------------------------------------------------------------------------------
 # Sends a notification at WARN level.
@@ -268,7 +289,10 @@ tty_notify_info() { _tty_notify "${TTY_LOG_INFO}" "$@"; }
 #   tty_notify_warn "%s: high memory usage: %dMB" "${0##*/}" "$mem"
 #   tty_notify_warn "%s: network connection unstable" "${0##*/}"
 #-------------------------------------------------------------------------------
-tty_notify_warn() { _tty_notify "${TTY_LOG_WARN}" "$@"; }
+tty_notify_warn()
+{
+    _tty_notify "${TTY_LOG_WARN}" "$@"
+}
 
 #-------------------------------------------------------------------------------
 # Sends a notification at ERROR level.
@@ -283,7 +307,10 @@ tty_notify_warn() { _tty_notify "${TTY_LOG_WARN}" "$@"; }
 #   tty_notify_error "%s: sync failed: '%s'" "${0##*/}" "$location"
 #   tty_notify_error "%s: disconnected after %ds" "${0##*/}" "$seconds"
 #-------------------------------------------------------------------------------
-tty_notify_error() { _tty_notify "${TTY_LOG_ERROR}" "$@"; }
+tty_notify_error()
+{
+    _tty_notify "${TTY_LOG_ERROR}" "$@"
+}
 
 #-------------------------------------------------------------------------------
 # Sends a notification at FATAL level and exits the script.
@@ -300,8 +327,10 @@ tty_notify_error() { _tty_notify "${TTY_LOG_ERROR}" "$@"; }
 #   tty_notify_fatal "%s: ls failed with exited code %d" "${0##*/}" "$?"
 #   tty_notify_fatal "%s: connection lost: cannot continue" "${0##*/}"
 #-------------------------------------------------------------------------------
-tty_notify_fatal() { _tty_notify "${TTY_LOG_FATAL}" "$@"; }
-
+tty_notify_fatal()
+{
+    _tty_notify "${TTY_LOG_FATAL}" "$@"
+}
 
 #-------------------------------------------------------------------------------
 # Prints an usage message and exits with status 1.

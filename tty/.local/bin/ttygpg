@@ -10,14 +10,20 @@ readonly SCRIPT="${0##*/}"
 
 # OPT(uname): s={kernel,system}-name
 case $(uname -s) in
-    FreeBSD*|OpenBSD*|NetBSD*|Darwin*)
-	# OPT(rm): f=force v=verbose
-	_shred0() { rm -f -v -- "$1"; }
-	;;
+    FreeBSD* | OpenBSD* | NetBSD* | Darwin*)
+        _shred0()
+        {
+            # OPT(rm): f=force v=verbose
+            rm -f -v -- "$1"
+        }
+        ;;
     *)
-	# OPT(shred): z=zero u=dealloc-remove v=verbose
-	_shred0() { shred -z -u -v -- "$1"; }
-	;;
+        _shred0()
+        {
+            # OPT(shred): z=zero u=dealloc-remove v=verbose
+            shred -z -u -v -- "$1"
+        }
+        ;;
 esac
 
 delete_if_exist()
@@ -25,28 +31,28 @@ delete_if_exist()
     encrypted_file=$(ls "${1}.gpg")
 
     if [ -f "$encrypted_file" ]; then
-	tty_info "%s: file successfully encrypted: '%s'" \
-		 "$SCRIPT" "$encrypted_file"
-	printf "Remove original file (y/n)? "
-	# OPT(read): r=no-backslashes
-	read -r response
-	response=$(printf "%s" "$response" | tr '[:upper:]' '[:lower:]')
+        tty_info "%s: file successfully encrypted: '%s'" \
+                 "$SCRIPT" "$encrypted_file"
+        printf "Remove original file (y/n)? "
+        # OPT(read): r=no-backslashes
+        read -r response
+        response=$(printf "%s" "$response" | tr '[:upper:]' '[:lower:]')
 
-	while [ "$response" != "y" ] && [ "$response" != "n" ]; do
-	    printf "Invalid input. Remove original file (y/n)? "
-	    # OPT(read): r=no-backslashes
-	    read -r response
-	    response=$(printf "%s" "$response" | tr '[:upper:]' '[:lower:]')
-	done
+        while [ "$response" != "y" ] && [ "$response" != "n" ]; do
+            printf "Invalid input. Remove original file (y/n)? "
+            # OPT(read): r=no-backslashes
+            read -r response
+            response=$(printf "%s" "$response" | tr '[:upper:]' '[:lower:]')
+        done
 
-	if [ "$response" = "y" ]; then
-	    _shred0 "$1"
-	    tty_info "original file removed: '%s'" "$1"
-	else
-	    exit 0
-	fi
+        if [ "$response" = "y" ]; then
+            _shred0 "$1"
+            tty_info "original file removed: '%s'" "$1"
+        else
+            exit 0
+        fi
     else
-	tty_fatal "%s: file not found: '%s'" "$SCRIPT" "$encrypted_file"
+        tty_fatal "%s: file not found: '%s'" "$SCRIPT" "$encrypted_file"
     fi
 }
 

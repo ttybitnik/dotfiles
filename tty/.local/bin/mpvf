@@ -12,5 +12,5 @@ usr="${1}"
 url="${base_t}/${usr}"
 chat="${base_t}/popout/$usr/chat?popout="
 
-mpv "$url" &> /dev/null &
-firefox --new-window "$chat" &> /dev/null &
+mpv "$url" &>/dev/null &
+firefox --new-window "$chat" &>/dev/null &

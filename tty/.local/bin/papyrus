@@ -174,13 +174,13 @@ write_qrcode()
         qrcode_output="${dir_tmp}/QR-${chunk_index}.png"
         # OPT(qrencode): t=type s=size m=margin 8=8bit o=output
         if ! qrencode \
-            -t PNG \
-            -s 6 \
-            -m 0 \
-            -8 \
-            -o "$qrcode_output" <"$chunk_file"; then
+             -t PNG \
+             -s 6 \
+             -m 0 \
+             -8 \
+             -o "$qrcode_output" <"$chunk_file"; then
             tty_notify_fatal "%s: qrencode failed for chunk %d" \
-                "$SCRIPT" "$chunk_index"
+                             "$SCRIPT" "$chunk_index"
         fi
         chunk_index=$((chunk_index + 1))
     done
@@ -188,43 +188,43 @@ write_qrcode()
     qrcode_files=$(find "$dir_tmp" -name "QR-*.png" 2>/dev/null | sort)
     if [ -z "$qrcode_files" ]; then
         tty_notify_fatal "%s: no QR code files found: '%s'" \
-            "$SCRIPT" "$dir_tmp"
+                         "$SCRIPT" "$dir_tmp"
     fi
 
     montage_output="${dir_tmp}/QR-montage.png"
 
     # shellcheck disable=SC2086
     if ! montage \
-        -font "$MONTAGE_FONT" \
-        -pointsize 24 \
-        -label '%t' \
-        $qrcode_files \
-        -background white \
-        -geometry "${QRCODE_SIZE}+25+25" \
-        "$montage_output"; then
+         -font "$MONTAGE_FONT" \
+         -pointsize 24 \
+         -label '%t' \
+         $qrcode_files \
+         -background white \
+         -geometry "${QRCODE_SIZE}+25+25" \
+         "$montage_output"; then
         tty_notify_fatal "%s: montage failed with non-zero exit code" "$SCRIPT"
     fi
 
     if ! magick \
-        "$montage_output" \
-        -resize "${PAPER_WIDTH}x${MONTAGE_MAX_HEIGHT}>" \
-        "$montage_output"; then
+         "$montage_output" \
+         -resize "${PAPER_WIDTH}x${MONTAGE_MAX_HEIGHT}>" \
+         "$montage_output"; then
         tty_notify_fatal "%s: magick failed with non-zero exit code" "$SCRIPT"
     fi
 
     if [ ! -f "$montage_output" ]; then
         tty_notify_fatal "%s: montage output file not created: '%s'" \
-            "$SCRIPT" "$montage_output"
+                         "$SCRIPT" "$montage_output"
     fi
 
     qrcode_final="${dir_tmp}/QR-final.png"
     if ! magick \
-        "$montage_output" \
-        -background white \
-        -splice "0x${MONTAGE_TOP_PADDING}" \
-        -gravity north \
-        -extent "$PAPER_SIZE" \
-        "$qrcode_final"; then
+         "$montage_output" \
+         -background white \
+         -splice "0x${MONTAGE_TOP_PADDING}" \
+         -gravity north \
+         -extent "$PAPER_SIZE" \
+         "$qrcode_final"; then
         tty_notify_fatal "%s: magick(1) failed with non-zero exit code" "$SCRIPT"
     fi
 }
@@ -233,11 +233,11 @@ restore_data()
 {
     # OPT(zbarimg): S=symbology q=quiet
     if ! zbarimg \
-        -Sdisable \
-        -Sqrcode.enable \
-        -Sbinary \
-        --raw \
-        -q "$filename" >"$restored_tmp"; then
+         -Sdisable \
+         -Sqrcode.enable \
+         -Sbinary \
+         --raw \
+         -q "$filename" >"$restored_tmp"; then
         tty_notify_fatal "%s: zbarimg failed with non-zero exit code" "$SCRIPT"
     fi
 
@@ -259,7 +259,7 @@ restore_data()
         tty_info "%s: file restored hash: '%s'" "$SCRIPT" "${restore_sha%% *}"
     else
         tty_notify_fatal "%s: sha256sum(1) failed with non-zero exit code" \
-            "$SCRIPT"
+                         "$SCRIPT"
     fi
 }
 
@@ -288,7 +288,7 @@ while getopts ":r:dh" opt; do
         :)
             trap display_help EXIT
             tty_fatal "%s: option requires an argument: '-%s'" \
-                "$SCRIPT" "$OPTARG"
+                      "$SCRIPT" "$OPTARG"
             ;;
     esac
 done
@@ -381,6 +381,6 @@ fi
 
 if [ "$debug" -eq 1 ]; then
     tty_info "%s: debug mode: temporary files preserved '%s'" \
-        "$SCRIPT" "$dir_tmp"
+             "$SCRIPT" "$dir_tmp"
     xdg-open "$qrcode_final" &
 fi

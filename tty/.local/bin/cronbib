@@ -12,21 +12,21 @@ readonly BIBFILE="${TTY_PROMETHEUS}/Library/general.bib"
 readonly CALIBREGUI_PROC="GUIPool"
 readonly SCRIPT="${0##*/}"
 
-calibretobib ()
+calibretobib()
 {
     if ! tty_run_print calibredb catalog "$BIBFILE"; then
-	tty_notify_fatal "%s: calibredb catalog failed with non-zero exit code" \
-			 "$SCRIPT"
+        tty_notify_fatal "%s: calibredb catalog failed with non-zero exit code" \
+                         "$SCRIPT"
     fi
 
     # OPT(sed): i=in-place
     if ! tty_run_print sed -i 's/{"}/\\"/g' "$BIBFILE"; then
-	tty_notify_fatal "%s: sed failed with non-zero exit code" "$SCRIPT"
+        tty_notify_fatal "%s: sed failed with non-zero exit code" "$SCRIPT"
     fi
 }
 
 # OPT(pgrep): x=exact
-if pgrep -x "$CALIBREGUI_PROC" > /dev/null; then
+if pgrep -x "$CALIBREGUI_PROC" >/dev/null; then
     # OPT(pkill): x=exact
     pkill -x -- "$CALIBREGUI_PROC"
     sleep 3

@@ -10,14 +10,20 @@ readonly SCRIPT="${0##*/}"
 
 # OPT(uname): s={kernel,system}-name
 case $(uname -s) in
-    FreeBSD*|OpenBSD*|NetBSD*|Darwin*)
-	# OPT(jot): r=random
-	_shuf0() { jot -r 1 0 63; }
-	;;
+    FreeBSD* | OpenBSD* | NetBSD* | Darwin*)
+        _shuf0()
+        {
+            # OPT(jot): r=random
+            jot -r 1 0 63
+        }
+        ;;
     *)
-	# OPT(shuf): i=input-rate n=head-count
-	_shuf0() { shuf -i 0-63 -n 1; }
-	;;
+        _shuf0()
+        {
+            # OPT(shuf): i=input-rate n=head-count
+            shuf -i 0-63 -n 1
+        }
+        ;;
 esac
 
 scratch_random()
@@ -26,9 +32,9 @@ scratch_random()
 
     # OPT(ffmpeg): i=input vf=filtergraph vframes=videoframes y=overwrite
     ffmpeg -i "${TTY_DOTFILES}/${filter_file}" \
-	   -vf "select=eq(n\,$random_frame)'" \
-	   -vframes 1 \
-	   -y "${TTY_DOTFILES}/.assets/ttyimg_scratches.jpg"
+           -vf "select=eq(n\,$random_frame)'" \
+           -vframes 1 \
+           -y "${TTY_DOTFILES}/.assets/ttyimg_scratches.jpg"
 }
 
 crop="crop=in_w:in_w*9/16"
@@ -64,7 +70,7 @@ elif [ "$crop_ratio" = "9:16" ]; then
     filter_file=".assets/ttyimg_filter_9-16.mp4"
 else
     tty_fatal "%s: invalid crop ratio: choose either 4:3, 3:4, 16:9 or 9:16" \
-	      "$SCRIPT"
+              "$SCRIPT"
 fi
 
 while [ "$#" -gt 0 ]; do
@@ -75,10 +81,10 @@ while [ "$#" -gt 0 ]; do
 
     # OPT(ffmpeg): i=input q=quality-scale
     ffmpeg -i "$filename" \
-	   -i "${TTY_DOTFILES}/.assets/ttyimg_scratches.jpg" \
-	   -filter_complex "${crop}, ${scale}, ${bw}, ${noise}, ${scratches}" \
-	   -q:v "${compress}" \
-	   -- "ttyimg_${filename}"
+           -i "${TTY_DOTFILES}/.assets/ttyimg_scratches.jpg" \
+           -filter_complex "${crop}, ${scale}, ${bw}, ${noise}, ${scratches}" \
+           -q:v "${compress}" \
+           -- "ttyimg_${filename}"
 
     exiftool -overwrite_original -All= -- "ttyimg_${filename}"
 done

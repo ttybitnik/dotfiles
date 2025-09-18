@@ -17,7 +17,6 @@ weather_format+="Last+update:+%T"
 # OPT(curl): s=silent
 data=$(curl -s "https://wttr.in/$city?format=$weather_format")
 
-
 # OPT(read): r=no-backslashes
 IFS=',' read -r \
     temp_actual \
@@ -29,7 +28,7 @@ IFS=',' read -r \
     precipitation \
     uv_index \
     location \
-    last_update <<< "$data"
+    last_update <<<"$data"
 
 text="${temp_actual#*: }"
 

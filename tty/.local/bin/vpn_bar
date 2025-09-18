@@ -9,8 +9,8 @@ if [[ -n "$vpn" ]]; then
 else
     printf " Unsecured"
     # OPT(pgrep): x=exact
-    if pgrep -x "qbittorrent" > /dev/null; then
-	# OPT(killall): q=quiet
-	killall -q qbittorrent
+    if pgrep -x "qbittorrent" >/dev/null; then
+        # OPT(killall): q=quiet
+        killall -q qbittorrent
     fi
 fi

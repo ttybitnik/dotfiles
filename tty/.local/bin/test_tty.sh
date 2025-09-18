@@ -145,11 +145,11 @@ printf "%s\n" "-----------------"
 
 for level in DEBUG INFO WARN ERROR FATAL; do
     case $level in
-	DEBUG) lvl=$TTY_LOG_DEBUG ;;
-	INFO)  lvl=$TTY_LOG_INFO ;;
-	WARN)  lvl=$TTY_LOG_WARN ;;
-	ERROR) lvl=$TTY_LOG_ERROR ;;
-	FATAL) lvl=$TTY_LOG_FATAL ;;
+	    DEBUG) lvl=$TTY_LOG_DEBUG ;;
+	    INFO)  lvl=$TTY_LOG_INFO ;;
+	    WARN)  lvl=$TTY_LOG_WARN ;;
+	    ERROR) lvl=$TTY_LOG_ERROR ;;
+	    FATAL) lvl=$TTY_LOG_FATAL ;;
     esac
 
     printf "Testing %s level (%s):\n" "$level" "$lvl"

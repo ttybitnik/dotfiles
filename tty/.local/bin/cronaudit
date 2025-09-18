@@ -13,4 +13,4 @@ set -x
 # OPT(ausearch): m=message ts=start
 # OPT(aureport): f=file
 "$ROOT_CMD" ausearch -m FANOTIFY -ts week-ago \
-    | $ROOT_CMD aureport --summary -f
+    | "$ROOT_CMD" aureport --summary -f

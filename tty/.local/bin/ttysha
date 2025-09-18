@@ -30,31 +30,31 @@ EOF
 
 while getopts ":l:s:ph" opt; do
     case $opt in
-	l)
-	    OPT_LENGTH="$OPTARG"
-	    ;;
-	s)
-	    OPT_SEPARATOR="$OPTARG"
-	    ;;
-	p)
-	    OPT_PRINT=1
-	    ;;
-	h)
-	    print_help
-	    exit 0
-	    ;;
-	\?)
-	    trap print_help EXIT
-	    tty_fatal "%s: invalid option: '-%s'" "$SCRIPT" "$OPTARG"
-	    ;;
-	:)
-	    trap print_help EXIT
-	    tty_fatal "%s: option requires an argument: '-%s'" \
-		      "$SCRIPT" "$OPTARG"
-	    ;;
+        l)
+            OPT_LENGTH="$OPTARG"
+            ;;
+        s)
+            OPT_SEPARATOR="$OPTARG"
+            ;;
+        p)
+            OPT_PRINT=1
+            ;;
+        h)
+            print_help
+            exit 0
+            ;;
+        \?)
+            trap print_help EXIT
+            tty_fatal "%s: invalid option: '-%s'" "$SCRIPT" "$OPTARG"
+            ;;
+        :)
+            trap print_help EXIT
+            tty_fatal "%s: option requires an argument: '-%s'" \
+                      "$SCRIPT" "$OPTARG"
+            ;;
     esac
 done
-shift $(( OPTIND - 1 ))
+shift $((OPTIND - 1))
 
 if [ "$#" -ne 1 ]; then
     trap print_help EXIT
@@ -69,13 +69,13 @@ fi
 length="${OPT_LENGTH:-$DEFAULT_LENGTH}"
 if [ "$length" -lt 1 ] || [ "$length" -gt 64 ]; then
     tty_fatal "%s: invalid length '%s': must be an integer from 1 to 64" \
-	      "$SCRIPT" "$length"
+              "$SCRIPT" "$length"
 fi
 
 separator="${OPT_SEPARATOR:-$DEFAULT_SEPARATOR}"
 if [ "${#separator}" -ne 1 ]; then
     tty_fatal "%s: invalid separator '%s': must be a single character" \
-	      "$SCRIPT" "$separator"
+              "$SCRIPT" "$separator"
 fi
 
 print="${OPT_PRINT:-$DEFAULT_PRINT}"
@@ -99,7 +99,7 @@ file_ext="${file_basename#*.}"
 regexp_sha=".*${separator}[a-fA-F0-9]\{$length\}$"
 if expr "$file_basename_noext" : "$regexp_sha" >/dev/null; then
     tty_fatal "%s: file already named with %d characters SHA256 digest: '%s'" \
-	      "$SCRIPT" "$length" "$filename"
+              "$SCRIPT" "$length" "$filename"
 fi
 
 new_filename="${file_basename_noext}${separator}${file_sha}.${file_ext}"
@@ -110,7 +110,7 @@ fi
 
 if mv -- "$filename" "$new_filename"; then
     tty_info "%s: new file name: '%s' -> '%s'" \
-	     "$SCRIPT" "$filename" "$new_filename"
+             "$SCRIPT" "$filename" "$new_filename"
 else
     tty_notify_fatal "%s: mv failed with exit code %d" "$SCRIPT" "$?"
 fi

@@ -4,4 +4,4 @@
 
 vpn=$(networkctl list | grep "wireguard.*routable" | awk '{print $2}')
 
-[[ -n "$vpn" ]] && qbittorrent 2> /dev/null &
+[[ -n "$vpn" ]] && qbittorrent 2>/dev/null &

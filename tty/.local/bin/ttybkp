@@ -13,18 +13,30 @@ readonly SCRIPT="${0##*/}"
 
 # OPT(uname): s={kernel,system}-name
 case $(uname -s) in
-    FreeBSD*|OpenBSD*|NetBSD*|Darwin*)
-	# OPT(date): r=reference-time
-	_date0() { date -r "$1" "+%Y%m%dT%H%M%S"; }
-	# OPT(stat): f=format
-	_stat0() { stat -f %m "$1"; }
-	;;
+    FreeBSD* | OpenBSD* | NetBSD* | Darwin*)
+        _date0()
+        {
+            # OPT(date): r=reference-time
+            date -r "$1" "+%Y%m%dT%H%M%S"
+        }
+        _stat0()
+        {
+            # OPT(date): r=reference-time
+            stat -f %m "$1"
+        }
+        ;;
     *)
-	# OPT(date): d=date
-	_date0() { date -d "@$1" "+%Y%m%dT%H%M%S"; }
-	# OPT(stat): c=format
-	_stat0() { stat -c %Y "$1"; }
-	;;
+        _date0()
+        {
+            # OPT(date): d=date
+            date -d "@$1" "+%Y%m%dT%H%M%S"
+        }
+        _stat0()
+        {
+            # OPT(stat): c=format
+            stat -c %Y "$1"
+        }
+        ;;
 esac
 
 sanitize_input()
@@ -32,9 +44,9 @@ sanitize_input()
     _input=$1
     # OPT(tr): c=complement d=delete
     printf "%s" "$_input" \
-	| tr ' ' '_' \
-	| tr '[:upper:]' '[:lower:]' \
-	| tr -cd '[:alnum:]_'
+        | tr ' ' '_' \
+        | tr '[:upper:]' '[:lower:]' \
+        | tr -cd '[:alnum:]_'
 }
 
 prompt_input()
@@ -80,7 +92,7 @@ fi
 new_filename="${domain}_${scope}_${mod_timestamp}_${file_sha}.${file_ext}"
 if mv -- "$filename" "$new_filename"; then
     tty_info "%s: new file name: '%s' -> '%s'" \
-	     "$SCRIPT" "$filename" "$new_filename"
+             "$SCRIPT" "$filename" "$new_filename"
 else
     tty_notify_fatal "%s: mv failed with exit code %d" "$SCRIPT" "$?"
 fi

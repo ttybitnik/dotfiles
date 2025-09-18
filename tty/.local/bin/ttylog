@@ -12,12 +12,18 @@ readonly SCRIPT="${0##*/}"
 
 # OPT(uname): s={kernel,system}-name
 case $(uname -s) in
-    FreeBSD*|OpenBSD*|NetBSD*|Darwin*)
-	_date0() { date "+%Y%m%dT%H%M%S"; }
-	;;
+    FreeBSD* | OpenBSD* | NetBSD* | Darwin*)
+        _date0()
+        {
+            date "+%Y%m%dT%H%M%S"
+        }
+        ;;
     *)
-	_date0() { date "+%Y%m%dT%H%M%S"; }
-	;;
+        _date0()
+        {
+            date "+%Y%m%dT%H%M%S"
+        }
+        ;;
 esac
 
 lambda()
@@ -38,7 +44,10 @@ cleanup()
 trap 'cleanup' EXIT
 logfile_tmp=$(mktemp)
 err_pipe_tmp=$(mktemp)
-(lambda "$@" 2>&1; printf "%d" "$?" > "$err_pipe_tmp") | tee "$logfile_tmp"
+(
+    lambda "$@" 2>&1
+    printf "%d" "$?" >"$err_pipe_tmp"
+) | tee "$logfile_tmp"
 err=$(cat "$err_pipe_tmp")
 
 timestamp=$(_date0)
@@ -49,7 +58,7 @@ logfile_r="${logfile_r}${1}_${err}.log.xz"
 
 if [ "$err" != 0 ]; then
     tty_notify_fatal "%s: %s failed with exit code %d: '%s'" \
-		     "$SCRIPT" "$1" "$err" "${logfile_r##*/}"
+                     "$SCRIPT" "$1" "$err" "${logfile_r##*/}"
 fi
 
 xz -- "$logfile_tmp"
@@ -58,4 +67,4 @@ chmod 400 -- "$logfile_r"
 chcon unconfined_u:object_r:user_home_t:s0 -- "$logfile_r"
 
 tty_notify_info "%s: %s execution complete: '%s'" \
-		"$SCRIPT" "$1" "${logfile_r##*/}"
+                "$SCRIPT" "$1" "${logfile_r##*/}"

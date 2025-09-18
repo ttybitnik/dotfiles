@@ -13,58 +13,58 @@ readonly SCRIPT="${0##*/}"
 switcher_changes()
 {
     if [[ "$toggle" == dark ]]; then
-	toggle=light
+        toggle=light
 
-	printf "%s\n" \
-	       "We can easily forgive a child who is afraid of the dark;" \
-	       "the real tragedy of life is when men are afraid of the light."
-	printf "— Plato\n"
+        printf "%s\n" \
+               "We can easily forgive a child who is afraid of the dark;" \
+               "the real tragedy of life is when men are afraid of the light."
+        printf "— Plato\n"
 
-	# OPT(ln): s=symbolic f=force
-	ln -sf "${HOME}/.emacs.d/local/switcher-day.el" \
-	   "${HOME}/.emacs.d/local/switcher.el"
-	ln -sf "${DOTFILES}/wayland/.config/gtk-3.0/switcher-light" \
-	   "${HOME}/.config/gtk-3.0/settings.ini"
-	ln -sf "${DOTFILES}/wayland/.config/foot/switcher-light" \
-	   "${HOME}/.config/foot/switcher"
-	ln -sf "${DOTFILES}/wayland/.config/rofi/switcher-light" \
-	   "${HOME}/.config/rofi/switcher.rasi"
-	ln -sf "${DOTFILES}/wayland/.config/dunst/switcher-light" \
-	   "${HOME}/.config/dunst/dunstrc.d/80-switcher.conf"
-	ln -sf "${DOTFILES}/wayland/.config/sway/switcher-light" \
-	   "${HOME}/.config/sway/switcher"
-	ln -sf "${DOTFILES}/wayland/.config/waybar/switcher-light" \
-	   "${HOME}/.config/waybar/style.css"
-	gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
+        # OPT(ln): s=symbolic f=force
+        ln -sf "${HOME}/.emacs.d/local/switcher-day.el" \
+            "${HOME}/.emacs.d/local/switcher.el"
+        ln -sf "${DOTFILES}/wayland/.config/gtk-3.0/switcher-light" \
+            "${HOME}/.config/gtk-3.0/settings.ini"
+        ln -sf "${DOTFILES}/wayland/.config/foot/switcher-light" \
+            "${HOME}/.config/foot/switcher"
+        ln -sf "${DOTFILES}/wayland/.config/rofi/switcher-light" \
+            "${HOME}/.config/rofi/switcher.rasi"
+        ln -sf "${DOTFILES}/wayland/.config/dunst/switcher-light" \
+            "${HOME}/.config/dunst/dunstrc.d/80-switcher.conf"
+        ln -sf "${DOTFILES}/wayland/.config/sway/switcher-light" \
+            "${HOME}/.config/sway/switcher"
+        ln -sf "${DOTFILES}/wayland/.config/waybar/switcher-light" \
+            "${HOME}/.config/waybar/style.css"
+        gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
 
     elif [[ "$toggle" == light ]]; then
-	toggle=dark
+        toggle=dark
 
-	printf "%s\n" \
-	       "Darkness now rose, as daylight" \
-	       "sunk, and brought in low'ring" \
-	       "night her shadowy offspring."
-	printf "— John Milton\n"
+        printf "%s\n" \
+               "Darkness now rose, as daylight" \
+               "sunk, and brought in low'ring" \
+               "night her shadowy offspring."
+        printf "— John Milton\n"
 
-	# OPT(ln): s=symbolic f=force
-	ln -sf "${HOME}/.emacs.d/local/switcher-night.el" \
-	   "${HOME}/.emacs.d/local/switcher.el"
-	ln -sf "${DOTFILES}/wayland/.config/gtk-3.0/switcher-dark" \
-	   "${HOME}/.config/gtk-3.0/settings.ini"
-	ln -sf "${DOTFILES}/wayland/.config/foot/switcher-dark" \
-	   "${HOME}/.config/foot/switcher"
-	ln -sf "${DOTFILES}/wayland/.config/rofi/switcher-dark" \
-	   "${HOME}/.config/rofi/switcher.rasi"
-	ln -sf "${DOTFILES}/wayland/.config/dunst/switcher-dark" \
-	   "${HOME}/.config/dunst/dunstrc.d/80-switcher.conf"
-	ln -sf "${DOTFILES}/wayland/.config/sway/switcher-dark" \
-	   "${HOME}/.config/sway/switcher"
-	ln -sf "${DOTFILES}/wayland/.config/waybar/switcher-dark" \
-	   "${HOME}/.config/waybar/style.css"
-	gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+        # OPT(ln): s=symbolic f=force
+        ln -sf "${HOME}/.emacs.d/local/switcher-night.el" \
+            "${HOME}/.emacs.d/local/switcher.el"
+        ln -sf "${DOTFILES}/wayland/.config/gtk-3.0/switcher-dark" \
+            "${HOME}/.config/gtk-3.0/settings.ini"
+        ln -sf "${DOTFILES}/wayland/.config/foot/switcher-dark" \
+            "${HOME}/.config/foot/switcher"
+        ln -sf "${DOTFILES}/wayland/.config/rofi/switcher-dark" \
+            "${HOME}/.config/rofi/switcher.rasi"
+        ln -sf "${DOTFILES}/wayland/.config/dunst/switcher-dark" \
+            "${HOME}/.config/dunst/dunstrc.d/80-switcher.conf"
+        ln -sf "${DOTFILES}/wayland/.config/sway/switcher-dark" \
+            "${HOME}/.config/sway/switcher"
+        ln -sf "${DOTFILES}/wayland/.config/waybar/switcher-dark" \
+            "${HOME}/.config/waybar/style.css"
+        gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 
     else
-	tty_fatal "configuration files not found: check '%s'" "${STATE_FILE}"
+        tty_fatal "configuration files not found: check '%s'" "${STATE_FILE}"
     fi
 }
 
@@ -72,8 +72,8 @@ switcher_reload()
 {
     # OPT(emacsclient): e=eval
     if ! swaymsg reload; then
-	tty_notify_error "%s: swaymsg reload failed with non-zero exit code" \
-			 "$SCRIPT"
+        tty_notify_error "%s: swaymsg reload failed with non-zero exit code" \
+                         "$SCRIPT"
     fi
 
     emacsclient -e "(config-reload/ttybitnik)" >/dev/null 2>&1 &
@@ -98,4 +98,4 @@ if [[ "$no_reload" = false ]]; then
     tty_notify_info "%s: color scheme reloaded" "$SCRIPT"
 fi
 
-printf "%s" "$toggle" > "$STATE_FILE"
+printf "%s" "$toggle" >"$STATE_FILE"

@@ -18,15 +18,15 @@ readonly SCRIPT="${0##*/}"
 validate()
 {
     if [ ! -f "$DEVICES_FILE" ]; then
-	tty_fatal "%s: device info file not found" "$SCRIPT"
+        tty_fatal "%s: device info file not found" "$SCRIPT"
     fi
 
     if [ -z "$device_info" ]; then
-	tty_fatal "%s: device not found: '%s'" "$SCRIPT" "$device_name"
+        tty_fatal "%s: device not found: '%s'" "$SCRIPT" "$device_name"
     fi
 
     if [ "$#" -ne 2 ]; then
-	tty_usage "%s <open|close> <device_name>" "$SCRIPT"
+        tty_usage "%s <open|close> <device_name>" "$SCRIPT"
     fi
 }
 
@@ -41,20 +41,20 @@ $device_info_open
 EOF
 
     if [ -b "/dev/disk/by-uuid/$device" ]; then
-	if [ -n "$key_path" ]; then
-	    # OPT(gpg): d=decrypt
-	    gpg -d -- "$key_path" \
-		| "$ROOT_CMD" cryptsetup --key-file=- open \
-			      UUID="$device" "$device_name"
-	    "$ROOT_CMD" mount -- "$mount_point"
-	else
-	    "$ROOT_CMD" cryptsetup open UUID="$device" "$device_name"
-	    "$ROOT_CMD" mount -- "$mount_point"
-	fi
-	tty_info "%s: device '%s' opened: '%s'" \
-		 "$SCRIPT" "$device_name" "$mount_point"
+        if [ -n "$key_path" ]; then
+            # OPT(gpg): d=decrypt
+            gpg -d -- "$key_path" \
+                | "$ROOT_CMD" cryptsetup --key-file=- open \
+                              UUID="$device" "$device_name"
+            "$ROOT_CMD" mount -- "$mount_point"
+        else
+            "$ROOT_CMD" cryptsetup open UUID="$device" "$device_name"
+            "$ROOT_CMD" mount -- "$mount_point"
+        fi
+        tty_info "%s: device '%s' opened: '%s'" \
+                 "$SCRIPT" "$device_name" "$mount_point"
     else
-	tty_fatal "%s: block device not found: '%s'" "$SCRIPT" "$device"
+        tty_fatal "%s: block device not found: '%s'" "$SCRIPT" "$device"
     fi
 }
 
@@ -68,12 +68,12 @@ $device_info_close
 EOF
 
     if [ -d "$mount_point" ]; then
-	"$ROOT_CMD" umount -- "$mount_point"
-	"$ROOT_CMD" cryptsetup close "$device_name"
-	tty_info "%s: device '%s' unmonted and closed: '%s'" \
-		 "$SCRIPT" "$device_name" "$mount_point"
+        "$ROOT_CMD" umount -- "$mount_point"
+        "$ROOT_CMD" cryptsetup close "$device_name"
+        tty_info "%s: device '%s' unmonted and closed: '%s'" \
+                 "$SCRIPT" "$device_name" "$mount_point"
     else
-	tty_fatal "%s: invalid mount point: '%s'" "$SCRIPT" "$mount_point"
+        tty_fatal "%s: invalid mount point: '%s'" "$SCRIPT" "$mount_point"
     fi
 }
 
@@ -87,13 +87,13 @@ validate "$@"
 
 case "$action" in
     "open")
-	open_device "$device_info"
-	;;
+        open_device "$device_info"
+        ;;
     "close")
-	close_device "$device_info"
-	;;
+        close_device "$device_info"
+        ;;
     *)
-	tty_error "%s: invalid action: '%s'" "$SCRIPT" "$action"
-	tty_usage "%s <open|close> <device_name>" "$SCRIPT"
-	;;
+        tty_error "%s: invalid action: '%s'" "$SCRIPT" "$action"
+        tty_usage "%s <open|close> <device_name>" "$SCRIPT"
+        ;;
 esac

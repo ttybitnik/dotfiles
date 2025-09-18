@@ -19,7 +19,7 @@ run()
 run_if_exists()
 {
     if command -v "$1" >/dev/null 2>&1; then
-	run "$2"
+        run "$2"
     fi
 }
 

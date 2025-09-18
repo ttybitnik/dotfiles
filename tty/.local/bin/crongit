@@ -16,21 +16,21 @@ set -- \
 
 for dir in "$@"; do
     if ! cd -- "$dir"; then
-	tty_fatal "%s: cannot change to directory '%s'" "$SCRIPT" "$dir"
+        tty_fatal "%s: cannot change to directory '%s'" "$SCRIPT" "$dir"
     fi
 
     if [ -z "$(git status --porcelain)" ]; then
-	tty_info "%s: git working tree clean: nothing to commit" "$SCRIPT"
-	continue
+        tty_info "%s: git working tree clean: nothing to commit" "$SCRIPT"
+        continue
     else
-	# OPT(git): A=all
-	if ! tty_run_print git add -A; then
-	    tty_fatal "%s: git add failed with non-zero exit code" "$SCRIPT"
-	fi
+        # OPT(git): A=all
+        if ! tty_run_print git add -A; then
+            tty_fatal "%s: git add failed with non-zero exit code" "$SCRIPT"
+        fi
 
-	# OPT(git): m=message
-	if ! tty_run_print git commit -m "Update on $(LANG=C date)"; then
-	    tty_fatal "%s: git commit failed with non-zero exit code" "$SCRIPT"
-	fi
+        # OPT(git): m=message
+        if ! tty_run_print git commit -m "Update on $(LANG=C date)"; then
+            tty_fatal "%s: git commit failed with non-zero exit code" "$SCRIPT"
+        fi
     fi
 done

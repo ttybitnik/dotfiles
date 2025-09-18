@@ -15,11 +15,11 @@ readonly SCRIPT="${0##*/}"
 validate()
 {
     if [ ! -f "$PASS_FILENAME" ]; then
-	tty_fatal "%s: file not found: '%s'" "$SCRIPT" "$PASS_FILENAME"
+        tty_fatal "%s: file not found: '%s'" "$SCRIPT" "$PASS_FILENAME"
     fi
 
     if [ "$#" -ne 1 ]; then
-	tty_usage "%s <service>" "$SCRIPT"
+        tty_usage "%s <service>" "$SCRIPT"
     fi
 }
 
@@ -30,13 +30,13 @@ access()
     pass_info=$(gpg -d -- "$PASS_FILENAME" | grep "^$pass_service")
 
     if [ -z "$pass_info" ]; then
-	tty_fatal "%s: service not found: '%s'" "$SCRIPT" "$pass_service"
+        tty_fatal "%s: service not found: '%s'" "$SCRIPT" "$pass_service"
     fi
 
     pass_gpg=$(printf "%s" "$pass_info" | awk '{print $2}')
     # OPT(gpg): d=decrypt
     if ! gpg -d -- "$pass_gpg"; then
-	tty_fatal "%s: gpg failed with non-zero exit code" "$SCRIPT"
+        tty_fatal "%s: gpg failed with non-zero exit code" "$SCRIPT"
     fi
 
     tty_notify_error "%s: %s password accesssed" "$SCRIPT" "${1##*/}"
