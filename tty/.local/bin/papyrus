@@ -304,7 +304,13 @@ if [ ! -f "$filename" ]; then
     tty_fatal "%s: file not found: '%s'" "$SCRIPT" "$filename"
 fi
 
-for dep in gzip bc qrencode magick zbarimg split; do
+dependencies="
+gzip
+qrencode
+magick
+zbarimg
+"
+for dep in $dependencies; do
     if ! command -v "$dep" >/dev/null 2>&1; then
         tty_fatal "%s: required dependency not found: '%s'" "$SCRIPT" "$dep"
     fi
