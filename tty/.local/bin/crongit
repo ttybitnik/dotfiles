@@ -10,9 +10,7 @@
 
 readonly SCRIPT="${0##*/}"
 
-set -- \
-    "${TTY_ORPHEUS}/Projects/Emacs/org/" \
-    "${TTY_ORPHEUS}/Projects/Emacs/org-roam/"
+set -- "${TTY_ORPHEUS}/Projects/Emacs/org-roam/"
 
 for dir in "$@"; do
     if ! cd -- "$dir"; then

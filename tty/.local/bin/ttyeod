@@ -61,8 +61,8 @@ ttylog omni
 print_align_asterisk_box "Running cronbib..."
 ttylog cronbib
 
-# print_align_asterisk_box "Running crongit..."
-# ttylog crongit
+print_align_asterisk_box "Running crongit..."
+ttylog crongit
 
 print_align_asterisk_box "Running crondrive..."
 ttylog crondrive_local
