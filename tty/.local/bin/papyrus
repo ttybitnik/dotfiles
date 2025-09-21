@@ -313,7 +313,7 @@ fi
 
 print_cmd="${OPT_PRINT_CMD:-$DEFAULT_PRINT_CMD}"
 if ! command -v "$print_cmd" >/dev/null 2>&1; then
-    tty_fatal "%s: cannot find print command '%s'" \
+    tty_fatal "%s: cannot find print command: '%s'" \
               "$SCRIPT" "$print_cmd"
 fi
 
