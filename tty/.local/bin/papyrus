@@ -27,7 +27,7 @@ readonly MONTAGE_MAX_HEIGHT=$((PAPER_HEIGHT - MONTAGE_TOP_PADDING))
 display_help()
 {
     cat <<EOF
-Usage: $SCRIPT [-r] [-p command] [-d] [-s size] [-S size] <file>
+Usage: $SCRIPT [-r] [-p command] [-s size] [-d] <file>
 
 Paper-based long-term cold backup for critical/small files via QR codes.
 
