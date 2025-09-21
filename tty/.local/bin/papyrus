@@ -9,15 +9,14 @@
 
 readonly SCRIPT="${0##*/}"
 readonly DEFAULT_RESTORE=0
+readonly DEFAULT_PRINT_CMD="lp"
+readonly DEFAULT_PAPER_SIZE="2100x2970"
 readonly DEFAULT_DEBUG=0
 
 readonly COMPRESSION_LEVEL=9
 readonly CHUNK_SIZE=2900
 
 readonly QRCODE_SIZE="1000x1000"
-readonly PAPER_WIDTH=2100
-readonly PAPER_HEIGHT=2970
-readonly PAPER_SIZE="${PAPER_WIDTH}x${PAPER_HEIGHT}"
 
 readonly MONTAGE_FONT="Noto-Sans-Mono"
 readonly MONTAGE_SKIP_LINES=33
@@ -28,12 +27,14 @@ readonly MONTAGE_MAX_HEIGHT=$((PAPER_HEIGHT - MONTAGE_TOP_PADDING))
 display_help()
 {
     cat <<EOF
-Usage: $SCRIPT [-r image] [-d] <file>
+Usage: $SCRIPT [-r] [-p command] [-d] [-s size] [-S size] <file>
 
 Paper-based long-term cold backup for critical/small files via QR codes.
 
 Options:
-  -r <image>       Restore data from QR codes (experimental).
+  -r               Restore data from QR codes (experimental).
+  -p <command>     Print command (default "$DEFAULT_PRINT_CMD").
+  -s <size>        Paper size (default "$DEFAULT_PAPER_SIZE").
   -d               Debug mode.
   -h               Display this help.
 EOF
@@ -95,7 +96,7 @@ print_base()
     done
     if [ "$response" = "y" ]; then
         tty_info "%s: base layer printing submitted" "$SCRIPT"
-        lp "$print_tmp"
+        "$print_cmd" "$print_tmp"
     fi
 }
 
@@ -119,7 +120,7 @@ print_qrcode()
     done
     if [ "$response" = "y" ]; then
         tty_info "%s: QR code layer printing submitted" "$SCRIPT"
-        lp "$qrcode_final"
+        "$print_cmd" "$qrcode_final"
     fi
 }
 
@@ -223,7 +224,7 @@ write_qrcode()
          -background white \
          -splice "0x${MONTAGE_TOP_PADDING}" \
          -gravity north \
-         -extent "$PAPER_SIZE" \
+         -extent "$paper_size" \
          "$qrcode_final"; then
         tty_notify_fatal "%s: magick(1) failed with non-zero exit code" "$SCRIPT"
     fi
@@ -269,10 +270,16 @@ cleanup()
     [ "$debug" -ne 1 ] && [ -d "$dir_tmp" ] && rmdir -- "$dir_tmp"
 }
 
-while getopts ":r:dh" opt; do
+while getopts ":rp:s:dh" opt; do
     case $opt in
         r)
             OPT_RESTORE=1
+            ;;
+        p)
+            OPT_PRINT_CMD="$OPTARG"
+            ;;
+        s)
+            OPT_PAPER_SIZE="$OPTARG"
             ;;
         d)
             OPT_DEBUG=1
@@ -302,6 +309,20 @@ fi
 filename="$1"
 if [ ! -f "$filename" ]; then
     tty_fatal "%s: file not found: '%s'" "$SCRIPT" "$filename"
+fi
+
+print_cmd="${OPT_PRINT_CMD:-$DEFAULT_PRINT_CMD}"
+if ! command -v "$print_cmd" >/dev/null 2>&1; then
+    tty_fatal "%s: cannot find print command '%s'" \
+              "$SCRIPT" "$print_cmd"
+fi
+
+paper_size="${OPT_PAPER_SIZE:-$DEFAULT_PAPER_SIZE}"
+if [ "${#paper_size}" -ne 9 ] \
+       || [ "${paper_size#????x}" = "$paper_size" ] \
+       || [ "${paper_size%x????}" = "$paper_size" ]; then
+    tty_fatal "%s: paper size must be in format NNNNxNNNN (e.g., %s)" \
+              "$SCRIPT" "$DEFAULT_PAPER_SIZE"
 fi
 
 dependencies="
