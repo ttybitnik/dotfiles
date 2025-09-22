@@ -1,10 +1,14 @@
+# Deprecated in favour of enabling the sockets only
 [Unit]
 Description=GnuPG cryptographic agent and passphrase cache
 Documentation=man:gpg-agent(1)
-Requires=gpg-agent.socket
+Requires=gpg-agent.socket gpg-agent-ssh.socket
 
 [Service]
 Type=simple
 ExecStart=/usr/bin/gpg-agent --supervised
 ExecReload=/usr/bin/gpgconf --reload gpg-agent
 ExecStop=/usr/bin/gpgconf --kill gpg-agent
+
+[Install]
+Also=gpg-agent.socket gpg-agent-ssh.socket

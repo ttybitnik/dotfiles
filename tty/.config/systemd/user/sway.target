@@ -1,6 +1,7 @@
+# Deprecated in favour of systemd standard targets
 [Unit]
-Description=Sway compositor session
+Description=Custom target for main user
 Documentation=man:systemd.special
-BindsTo=graphical-session.target
-Wants=graphical-session.target
-After=graphical-session.target
+
+[Install]
+WantedBy=sway-session.target

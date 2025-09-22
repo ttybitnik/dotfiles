@@ -10,10 +10,11 @@ Type=notify
 EnvironmentFile=%h/.config/systemd/envs/emacs-daemon.env
 ExecStart=/usr/bin/emacs --fg-daemon
 ExecStop=/usr/bin/emacsclient --suppress-output --eval "(progn (setq confirm-kill-processes nil) (save-buffers-kill-emacs t))"
+TimeoutStartSec=180
 RestartSec=10s
 StartLimitInterval=60s
 StartLimitBurst=3
 Restart=on-failure
 
 [Install]
-WantedBy=sway.target
+WantedBy=sway-session.target
