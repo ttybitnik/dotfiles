@@ -108,6 +108,7 @@ To streamline the music experience, just run =euterpe=. This script leverages tm
 - ttymv: /backup naming standard/
 - ttypas: /env and secrets security/
 - ttysha: /file enumeration prevention/
+- ttysync: /safe rsync directories/
 - ttyt00: /tmux wrapper/
 - ttyt01: /tmux wrapper/
 - ttyt02: /tmux wrapper/

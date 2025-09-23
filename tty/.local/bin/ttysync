@@ -1,0 +1,72 @@
+#!/bin/sh
+
+# Safe rsync between source and destination directories.
+#   Dependencies:
+#     /usr/local/lib/tty.sh
+
+. /usr/local/lib/tty.sh
+
+readonly SCRIPT="${0##*/}"
+
+readonly RSYNC_BACKUP_DIR="/tmp/RSYNC-$(date "+%Y%m%dT%H%M%S%z")"
+# OPT(rsyc): a=archive v=verbose P=partial-progress u=update h=human-readable b=backup
+readonly RSYNC_OPTS="-avPuhb --backup-dir=$RSYNC_BACKUP_DIR --delete-after --stats"
+readonly RSYNC_DRYRUN="--dry-run"
+
+prompt_confirm()
+{
+    printf "\n"
+    printf "Direction: %s" "$direction"
+    printf "\n"
+    printf "Execute rsync transaction above without dry-run (y/n)? "
+    # OPT(read): r=no-backslashes
+    read -r response
+    response=$(printf "%s" "$response" | tr '[:upper:]' '[:lower:]')
+    while [ "$response" != "y" ] && [ "$response" != "n" ]; do
+        printf "Invalid input. Execute rsync without dry-run (y/n)? "
+        # OPT(read): r=no-backslashes
+        read -r response
+        response=$(printf "%s" "$response" | tr '[:upper:]' '[:lower:]')
+    done
+    if [ "$response" != "y" ]; then
+        exit 0
+    fi
+}
+
+if [ "$#" -ne 2 ]; then
+    tty_usage "%s <source> <destination>" "$SCRIPT"
+fi
+
+src="$1"
+if [ ! -r "$src" ]; then
+    tty_fatal "%s: source not readable: '%s'" "$SCRIPT" "$src"
+fi
+
+dest="$2"
+dest_parent=$(dirname "$dest")
+if [ ! -w "$dest_parent" ]; then
+    tty_fatal "%s: destination directory not writable: '%s'" \
+              "$SCRIPT" "$dest_parent"
+fi
+
+direction=$(printf "'%s' -> '%s' " "$src" "$dest")
+
+tty_info "%s: DRY-RUN: running rsync %s" "$SCRIPT" "$direction"
+
+if ! tty_run_print rsync $RSYNC_DRYRUN $RSYNC_OPTS "$src" "$dest"; then
+    tty_fatal "%s: DRY-RUN: rsync %s failed with non-zero exit code" \
+              "$SCRIPT" "$direction"
+fi
+
+prompt_confirm
+
+tty_info "%s: running rsync %s" "$SCRIPT" "$direction"
+if ! tty_run_print rsync $RSYNC_OPTS "$src" "$dest"; then
+    tty_fatal "%s: rsync %s failed with non-zero exit code" \
+              "$SCRIPT" "$direction"
+fi
+
+if [ -d "$RSYNC_BACKUP_DIR" ]; then
+    tty_notify_warn "%s: destructive transfer: removed files safety backup '%s'" \
+                    "$SCRIPT" "$RSYNC_BACKUP_DIR"
+fi
