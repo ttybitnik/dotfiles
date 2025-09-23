@@ -5,10 +5,17 @@
 export_maybe_path()
 {
     local dir="$1"
-    [[ -d "$dir" ]] && case ":${PATH}:" in
-	*":${dir}:"*) return 1 ;;
-	*) export PATH="${PATH}:${dir}"; return 0 ;;
-    esac
+    if [[ -d "$dir" ]]; then
+        case ":${PATH}:" in
+            *":${dir}:"*)
+                return 1
+                ;;
+            *)
+                export PATH="${PATH}:${dir}"
+                return 0
+                ;;
+        esac
+    fi
 }
 #===============================================================================
 #				     System
@@ -40,19 +47,19 @@ export TTY_SIGNING="0xB52D1006EFAC93DF"
 export HISTCONTROL="ignoreboth"
 export EDITOR="/usr/bin/emacsclient -c -n"
 unset SSH_AGENT_PID
-SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 export SSH_AUTH_SOCK
 #-------------------------------------------------------------------------------
 # Development environment
 #-------------------------------------------------------------------------------
 if command -v npm >/dev/null 2>&1; then
     export_maybe_path "${HOME}/.npm-global/bin" \
-	&& printf "prefix=%s/.npm-global\n" "${HOME}" > "${HOME}/.npmrc"
+        && printf "prefix=%s/.npm-global\n" "${HOME}" >"${HOME}/.npmrc"
 fi
 
 if command -v go >/dev/null 2>&1; then
     export_maybe_path "${HOME}/.go/bin" \
-	&& export GOPATH="${HOME}/.go"
+        && export GOPATH="${HOME}/.go"
 fi
 
 if command -v cargo >/dev/null 2>&1; then
@@ -61,12 +68,12 @@ fi
 
 if command -v pip3 >/dev/null 2>&1; then
     export_maybe_path "${HOME}/.pip/bin" \
-	&& export PYTHONUSERBASE="${HOME}/.pip"
+        && export PYTHONUSERBASE="${HOME}/.pip"
 fi
 
 if command -v chicken-install >/dev/null 2>&1; then
     export_maybe_path "${HOME}/.chicken/bin" \
-	&& export CHICKEN_INSTALL_REPOSITORY="$HOME/.chicken"
+        && export CHICKEN_INSTALL_REPOSITORY="$HOME/.chicken"
 fi
 #-------------------------------------------------------------------------------
 # Custom environment
@@ -86,8 +93,8 @@ case "$(uname -s)" in
     CYGWIN*)   CUSTOM_SYSTEM="CYGWIN" ;;
     *)         CUSTOM_SYSTEM="UNKNOWN" ;;
 esac
-if [[ "$CUSTOM_SYSTEM" == "LINUX" ]] && \
-       grep -q '(Microsoft@Microsoft.com)' /proc/version 2>/dev/null; then
+if [[ "$CUSTOM_SYSTEM" == "LINUX" ]] \
+       && grep -q '(Microsoft@Microsoft.com)' /proc/version 2>/dev/null; then
     CUSTOM_SYSTEM="Win11_Linux"
 fi
 export CUSTOM_SYSTEM
