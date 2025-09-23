@@ -14,7 +14,7 @@ SYS_LIBDIR := $(SYS_PREFIX)/lib
 SYS_BINDIR := $(SYS_PREFIX)/bin
 
 SYS_LIB_BASENAMES := tty.sh
-SYS_BIN_BASENAMES := ttybkp ttysha
+SYS_BIN_BASENAMES := ttymv ttysha
 SYS_LIB_FILES     := $(addprefix $(SYS_LIBDIR)/,$(SYS_LIB_BASENAMES))
 SYS_BIN_FILES     := $(addprefix $(SYS_BINDIR)/,$(SYS_BIN_BASENAMES))
 
