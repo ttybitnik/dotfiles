@@ -16,8 +16,8 @@ case $(uname -s) in
     FreeBSD* | OpenBSD* | NetBSD* | Darwin*)
         _date0()
         {
-            # OPT(date): r=reference-time
-            date -r "$1" "+%Y%m%dT%H%M%S"
+            # OPT(date): u=utc r=reference-time
+            date -u -r "$1" "+%Y%m%dT%H%M%SZ"
         }
         _stat0()
         {
@@ -28,8 +28,8 @@ case $(uname -s) in
     *)
         _date0()
         {
-            # OPT(date): d=date
-            date -d "@$1" "+%Y%m%dT%H%M%S"
+            # OPT(date): u=utc d=date
+            date -u -d "@$1" "+%Y%m%dT%H%M%SZ"
         }
         _stat0()
         {
