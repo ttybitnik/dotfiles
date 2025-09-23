@@ -1,5 +1,5 @@
 # Main options
-image="$(find $TTY_WALLPAPER -type f | shuf -n 1)"
+image=$(find $TTY_WALLPAPER -type f | shuf -n 1)
 scaling=fill
 # no-unlock-indicator
 ignore-empty-password
