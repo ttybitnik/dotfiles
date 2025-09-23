@@ -22,10 +22,10 @@ Note that the TTY tools are employed across all environments.
 
 *** Suggestions
 
-| General             | GNU Emacs ([[https://github.com/ttybitnik/emacs.d][my config]]), GNU Image Manipulation Program, Blender, Inkscape, Ffmpeg, Pandoc, Imv, Fzf, Ytfzf, Yt-dlp, Shotcut, Mpv, Thunar, Podman, Ansible                                                                                  |
-| TTY Environment     | GNU Bourne-Again SHell, GNU Emacs (ditto), GNU Midnight Commander, GNU Lynx, GNU Parallel, GNU Privacy Guard, GNU Stow, GNU Make, Bash-completion, ClamAV, Tmux, Git, Htop, Powertop, Hyperfine, Tree, Nmcli, Yq, Pulsemixer, Spotify-tui |
-| Wayland Environment | Foot, Sway, Swaylock, Waybar, Rofi, Dunst, Kanshi, Gammastep, Wl-clipboard, SDDM                                                                                                                                                          |
-| Xorg Environment    | Urxvt, Suckless tools ([[https://github.com/ttybitnik/suckless][my builds]]), Redshift, Nitrogen, Sxhkd, Xclip, Xsettingsd                                                                                                                                                           |
+| General             | GNU Emacs ([[https://github.com/ttybitnik/emacs.d][my config]]), GNU Image Manipulation Program, Blender, Inkscape, Ffmpeg, Pandoc, Imv, Fzf, Ytfzf, Yt-dlp, Shotcut, Mpv, Thunar, Podman, Ansible                                                                                                         |
+| TTY Environment     | GNU Bourne-Again SHell, GNU Emacs (ditto), GNU Midnight Commander, GNU Lynx, GNU Parallel, GNU Privacy Guard, GNU Stow, GNU Make, Bash-completion, ClamAV, Tmux, Git, Htop, Powertop, Hyperfine, Tree, Nmcli, Yq, Pulsemixer, Spotify-tui, Rsync, Rclone, Restic |
+| Wayland Environment | Foot, Sway, Swaylock, Waybar, Rofi, Dunst, Kanshi, Gammastep, Wl-clipboard, SDDM                                                                                                                                                                                 |
+| Xorg Environment    | Urxvt, Suckless tools ([[https://github.com/ttybitnik/suckless][my builds]]), Redshift, Nitrogen, Sxhkd, Xclip, Xsettingsd                                                                                                                                                                                  |
 
 ** Usage
 
