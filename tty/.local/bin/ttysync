@@ -7,10 +7,13 @@
 . /usr/local/lib/tty.sh
 
 readonly SCRIPT="${0##*/}"
-
-readonly RSYNC_BACKUP_DIR="/tmp/RSYNC-$(date "+%Y%m%dT%H%M%S%z")"
-# OPT(rsyc): a=archive v=verbose P=partial-progress u=update h=human-readable b=backup
-readonly RSYNC_OPTS="-avPuhb --backup-dir=$RSYNC_BACKUP_DIR --delete-after --stats"
+RSYNC_BACKUP_DIR="/tmp/RSYNC-$(date "+%Y%m%dT%H%M%S%z")"
+readonly RSYNC_BACKUP_DIR
+# OPT(rsync): a=archive v=verbose P=partial-progress u=update i=itemize-changes
+# OPT(rsync): h=human-readable b=backup
+RSYNC_OPTS="-avPuihb --backup-dir=$RSYNC_BACKUP_DIR"
+RSYNC_OPTS="$RSYNC_OPTS --delete-after --stats"
+readonly RSYNC_OPTS
 readonly RSYNC_DRYRUN="--dry-run"
 
 prompt_confirm()
@@ -53,6 +56,7 @@ direction=$(printf "'%s' -> '%s' " "$src" "$dest")
 
 tty_info "%s: DRY-RUN: running rsync %s" "$SCRIPT" "$direction"
 
+# shellcheck disable=SC2086
 if ! tty_run_print rsync $RSYNC_DRYRUN $RSYNC_OPTS "$src" "$dest"; then
     tty_fatal "%s: DRY-RUN: rsync %s failed with non-zero exit code" \
               "$SCRIPT" "$direction"
@@ -61,6 +65,8 @@ fi
 prompt_confirm
 
 tty_info "%s: running rsync %s" "$SCRIPT" "$direction"
+
+# shellcheck disable=SC2086
 if ! tty_run_print rsync $RSYNC_OPTS "$src" "$dest"; then
     tty_fatal "%s: rsync %s failed with non-zero exit code" \
               "$SCRIPT" "$direction"
