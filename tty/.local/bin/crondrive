@@ -1,22 +1,127 @@
 #!/bin/sh
 
-# Cron/timer script to sync changes between remote and local directories.
+# Cron/timer script to rclone sync local directories and remote drives.
 #   Globals:
-#     TTY_ARGO
 #     TTY_ORPHEUS
 #     TTY_PROMETHEUS
+#     TTY_HARPOKRATES
+#     TTY_ARGO
 #   Dependencies:
 #     /usr/local/lib/tty.sh
 
 . /usr/local/lib/tty.sh
 
 readonly SCRIPT="${0##*/}"
+readonly DEFAULT_CHECK=0
+readonly DEFAULT_CHECKSUM=0
+# OPT(rclone): v=verbose
+readonly RCLONE_OPTS="-v --skip-links --exclude ./git/"
 
-for drive in argo prometheus orpheus; do
+print_help()
+{
+    cat <<EOF
+Usage: $SCRIPT [-c] [-C] [-l option]
+
+Rclone sync local directories and remote drives.
+
+Options:
+  -c               Check rclone files discrepancies.
+  -C               Checksum rclone files discrepancies.
+  -l <option>      Local option for rclone (IFS="|").
+  -h               Display this help.
+EOF
+}
+
+rclone_sync()
+{
+    tty_info "%s: rclone_sync to remote: '%s'" \
+             "$SCRIPT" "$drive"
+
+    local_opt_tmp="$local_opt"
+    IFS="|"
+    # shellcheck disable=SC2086
+    set -- $local_opt_tmp
+    unset IFS
+
+    # shellcheck disable=SC2086
+    tty_run_print rclone sync $RCLONE_OPTS "$@" "$dir" "${drive}:"
+}
+
+rclone_check()
+{
+    tty_info "%s: rclone_check in source and destination: '%s'" \
+             "$SCRIPT" "$drive"
+
+    local_opt_tmp="$local_opt"
+    IFS="|"
+    # shellcheck disable=SC2086
+    set -- $local_opt_tmp
+    unset IFS
+
+    # shellcheck disable=SC2086
+    tty_run_print rclone check $RCLONE_OPTS "$@" "$dir" "${drive}:"
+}
+
+rclone_checksum()
+{
+    tty_info "%s: rclone_checksum in destination against source SUM: '%s'" \
+             "$SCRIPT" "$drive"
+
+    local_opt_tmp="$local_opt"
+    IFS="|"
+    # shellcheck disable=SC2086
+    set -- $local_opt_tmp
+    unset IFS
+
+    # TODO: Double check this command and the sumfile argument.
+    # shellcheck disable=SC2086
+    tty_run_print rclone checksum $RCLONE_OPTS "$@" "$dir" "${drive}:"
+}
+
+while getopts ":cCl:h" opt; do
+    case $opt in
+        c)
+            OPT_CHECK=1
+            ;;
+        C)
+            OPT_CHECKSUM=1
+            ;;
+        l)
+            OPT_LOCAL_OPT="$OPTARG"
+            ;;
+        h)
+            print_help
+            exit 0
+            ;;
+        \?)
+            trap print_help EXIT
+            tty_fatal "%s: invalid option: '-%s'" "$SCRIPT" "$OPTARG"
+            ;;
+        :)
+            trap print_help EXIT
+            tty_fatal "%s: option requires an argument: '-%s'" \
+                      "$SCRIPT" "$OPTARG"
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+if [ "$#" -ne 0 ]; then
+    trap print_help EXIT
+    tty_fatal "%s: wrong number of arguments" "$SCRIPT"
+fi
+
+local_opt="$OPT_LOCAL_OPT"
+check="${OPT_CHECK:-$DEFAULT_CHECK}"
+checksum="${OPT_CHECKSUM:-$DEFAULT_CHECKSUM}"
+
+drives="porpheus pprometheus pharpokrates pargos"
+for drive in $drives; do
     case $drive in
-        argo)       dir="${TTY_ARGO}/"       ;;
-        prometheus) dir="${TTY_PROMETHEUS}/" ;;
-        orpheus)    dir="${TTY_ORPHEUS}/"    ;;
+        porpheus)       dir="${TTY_ORPHEUS}/"     ;;
+        pprometheus)    dir="${TTY_PROMETHEUS}/"  ;;
+        pharpokrates)   dir="${TTY_HARPOKRATES}/" ;;
+        pargos)         dir="${TTY_ARGOS}/"       ;;
         *) tty_fatal "%s: unknown drive: '%s'" "$SCRIPT" "$drive" ;;
     esac
 
@@ -24,10 +129,21 @@ for drive in argo prometheus orpheus; do
         tty_fatal "%s: directory not found: '%s'" "$SCRIPT" "$dir"
     fi
 
-    # TODO: Add health check using check to validate remote files.
-    # OPT(rclone): v=verbose
-    if ! tty_run_print rclone sync "$dir" "${drive}:" -v \
-         --skip-links --exclude ".git/" "$1" "$2"; then
-        tty_notify_fatal "%s: rclone sync failed for '%s'" "$SCRIPT" "$drive"
+    if ! rclone_sync; then
+        tty_notify_fatal "%s: rclone_sync failed for '%s'" "$SCRIPT" "$drive"
+    fi
+
+    if [ "$check" -eq 1 ]; then
+        if ! rclone_check; then
+            tty_notify_fatal "%s: rclone_check failed with exit code %d" \
+                             "$SCRIPT" "$?"
+        fi
+    fi
+
+    if [ "$checksum" -eq 1 ]; then
+        if ! rclone_checksum; then
+            tty_notify_fatal "%s: rclone_checksum failed with exit code %d" \
+                             "$SCRIPT" "$?"
+        fi
     fi
 done
