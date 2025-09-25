@@ -15,7 +15,7 @@ readonly SCRIPT="${0##*/}"
 readonly DEFAULT_CHECK=0
 readonly DEFAULT_CHECKSUM=0
 # OPT(rclone): v=verbose
-readonly RCLONE_OPTS="-v --skip-links --exclude ./git/"
+readonly RCLONE_OPTS="-v --skip-links --exclude .git/"
 
 print_help()
 {
