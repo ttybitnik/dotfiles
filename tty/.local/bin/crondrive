@@ -20,14 +20,13 @@ readonly RCLONE_OPTS="-v --skip-links --exclude ./git/"
 print_help()
 {
     cat <<EOF
-Usage: $SCRIPT [-c] [-C] [-l option]
+Usage: $SCRIPT [-c] [-C]
 
 Rclone sync local directories and remote drives.
 
 Options:
   -c               Check rclone files discrepancies.
   -C               Checksum rclone files discrepancies.
-  -l <option>      Local option for rclone (IFS="|").
   -h               Display this help.
 EOF
 }
@@ -37,14 +36,8 @@ rclone_sync()
     tty_info "%s: rclone_sync to remote: '%s'" \
              "$SCRIPT" "$drive"
 
-    local_opt_tmp="$local_opt"
-    IFS="|"
     # shellcheck disable=SC2086
-    set -- $local_opt_tmp
-    unset IFS
-
-    # shellcheck disable=SC2086
-    tty_run_print rclone sync $RCLONE_OPTS "$@" "$dir" "${drive}:"
+    tty_run_print rclone_local sync $RCLONE_OPTS "$dir" "${drive}:"
 }
 
 rclone_check()
@@ -52,14 +45,8 @@ rclone_check()
     tty_info "%s: rclone_check in source and destination: '%s'" \
              "$SCRIPT" "$drive"
 
-    local_opt_tmp="$local_opt"
-    IFS="|"
     # shellcheck disable=SC2086
-    set -- $local_opt_tmp
-    unset IFS
-
-    # shellcheck disable=SC2086
-    tty_run_print rclone check $RCLONE_OPTS "$@" "$dir" "${drive}:"
+    tty_run_print rclone_local check $RCLONE_OPTS "$dir" "${drive}:"
 }
 
 rclone_checksum()
@@ -67,27 +54,18 @@ rclone_checksum()
     tty_info "%s: rclone_checksum in destination against source SUM: '%s'" \
              "$SCRIPT" "$drive"
 
-    local_opt_tmp="$local_opt"
-    IFS="|"
-    # shellcheck disable=SC2086
-    set -- $local_opt_tmp
-    unset IFS
-
     # TODO: Double check this command and the sumfile argument.
     # shellcheck disable=SC2086
-    tty_run_print rclone checksum $RCLONE_OPTS "$@" "$dir" "${drive}:"
+    tty_run_print rclone_local checksum $RCLONE_OPTS "$dir" "${drive}:"
 }
 
-while getopts ":cCl:h" opt; do
+while getopts ":cCh" opt; do
     case $opt in
         c)
             OPT_CHECK=1
             ;;
         C)
             OPT_CHECKSUM=1
-            ;;
-        l)
-            OPT_LOCAL_OPT="$OPTARG"
             ;;
         h)
             print_help
@@ -111,7 +89,6 @@ if [ "$#" -ne 0 ]; then
     tty_fatal "%s: wrong number of arguments" "$SCRIPT"
 fi
 
-local_opt="$OPT_LOCAL_OPT"
 check="${OPT_CHECK:-$DEFAULT_CHECK}"
 checksum="${OPT_CHECKSUM:-$DEFAULT_CHECKSUM}"
 
