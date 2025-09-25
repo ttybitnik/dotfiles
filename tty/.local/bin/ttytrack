@@ -7,6 +7,20 @@
 . /usr/local/lib/tty.sh
 
 readonly SCRIPT="${0##*/}"
+readonly DEFAULT_INCLUDE_GIT=0
+
+print_help()
+{
+    cat <<EOF
+Usage: $SCRIPT [-i]
+
+Track current file state with previous upload log.
+
+Options:
+  -i               Include '.git' directories.
+  -h               Display this help.
+EOF
+}
 
 prompt_confirm()
 {
@@ -34,15 +48,45 @@ cleanup()
     [ -e "$diff_tmp" ] && rm -- "$diff_tmp"
 }
 
+while getopts ":ih" opt; do
+    case $opt in
+        i)
+            OPT_INCLUDE_GIT=1
+            ;;
+        h)
+            print_help
+            exit 0
+            ;;
+        \?)
+            trap print_help EXIT
+            tty_fatal "%s: invalid option: '-%s'" "$SCRIPT" "$OPTARG"
+            ;;
+        :)
+            trap print_help EXIT
+            tty_fatal "%s: option requires an argument: '-%s'" \
+                      "$SCRIPT" "$OPTARG"
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
 if [ "$#" -ne 0 ]; then
-    tty_usage "%s <source> <destination>" "$SCRIPT"
+    trap print_help EXIT
+    tty_fatal "%s: wrong number of arguments" "$SCRIPT"
 fi
 
 trap 'cleanup' EXIT
 current_tmp=$(mktemp)
 diff_tmp=$(mktemp)
 
-find . -type f ! -name "${SCRIPT}*" >"$current_tmp"
+include_git="${OPT_INCLUDE_GIT:-$DEFAULT_INCLUDE_GIT}"
+find_opts="-name .git -prune -o -type f"
+if [ "$include_git" -eq 1 ]; then
+    find_opts="-type f"
+fi
+
+# shellcheck disable=SC2086
+find . $find_opts ! -name "${SCRIPT}*" >"$current_tmp"
 
 log_last=$(find . -maxdepth 1 -name "${SCRIPT}*" -type f 2>/dev/null | head -1)
 log_new=$(printf "./%s_upload_log_$(date "+%Y%m%dT%H%M%S%z").txt" "$SCRIPT")
