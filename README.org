@@ -100,12 +100,12 @@ To streamline the music experience, just run =euterpe=. This script leverages tm
 - qbit: /qbittorrent secure launcher/
 - ram_bar: /ram usage/
 - switcher: /global dark/light mode switcher/
+- ttybkp: /backup naming standard/
 - ttyeod: /end of day wrapper/
 - ttygpg: /encryption automation/
 - ttyimg: /image privacy and filtering/
 - ttylog: /logging for commands/
 - ttymnt: /luks devices management/
-- ttymv: /backup naming standard/
 - ttypas: /env and secrets security/
 - ttysha: /file enumeration prevention/
 - ttysync: /safe rsync directories/
