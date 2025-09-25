@@ -7,14 +7,28 @@
 . /usr/local/lib/tty.sh
 
 readonly SCRIPT="${0##*/}"
+readonly DEFAULT_IGNORE_GIT=0
 RSYNC_BACKUP_DIR="/tmp/RSYNC-$(date "+%Y%m%dT%H%M%S%z")"
 readonly RSYNC_BACKUP_DIR
+readonly RSYNC_DRYRUN="--dry-run"
+
 # OPT(rsync): a=archive v=verbose P=partial-progress u=update i=itemize-changes
 # OPT(rsync): h=human-readable b=backup
 RSYNC_OPTS="-avPuihb --backup-dir=$RSYNC_BACKUP_DIR"
 RSYNC_OPTS="$RSYNC_OPTS --delete-after --stats"
-readonly RSYNC_OPTS
-readonly RSYNC_DRYRUN="--dry-run"
+
+print_help()
+{
+    cat <<EOF
+Usage: $SCRIPT [-i] <source> <destination>
+
+Safe rsync between source and destination directories.
+
+Options:
+  -i               Ignore '.git' directories.
+  -h               Display this help.
+EOF
+}
 
 prompt_confirm()
 {
@@ -36,8 +50,31 @@ prompt_confirm()
     fi
 }
 
+while getopts ":ih" opt; do
+    case $opt in
+        i)
+            OPT_IGNORE_GIT=1
+            ;;
+        h)
+            print_help
+            exit 0
+            ;;
+        \?)
+            trap print_help EXIT
+            tty_fatal "%s: invalid option: '-%s'" "$SCRIPT" "$OPTARG"
+            ;;
+        :)
+            trap print_help EXIT
+            tty_fatal "%s: option requires an argument: '-%s'" \
+                      "$SCRIPT" "$OPTARG"
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
 if [ "$#" -ne 2 ]; then
-    tty_usage "%s <source> <destination>" "$SCRIPT"
+    trap print_help EXIT
+    tty_fatal "%s: wrong number of arguments" "$SCRIPT"
 fi
 
 src="$1"
@@ -55,6 +92,11 @@ fi
 direction=$(printf "'%s' -> '%s' " "$src" "$dest")
 
 tty_info "%s: DRY-RUN: running rsync %s" "$SCRIPT" "$direction"
+
+ignore_git="${OPT_IGNORE_GIT:-$DEFAULT_IGNORE_GIT}"
+if [ "$ignore_git" -eq 1 ]; then
+    RSYNC_OPTS="$RSYNC_OPTS --exclude=.git"
+fi
 
 # shellcheck disable=SC2086
 if ! tty_run_print rsync $RSYNC_DRYRUN $RSYNC_OPTS "$src" "$dest"; then
