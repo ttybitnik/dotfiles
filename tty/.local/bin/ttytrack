@@ -1,0 +1,64 @@
+#!/bin/sh
+
+# Track current file state with previous upload log to find new/modfied files.
+#   Dependencies:
+#     /usr/local/lib/tty.sh
+
+. /usr/local/lib/tty.sh
+
+readonly SCRIPT="${0##*/}"
+
+prompt_confirm()
+{
+    printf "Update last upload log '%s' (y/n)? " "$log_new"
+    # OPT(read): r=no-backslashes
+    read -r response
+    response=$(printf "%s" "$response" | tr '[:upper:]' '[:lower:]')
+    while [ "$response" != "y" ] && [ "$response" != "n" ]; do
+        printf "Invalid input. Update last upload log (y/n)? "
+        # OPT(read): r=no-backslashes
+        read -r response
+        response=$(printf "%s" "$response" | tr '[:upper:]' '[:lower:]')
+    done
+    if [ "$response" = "y" ]; then
+        # OPT(rm): v=verbose
+        rm -v -- "$log_last"
+        # OPT(cp): v=verbose
+        cp -v -- "$current_tmp" "$log_new"
+    fi
+}
+
+cleanup()
+{
+    [ -e "$current_tmp" ] && rm -- "$current_tmp"
+    [ -e "$diff_tmp" ] && rm -- "$diff_tmp"
+}
+
+if [ "$#" -ne 0 ]; then
+    tty_usage "%s <source> <destination>" "$SCRIPT"
+fi
+
+trap 'cleanup' EXIT
+current_tmp=$(mktemp)
+diff_tmp=$(mktemp)
+
+find . -type f ! -name "${SCRIPT}*" >"$current_tmp"
+
+log_last=$(find . -maxdepth 1 -name "${SCRIPT}*" -type f 2>/dev/null | head -1)
+log_new=$(printf "./%s_upload_log_$(date "+%Y%m%dT%H%M%S%z").txt" "$SCRIPT")
+
+if [ -e "$log_last" ]; then
+    diff -n "$log_last" "$current_tmp" | tee "$diff_tmp"
+
+    last_lines=$(wc -l <"$log_last")
+    current_lines=$(wc -l <"$current_tmp")
+    printf "Last number of files: %d\n" "$last_lines"
+    printf "Current number of files: %d\n" "$current_lines"
+else
+    # OPT(cp): v=verbose
+    cp -v -- "$current_tmp" "$log_new"
+fi
+
+if [ -s "$diff_tmp" ]; then
+    prompt_confirm
+fi

@@ -112,6 +112,7 @@ To streamline the music experience, just run =euterpe=. This script leverages tm
 - ttyt00: /tmux wrapper/
 - ttyt01: /tmux wrapper/
 - ttyt02: /tmux wrapper/
+- ttytrack: /track current state and upload log/
 - volume_bar: /volume status/
   - volume_down: /lower volume/
   - volume_up: /raise volume/
