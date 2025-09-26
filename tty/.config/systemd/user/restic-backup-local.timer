@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily backup for restic local repository
+
+[Timer]
+OnCalendar=*-*-* 17:00:00
+Persistent=true
+Unit=restic-backup@local.service
+
+[Install]
+WantedBy=timers.target

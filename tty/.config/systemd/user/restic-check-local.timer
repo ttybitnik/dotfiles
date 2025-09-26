@@ -1,0 +1,11 @@
+[Unit]
+Description=Fortnightly check for restic local repository
+
+[Timer]
+OnCalendar=*-*-05,20 19:00:00
+# RandomizedDelaySec=1h
+Persistent=true
+Unit=restic-check@local.service
+
+[Install]
+WantedBy=timers.target

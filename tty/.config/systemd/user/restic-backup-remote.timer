@@ -1,0 +1,10 @@
+[Unit]
+Description=Weekly backup for restic remote repository
+
+[Timer]
+OnCalendar=Fri *-*-* 18:00:00
+Persistent=true
+Unit=restic-backup@remote.service
+
+[Install]
+WantedBy=timers.target

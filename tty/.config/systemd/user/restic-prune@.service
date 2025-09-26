@@ -1,0 +1,9 @@
+[Unit]
+Description=Restic forget prune action
+After=default.target restic-backup@%i.service
+Requires=default.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=%h/.config/systemd/envs/restic.env
+ExecStart=systemd-inhibit --what=shutdown:sleep --who="%p" --why="Operation of %n in progress" %h/.local/bin/cronbkp -P %i

@@ -1,0 +1,9 @@
+[Unit]
+Description=Restic backup action
+After=default.target
+Requires=default.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=%h/.config/systemd/envs/restic.env
+ExecStart=systemd-inhibit --what=shutdown:sleep --who="%p" --why="Operation of %n in progress" %h/.local/bin/cronbkp -b %i
