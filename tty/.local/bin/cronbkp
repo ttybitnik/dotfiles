@@ -1,0 +1,201 @@
+#!/bin/sh
+
+# Cron/timer script to back up to local and remote restic repositories.
+#   Globals:
+#     TTY_BACKUP_LOCAL
+#     TTY_BACKUP_REMOTE
+#   Dependencies:
+#     /usr/local/lib/tty.sh
+
+. /usr/local/lib/tty.sh
+
+readonly SCRIPT="${0##*/}"
+readonly DEFAULT_BACKUP=0
+readonly DEFAULT_TAG="$SCRIPT"
+readonly DEFAULT_PRUNE=0
+readonly DEFAULT_CHECK=0
+readonly DEFAULT_CHECK_READ=0
+CONFIG_DIR="${HOME}/.config/restic"
+readonly CONFIG_DIR
+
+print_help()
+{
+    cat <<EOF
+Usage: $SCRIPT [-b] [-t tag] [-P] [-c] [-C] <local|remote>
+
+Restic backup script for local and remote repositories.
+
+Options:
+  -b               Backup restic action.
+  -t <tag>         Tag for backup action (default "$DEFAULT_TAG")
+  -P               Forget prune restic action.
+  -c               Check metadata restic action.
+  -C               Check data restic action.
+  -h               Display this help.
+EOF
+}
+
+restic_backup()
+{
+    tty_notify_info "%s: backing up to repository: '%s'" \
+                    "$SCRIPT" "$repository"
+
+    restic_local backup \
+                 --verbose \
+                 --tag "$tag" \
+                 --exclude-file "${CONFIG_DIR}/exclude.txt" \
+                 --files-from "${CONFIG_DIR}/include.txt"
+}
+
+restic_prune()
+{
+    tty_notify_info "%s: forgetting and prunning repository: '%s'" \
+                    "$SCRIPT" "$repository"
+
+    if [ "$repository" = "local" ]; then
+        # Local repository: daily automatic backups
+        # Snapshots for short/mid/long-term recovery with longer retention
+        restic_local forget \
+                     --verbose \
+                     --keep-daily 14 \
+                     --keep-weekly 8 \
+                     --keep-monthly 24 \
+                     --prune
+    else
+        # Remote repository: weekly automatic backups
+        # Snapshots for mid/long-term disaster recovery with shorter retention
+        restic_local forget \
+                     --verbose \
+                     --keep-weekly 4 \
+                     --keep-monthly 12 \
+                     --prune
+    fi
+}
+
+restic_check()
+{
+    tty_notify_info "%s: checking repository metadata: '%s'" \
+                    "$SCRIPT" "$repository"
+
+    restic_local check
+}
+
+restic_check_read()
+{
+    tty_notify_info "%s: checking repository data: '%s'" \
+                    "$SCRIPT" "$repository"
+
+    if [ "$repository" = "local" ]; then
+        restic_local check --read-data
+    else
+        # Check a randomly chosen subset of the repository pack files.
+        # This is less bandwidth intensitive than 'read-data' (100%).
+        restic_local check --read-data-subset=10%
+    fi
+}
+
+while getopts ":bt:PcCh" opt; do
+    case $opt in
+        b)
+            OPT_BACKUP=1
+            ;;
+        t)
+            OPT_TAG="$OPTARG"
+            ;;
+        P)
+            OPT_PRUNE=1
+            ;;
+        c)
+            OPT_CHECK=1
+            ;;
+        C)
+            OPT_CHECK_READ=1
+            ;;
+        h)
+            print_help
+            exit 0
+            ;;
+        \?)
+            trap print_help EXIT
+            tty_notify_fatal "%s: invalid option: '-%s'" "$SCRIPT" "$OPTARG"
+            ;;
+        :)
+            trap print_help EXIT
+            tty_notify_fatal "%s: option requires an argument: '-%s'" \
+                             "$SCRIPT" "$OPTARG"
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+if [ "$#" -ne 1 ]; then
+    trap print_help EXIT
+    tty_notify_fatal "%s: wrong number of arguments" "$SCRIPT"
+fi
+
+repository="$1"
+case "$repository" in
+    "local")
+        # shellcheck disable=SC2034
+        RESTIC_REPOSITORY="$TTY_BACKUP_LOCAL"
+        ;;
+    "remote")
+        # shellcheck disable=SC2034
+        RESTIC_REPOSITORY="$TTY_BACKUP_REMOTE"
+        ;;
+    *)
+        tty_notify_fatal "%s: invalid repository: '%s'" "$SCRIPT" "$repository"
+        ;;
+esac
+
+tag="${OPT_TAG:-$DEFAULT_TAG}"
+backup="${OPT_BACKUP:-$DEFAULT_BACKUP}"
+if [ "$backup" -eq 1 ]; then
+    if restic_backup; then
+        tty_notify_info "%s: restic finished backing up repostiory: '%s'" \
+                        "$SCRIPT" "$repository"
+        exit 0
+    else
+        tty_notify_fatal "%s: restic_backup failed with exit code %d" \
+                         "$SCRIPT" "$?"
+    fi
+fi
+
+prune="${OPT_PRUNE:-$DEFAULT_PRUNE}"
+if [ "$prune" -eq 1 ]; then
+    if restic_prune; then
+        tty_notify_info "%s: restic finished pruning repostiory: '%s'" \
+                        "$SCRIPT" "$repository"
+        exit 0
+    else
+        tty_notify_fatal "%s: restic_prune failed with exit code %d" \
+                         "$SCRIPT" "$?"
+    fi
+fi
+
+check="${OPT_CHECK:-$DEFAULT_CHECK}"
+if [ "$check" -eq 1 ]; then
+    if restic_check; then
+        tty_notify_info "%s: restic finished checking repostiory metadata: '%s'" \
+                        "$SCRIPT" "$repository"
+        exit 0
+    else
+        tty_notify_fatal "%s: restic_check failed with exit code %d" \
+                         "$SCRIPT" "$?"
+    fi
+fi
+
+check_read="${OPT_CHECK_READ:-$DEFAULT_CHECK_READ}"
+if [ "$check_read" -eq 1 ]; then
+    if restic_check_read; then
+        tty_notify_info "%s: restic finished checking repostiory data: '%s'" \
+                        "$SCRIPT" "$repository"
+        exit 0
+    else
+        tty_notify_fatal "%s: restic_check_data failed with exit code %d" \
+                         "$SCRIPT" "$?"
+    fi
+fi
+
+tty_warn "%s: nothing happened: must select an action option" "$SCRIPT"
+print_help

@@ -85,6 +85,7 @@ To streamline the music experience, just run =euterpe=. This script leverages tm
 - cronaide: /aide checks/
 - cronaudit: /audit summaries/
 - cronbib: /calibre to bibtex/
+- cronbkp: /backup automation/
 - crondrive: /bisync drives/
 - cronemacs: /emacs packages updates/
 - crongit: /commit local repos/
