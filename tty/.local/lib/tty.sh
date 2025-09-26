@@ -105,7 +105,7 @@ _tty_log()
 #   $2 - Format string (passed to notify-send or printf)
 #   $@ - Remaining arguments for the format string
 # Outputs:
-#   Sends desktop notification via notify-send, or
+#   Sends desktop notification via notify-send, and
 #   falls back to _tty_log if notify-send is unavailable
 # Returns:
 #   Exits with status 1 if log level is FATAL, otherwise 0
@@ -246,8 +246,8 @@ tty_fatal()
 #   $1 - Format string (passed to notify-send or printf)
 #   $@ - Remaining arguments for the format string
 # Outputs:
-#   Sends desktop notification via notify-send, or
-#   writes formatted message to stdout if notify-send is unavailable
+#   Sends desktop notification via notify-send
+#   Writes formatted message to stdout
 #
 # Examples:
 #   tty_notify_debug "%s: debug information: '%s'" "${0##*/}" "$data"
@@ -264,8 +264,8 @@ tty_notify_debug()
 #   $1 - Format string (passed to notify-send or printf)
 #   $@ - Remaining arguments for the format string
 # Outputs:
-#   Sends desktop notification via notify-send, or
-#   writes formatted message to stdout if notify-send is unavailable
+#   Sends desktop notification via notify-send
+#   Writes formatted message to stdout
 #
 # Examples:
 #   tty_notify_info "%s: download completed: '%s'" "${0##*/}" "$tar"
@@ -282,8 +282,8 @@ tty_notify_info()
 #   $1 - Format string (passed to notify-send or printf)
 #   $@ - Remaining arguments for the format string
 # Outputs:
-#   Sends desktop notification via notify-send, or
-#   writes formatted message to stderr if notify-send is unavailable
+#   Sends desktop notification via notify-send
+#   Writes formatted message to stderr
 #
 # Examples:
 #   tty_notify_warn "%s: high memory usage: %dMB" "${0##*/}" "$mem"
@@ -300,8 +300,8 @@ tty_notify_warn()
 #   $1 - Format string (passed to notify-send or printf)
 #   $@ - Remaining arguments for the format string
 # Outputs:
-#   Sends desktop notification via notify-send, or
-#   writes formatted message to stderr if notify-send is unavailable
+#   Sends desktop notification via notify-send
+#   Writes formatted message to stderr
 #
 # Examples:
 #   tty_notify_error "%s: sync failed: '%s'" "${0##*/}" "$location"
@@ -318,8 +318,8 @@ tty_notify_error()
 #   $1 - Format string (passed to notify-send or printf)
 #   $@ - Remaining arguments for the format string
 # Outputs:
-#   Sends desktop notification via notify-send, or
-#   writes formatted message to stderr if notify-send is unavailable
+#   Sends desktop notification via notify-send
+#   Writes formatted message to stderr
 # Returns:
 #   Exits script with status 1
 #
