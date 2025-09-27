@@ -5,7 +5,7 @@
 # alpha=0.95
 background=0d0e1c
 foreground=ffffff
-cursor=0d0e1c f78fe7  # <inverse foreground/background> bg-main/cursor
+cursor=0d0e1c ff66ff  # <inverse foreground/background> bg-main/cursor
 
 ## Normal/regular colors (color palette 0-7)
 regular0=ffffff  # black fg-main
