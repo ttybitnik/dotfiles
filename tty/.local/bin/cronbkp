@@ -137,11 +137,11 @@ repository="$1"
 case "$repository" in
     "local")
         # shellcheck disable=SC2034
-        RESTIC_REPOSITORY="$TTY_BACKUP_LOCAL"
+        export RESTIC_REPOSITORY="$TTY_BACKUP_LOCAL"
         ;;
     "remote")
         # shellcheck disable=SC2034
-        RESTIC_REPOSITORY="$TTY_BACKUP_REMOTE"
+        export RESTIC_REPOSITORY="$TTY_BACKUP_REMOTE"
         ;;
     *)
         tty_notify_fatal "%s: invalid repository: '%s'" "$SCRIPT" "$repository"
