@@ -17,4 +17,4 @@ StartLimitBurst=3
 Restart=on-failure
 
 [Install]
-WantedBy=sway-session.target
+WantedBy=graphical-session.target

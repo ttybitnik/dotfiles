@@ -1,7 +1,7 @@
 [Unit]
 Description=Restic backup action
-After=default.target
-Requires=default.target
+After=graphical-session.target
+Requires=graphical-session.target
 
 [Service]
 Type=oneshot

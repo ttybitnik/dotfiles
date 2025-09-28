@@ -1,7 +1,7 @@
 [Unit]
 Description=Restic forget prune action
-After=default.target restic-backup@%i.service
-Requires=default.target
+After=graphical-session.target restic-backup@%i.service
+Requires=graphical-session.target
 
 [Service]
 Type=oneshot

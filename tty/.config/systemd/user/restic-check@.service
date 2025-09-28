@@ -1,8 +1,8 @@
 [Unit]
 Description=Restic check action
 Before=restic-prune@%i.service
-After=default.target restic-backup@%i.service restic-prune@%i.service
-Requires=default.target
+After=graphical-session.target restic-backup@%i.service restic-prune@%i.service
+Requires=graphical-session.target
 
 [Service]
 Type=oneshot
