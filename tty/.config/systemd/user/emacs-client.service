@@ -9,4 +9,4 @@ Type=simple
 ExecStart=/usr/bin/emacsclient --suppress-output --create-frame --eval "(dashboard-refresh-buffer)"
 
 [Install]
-WantedBy=sway-session.target
+WantedBy=graphical-session.target
