@@ -1,0 +1,5 @@
+;; (setq dashboard-startup-banner
+;;       (expand-file-name "dashLogo_green.png" img-d/ttybitnik))
+(dashboard-refresh-buffer)
+(load-theme 'tango-dark t)
+(match-current-line-background/ttybitnik)

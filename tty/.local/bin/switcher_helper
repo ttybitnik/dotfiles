@@ -13,9 +13,9 @@ current_hour=$(date "+%k")
 if ((current_hour >= 6 && current_hour < 17)); then
     printf "dark" >"$STATE_FILE"
     # OPT(switcher): nr=no-reload
-    "${HOME}"/.local/bin/switcher -nr
+    "${HOME}"/.local/bin/switcher -s
 else
     printf "light" >"$STATE_FILE"
     # OPT(switcher): nr=no-reload
-    "${HOME}"/.local/bin/switcher -nr
+    "${HOME}"/.local/bin/switcher -s
 fi

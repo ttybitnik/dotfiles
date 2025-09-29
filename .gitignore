@@ -1,8 +1,10 @@
 .switcher_state
+.switcher_theme
 /tty/.config/systemd/user/*target.wants/
 /.assets/ttyimg_scratches.jpg
 /tty/.config/hermes/motd.log
 /tty/.local/share/applications/*.cache
+/tty/.config/switcher/current
 
 # Symlinks
 **/*@

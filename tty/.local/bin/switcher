@@ -1,101 +1,177 @@
 #!/usr/bin/env bash
 
-# Switch globally between dark/light mode.
+# Switch globally between dark/light mode of selected theme family.
+#   Globals:
+#     CUSTOM_SWITCHER
 #   Dependencies:
 #     /usr/local/lib/tty.sh
 
 source /usr/local/lib/tty.sh
 
-readonly DOTFILES="$TTY_DOTFILES"
+readonly CONFIG_DIR="${HOME}/.config"
+readonly THEMES_DIR="${CONFIG_DIR}/switcher"
+readonly CURRENT_THEME="$THEMES_DIR/current"
 readonly STATE_FILE="$CUSTOM_SWITCHER"
+readonly THEME_FILE="${THEMES_DIR}/.switcher_theme"
+readonly DEFAULT_SKIP=0
+readonly DEFAULT_CHANGE=0
+readonly DEFAULT_THEME="modus"
 readonly SCRIPT="${0##*/}"
 
-switcher_changes()
+print_help()
 {
-    if [[ "$toggle" == dark ]]; then
-        toggle=light
+    cat <<EOF
+Usage: $SCRIPT [-c] [-s]
+
+Switch globally between dark/light mode of selected theme family.
+
+Options:
+  -c               Change the current theme family.
+  -s               Skip application reload after switching.
+  -h               Display this help.
+EOF
+}
+
+switcher_links()
+{
+    local theme_family_dir="$THEMES_DIR/$theme_family"
+    local toggle
+
+    toggle=$(cat "$STATE_FILE" 2>/dev/null)
+    if [[ -z "$toggle" ]]; then
+        toggle="light"
+    fi
+
+    if (("$change" == 1)); then
+        variant="$toggle"
+
+        printf "%s\n" \
+               "No man ever steps in the same river twice," \
+               "for it's not the same river and he's not the same man."
+        printf "\n"
+        printf "— Heraclitus\n"
+
+    elif [[ "$toggle" == dark ]]; then
+        variant="light"
 
         printf "%s\n" \
                "We can easily forgive a child who is afraid of the dark;" \
                "the real tragedy of life is when men are afraid of the light."
+        printf "\n"
         printf "— Plato\n"
 
-        # OPT(ln): s=symbolic f=force
-        ln -sf "${HOME}/.emacs.d/local/switcher-day.el" \
-            "${HOME}/.emacs.d/local/switcher.el"
-        ln -sf "${DOTFILES}/wayland/.config/gtk-3.0/switcher-light" \
-            "${HOME}/.config/gtk-3.0/settings.ini"
-        ln -sf "${DOTFILES}/wayland/.config/foot/switcher-light" \
-            "${HOME}/.config/foot/switcher"
-        ln -sf "${DOTFILES}/wayland/.config/rofi/switcher-light" \
-            "${HOME}/.config/rofi/switcher.rasi"
-        ln -sf "${DOTFILES}/wayland/.config/dunst/switcher-light" \
-            "${HOME}/.config/dunst/dunstrc.d/80-switcher.conf"
-        ln -sf "${DOTFILES}/wayland/.config/sway/switcher-light" \
-            "${HOME}/.config/sway/switcher"
-        ln -sf "${DOTFILES}/wayland/.config/waybar/switcher-light" \
-            "${HOME}/.config/waybar/style.css"
-        gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
-
     elif [[ "$toggle" == light ]]; then
-        toggle=dark
+        variant="dark"
 
         printf "%s\n" \
                "Darkness now rose, as daylight" \
                "sunk, and brought in low'ring" \
                "night her shadowy offspring."
+        printf "\n"
         printf "— John Milton\n"
-
-        # OPT(ln): s=symbolic f=force
-        ln -sf "${HOME}/.emacs.d/local/switcher-night.el" \
-            "${HOME}/.emacs.d/local/switcher.el"
-        ln -sf "${DOTFILES}/wayland/.config/gtk-3.0/switcher-dark" \
-            "${HOME}/.config/gtk-3.0/settings.ini"
-        ln -sf "${DOTFILES}/wayland/.config/foot/switcher-dark" \
-            "${HOME}/.config/foot/switcher"
-        ln -sf "${DOTFILES}/wayland/.config/rofi/switcher-dark" \
-            "${HOME}/.config/rofi/switcher.rasi"
-        ln -sf "${DOTFILES}/wayland/.config/dunst/switcher-dark" \
-            "${HOME}/.config/dunst/dunstrc.d/80-switcher.conf"
-        ln -sf "${DOTFILES}/wayland/.config/sway/switcher-dark" \
-            "${HOME}/.config/sway/switcher"
-        ln -sf "${DOTFILES}/wayland/.config/waybar/switcher-dark" \
-            "${HOME}/.config/waybar/style.css"
-        gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 
     else
         tty_fatal "configuration files not found: check '%s'" "${STATE_FILE}"
     fi
+
+    ln -sfn "$theme_family_dir" "$CURRENT_THEME"
+
+    # TODO: Maybe standarize link targets to 'switcher' for each config.
+    # TODO: Loop trhough the configs dynamically.
+    ln -sf "${CURRENT_THEME}/emacs/switcher-${variant}"   "${HOME}/.emacs.d/local/switcher.el"
+    ln -sf "${CURRENT_THEME}/gtk-3.0/switcher-${variant}" "${CONFIG_DIR}/gtk-3.0/settings.ini"
+    ln -sf "${CURRENT_THEME}/foot/switcher-${variant}"    "${CONFIG_DIR}/foot/switcher"
+    ln -sf "${CURRENT_THEME}/rofi/switcher-${variant}"    "${CONFIG_DIR}/rofi/switcher.rasi"
+    ln -sf "${CURRENT_THEME}/dunst/switcher-${variant}"   "${CONFIG_DIR}/dunst/dunstrc.d/80-switcher.conf"
+    ln -sf "${CURRENT_THEME}/sway/switcher-${variant}"    "${CONFIG_DIR}/sway/switcher"
+    ln -sf "${CURRENT_THEME}/waybar/switcher-${variant}"  "${CONFIG_DIR}/waybar/style.css"
+
+    gsettings set org.gnome.desktop.interface color-scheme "prefer-${variant}"
+
+    printf "%s" "$variant" >"$STATE_FILE"
 }
 
 switcher_reload()
 {
     # OPT(emacsclient): e=eval
-    if ! swaymsg reload; then
+    if ! swaymsg >/dev/null 2>&1  reload; then
         tty_notify_error "%s: swaymsg reload failed with non-zero exit code" \
                          "$SCRIPT"
     fi
 
     emacsclient -e "(config-reload/ttybitnik)" >/dev/null 2>&1 &
 
-    killall -USR1 foot 2>/dev/null || true
+    killall -USR1 foot >/dev/null 2>&1 || true
 
-    killall dunst 2>/dev/null || true
+    killall dunst >/dev/null 2>&1 || true
     dunst >/dev/null 2>&1 &
 }
 
-no_reload=false
-toggle=$(cat "$STATE_FILE" 2>/dev/null) || toggle="light"
+switcher_change()
+{
+    local selector_prompt="Select theme family: "
+    local available_themes
 
-if [[ "$1" == "-nr" ]]; then
-    no_reload=true
+    available_themes=$(
+        find "$THEMES_DIR/" \
+             -maxdepth 1 \
+             -type d \
+             -not -name "$SCRIPT" \
+             -exec basename {} \;
+    )
+
+    theme_family=$(
+        printf "%s\n" "$available_themes" | fzf --prompt="$selector_prompt"
+    )
+
+    printf "%s" "$theme_family" >"$THEME_FILE"
+}
+
+while getopts ":csh" opt; do
+    case $opt in
+        c)
+            OPT_CHANGE=1
+            ;;
+        s)
+            OPT_SKIP=1
+            ;;
+        h)
+            print_help
+            exit 0
+            ;;
+        \?)
+            trap print_help EXIT
+            tty_fatal "%s: invalid option: '-%s'" "$SCRIPT" "$OPTARG"
+            ;;
+        :)
+            trap print_help EXIT
+            tty_fatal "%s: option requires an argument: '-%s'" \
+                      "$SCRIPT" "$OPTARG"
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+if (("$#" != 0)); then
+    trap print_help EXIT
+    tty_fatal "%s: wrong number of arguments" "$SCRIPT"
 fi
 
-switcher_changes
+theme_family=$(cat "$THEME_FILE" 2>/dev/null) || theme_family="$DEFAULT_THEME"
 
-if [[ "$no_reload" = false ]]; then
+change="${OPT_CHANGE:-$DEFAULT_CHANGE}"
+if [[ "$change" = 1 ]]; then
+    switcher_change
+    tty_notify_info "%s: theme familly changed: '%s'" "$SCRIPT" "$theme_family"
+fi
+
+if ! switcher_links; then
+    tty_notify_fatal "%s: switcher_links failed with non-zero exit code" \
+                     "$SCRIPT"
+fi
+
+skip="${OPT_SKIP:-$DEFAULT_SKIP}"
+if [[ "$skip" != 1 ]]; then
     switcher_reload
-    tty_notify_info "%s: color scheme reloaded" "$SCRIPT"
+    tty_notify_info "%s: color scheme reloaded: '%s'" "$SCRIPT" "$variant"
 fi
-
-printf "%s" "$toggle" >"$STATE_FILE"

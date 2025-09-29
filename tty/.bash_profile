@@ -79,7 +79,7 @@ fi
 # Custom environment
 #-------------------------------------------------------------------------------
 export CUSTOM_HERMES="${TTY_DOTFILES}/tty/.config/hermes/motd.log"
-export CUSTOM_SWITCHER="${TTY_DOTFILES}/.switcher_state"
+export CUSTOM_SWITCHER="${TTY_DOTFILES}/tty/.config/switcher/.switcher_state"
 
 case "$(uname -s)" in
     SunOS*)    CUSTOM_SYSTEM="SOLARIS" ;;
