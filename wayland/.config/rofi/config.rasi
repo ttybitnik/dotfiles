@@ -1,0 +1,12 @@
+configuration {
+  // Mixed Vi & Emacs binding style (default in GNU applications).
+  // Lost Control+j for 'accept-entry'
+  kb-accept-entry: "Control+m,Return,KP_Enter";
+  // Lost Control+k for 'remove-to-eol'
+  kb-remove-to-eol: "Alt+k";
+  kb-row-up: "Up,Control+p,Control+k";
+  kb-row-down: "Down,Control+n,Control+j";
+  kb-mode-next: "Shift+Right,Control+Tab,Alt+l";
+  kb-mode-previous: "Shift+Left,Control+ISO_Left_Tab,Alt+h";
+}
+@theme "switcher"

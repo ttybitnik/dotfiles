@@ -8,8 +8,7 @@ set $up k
 set $right l
 set $term foot tmux attach
 set $rofi_cmd rofi -terminal '$term'
-set $menu $rofi_cmd -theme switcher -show combi \
-    	  	      -combi-modes drun#run -modes combi
+set $menu $rofi_cmd -combi-modes "drun,window" -show combi -show-icons
 
 ### Output configuration ###
 output * bg "$(find $TTY_WALLPAPER -type f | shuf -n 1)" fill
