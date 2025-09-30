@@ -76,15 +76,15 @@ switcher_links()
 
     ln -sfn "$theme_family_dir" "$CURRENT_THEME"
 
-    # TODO: Maybe standarize link targets to 'switcher' for each config.
-    # TODO: Loop trhough the configs dynamically.
-    ln -sf "${CURRENT_THEME}/emacs/switcher-${variant}"   "${HOME}/.emacs.d/local/switcher.el"
+    # Note to future self: you cannot improve this logic dynamically since not
+    # all applications have a config include/import directive. Let it be.
     ln -sf "${CURRENT_THEME}/gtk-3.0/switcher-${variant}" "${CONFIG_DIR}/gtk-3.0/settings.ini"
-    ln -sf "${CURRENT_THEME}/foot/switcher-${variant}"    "${CONFIG_DIR}/foot/switcher"
+    ln -sf "${CURRENT_THEME}/emacs/switcher-${variant}"   "${HOME}/.emacs.d/local/switcher.el"
+    ln -sf "${CURRENT_THEME}/foot/switcher-${variant}"    "${CONFIG_DIR}/foot/switcher.ini"
     ln -sf "${CURRENT_THEME}/rofi/switcher-${variant}"    "${CONFIG_DIR}/rofi/switcher.rasi"
     ln -sf "${CURRENT_THEME}/dunst/switcher-${variant}"   "${CONFIG_DIR}/dunst/dunstrc.d/80-switcher.conf"
     ln -sf "${CURRENT_THEME}/sway/switcher-${variant}"    "${CONFIG_DIR}/sway/switcher"
-    ln -sf "${CURRENT_THEME}/waybar/switcher-${variant}"  "${CONFIG_DIR}/waybar/style.css"
+    ln -sf "${CURRENT_THEME}/waybar/switcher-${variant}"  "${CONFIG_DIR}/waybar/switcher.css"
 
     gsettings set org.gnome.desktop.interface color-scheme "prefer-${variant}"
 

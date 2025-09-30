@@ -10,8 +10,8 @@
 **/*@
 # Internal symlinks
 wayland/.config/dunst/dunstrc.d/80-switcher.conf
-wayland/.config/foot/switcher
+wayland/.config/foot/switcher.ini
 wayland/.config/gtk-3.0/settings.ini
 wayland/.config/rofi/switcher.rasi
 wayland/.config/sway/switcher
-wayland/.config/waybar/style.css
+wayland/.config/waybar/switcher.css
