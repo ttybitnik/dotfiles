@@ -1,6 +1,9 @@
 [Unit]
 Description=Gammastep display temperature according to time of day
 Documentation=man:gammastep(1)
+PartOf=graphical-session.target
+After=graphical-session.target
+Requisite=graphical-session.target
 
 [Service]
 Type=simple
@@ -16,4 +19,4 @@ StartLimitBurst=3
 Restart=on-failure
 
 [Install]
-WantedBy=sway-session.target
+WantedBy=graphical-session.target
