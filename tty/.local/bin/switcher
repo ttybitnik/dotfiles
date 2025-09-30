@@ -35,7 +35,6 @@ EOF
 switcher_links()
 {
     local theme_family_dir="$THEMES_DIR/$theme_family"
-    local toggle
 
     toggle=$(cat "$STATE_FILE" 2>/dev/null)
     if [[ -z "$toggle" ]]; then
@@ -101,7 +100,19 @@ switcher_reload()
 
     emacsclient -e "(config-reload/ttybitnik)" >/dev/null 2>&1 &
 
-    killall -USR1 foot >/dev/null 2>&1 || true
+    # TODO: Perhaps file a feature request. Apparently, foot does not reload
+    # configs on USR1/USR2, it only switches between pre-loaded colors/colors2
+    # sections. This requires both variants to be in a single config file,
+    # making it harder to switch/maintain different theme options. Ideally,
+    # signals would trigger a config reload including imported files IMO.
+    #
+    # See issues and PRs in CHANGELOG for versions 1.23-1.24.
+    # https://codeberg.org/dnkl/foot/src/branch/master/CHANGELOG.md#1-23-1
+    if [[ "$toggle" == dark ]]; then
+        killall -USR2 foot >/dev/null 2>&1 || true
+    else
+        killall -USR1 foot >/dev/null 2>&1 || true
+    fi
 
     killall dunst >/dev/null 2>&1 || true
     dunst >/dev/null 2>&1 &

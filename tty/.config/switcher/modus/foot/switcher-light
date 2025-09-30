@@ -1,4 +1,9 @@
 # -*- conf -*-
+
+# Foot requires both variants to be in both files due the way it implemented
+# SIGUSR1 and SIGUSR2 (switch between colors and colors2). There is no reloading
+# of the main config or included config 'switcher.ini' file apparently.
+
 # Modus Operandi Tinted
 
 [colors]
@@ -35,3 +40,40 @@ scrollback-indicator=000000 0000ff      # black-on-bright-blue
 search-box-no-match=000000 a60000       # black-on-red
 search-box-match=000000 6f5500          # black-on-yellow
 urls=6f5500
+
+# Modus Vivendi Tinted
+
+[colors2]
+# alpha=0.95
+background=0d0e1c
+foreground=ffffff
+cursor=0d0e1c ff66ff  # <inverse foreground/background> bg-main/cursor
+
+## Normal/regular colors (color palette 0-7)
+regular0=ffffff  # black fg-main
+regular1=ff5f59  # red
+regular2=44bc44  # green
+regular3=45605e  # yellow < bg-hover (tmux)
+regular4=2fafff  # blue
+regular5=feacd0  # magenta
+regular6=00d3d0  # cyan
+regular7=0d0e1c  # white bg-main
+
+## Bright colors (color palette 8-15)
+bright0=989898  # black fg-dim
+bright1=ff5f5f  # red
+bright2=44df44  # green
+bright3=efef00  # yellow
+bright4=338fff  # blue
+bright5=ff66ff  # magenta
+bright6=00eff0  # cyan
+bright7=1d2235  # white bg-dim
+
+## Misc colors
+selection-foreground=ffffff             # <inverse foreground/background> fg-region
+selection-background=555a66             # <inverse foreground/background> bg-region
+jump-labels=ffffff d0bc00               # black-on-yellow
+scrollback-indicator=ffffff 338fff      # black-on-bright-blue
+search-box-no-match=ffffff ff5f59       # black-on-red
+search-box-match=ffffff d0bc00          # black-on-yellow
+urls=d0bc00
