@@ -1,6 +1,9 @@
 [Unit]
 Description=GNU Emacs daemon
 Documentation=info:emacs man:emacs(1) https://gnu.org/software/emacs/
+After=gpg-agent.socket graphical-session.target
+Requisite=gpg-agent.socket
+Wants=emacs-client.service
 
 [Service]
 Type=notify
