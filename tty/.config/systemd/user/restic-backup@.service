@@ -1,7 +1,7 @@
 [Unit]
 Description=Restic backup action
-After=graphical-session.target
-Requires=graphical-session.target
+After=gpg-agent.socket graphical-session.target
+Requisite=gpg-agent.socket
 
 [Service]
 Type=oneshot

@@ -1,8 +1,8 @@
 [Unit]
 Description=Restic check read action
 Before=restic-prune@%i.service
-After=graphical-session.target restic-backup@%i.service restic-prune@%i.service
-Requires=graphical-session.target
+After=gpg-agent.socket graphical-session.target restic-backup@%i.service restic-prune@%i.service
+Requisite=gpg-agent.socket
 
 [Service]
 Type=oneshot

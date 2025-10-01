@@ -1,7 +1,7 @@
 [Unit]
 Description=Restic forget prune action
-After=graphical-session.target restic-backup@%i.service
-Requires=graphical-session.target
+After=gpg-agent.socket graphical-session.target restic-backup@%i.service
+Requisite=gpg-agent.socket
 
 [Service]
 Type=oneshot
