@@ -109,9 +109,9 @@ switcher_reload()
     # See issues and PRs in CHANGELOG for versions 1.23-1.24.
     # https://codeberg.org/dnkl/foot/src/branch/master/CHANGELOG.md#1-23-1
     if [[ "$toggle" == dark ]]; then
-        killall -USR2 foot >/dev/null 2>&1 || true
-    else
         killall -USR1 foot >/dev/null 2>&1 || true
+    else
+        killall -USR2 foot >/dev/null 2>&1 || true
     fi
 
     killall dunst >/dev/null 2>&1 || true
@@ -136,6 +136,8 @@ switcher_change()
     )
 
     printf "%s" "$theme_family" >"$THEME_FILE"
+
+    killall foot >/dev/null 2>&1 || true
 }
 
 while getopts ":csh" opt; do
