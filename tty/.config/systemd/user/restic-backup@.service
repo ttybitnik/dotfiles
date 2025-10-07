@@ -6,4 +6,5 @@ Requisite=gpg-agent.socket
 [Service]
 Type=oneshot
 EnvironmentFile=%h/.config/systemd/envs/restic.env
+ExecStartPre=%h/.local/bin/systemd_ensure_agent
 ExecStart=systemd-inhibit --what=shutdown:sleep --who="%p" --why="Operation of %n in progress" %h/.local/bin/cronbkp -b %i
