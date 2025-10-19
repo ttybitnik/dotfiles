@@ -129,11 +129,13 @@ The scripts are located in the following repository path: =./tty/.local/bin/=.
   - Ansible
   - Bash
   - Curl
+  - Fzf
   - Git
   - GNU Lynx
   - GNU Midnight Commander
   - Kmonad
   - Readline
+  - Ripgrep
   - Systemd
   - Tmux
   - Xdg

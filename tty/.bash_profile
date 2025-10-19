@@ -45,10 +45,19 @@ export TTY_SIGNING="0xB52D1006EFAC93DF"
 # System environment
 #-------------------------------------------------------------------------------
 export HISTCONTROL="ignoreboth"
-export EDITOR="/usr/bin/emacsclient -c -n"
+export EDITOR="/usr/bin/emacsclient -nw"
 unset SSH_AGENT_PID
 SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 export SSH_AUTH_SOCK
+if command -v fzf >/dev/null 2>&1; then
+    export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git/*"'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_DEFAULT_OPTS_FILE="${HOME}/.config/fzf/fzf.conf"
+    eval "$(fzf --bash)"
+fi
+if command -v rg >/dev/null 2>&1; then
+    export RIPGREP_CONFIG_PATH="${HOME}/.config/ripgrep/ripgrep.conf"
+fi
 #-------------------------------------------------------------------------------
 # Development environment
 #-------------------------------------------------------------------------------

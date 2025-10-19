@@ -45,8 +45,4 @@ alias pomodoro='emacsclient -n -e "(pomodoro/ttybitnik)"'
 alias view='vi -R'
 alias ?='lynx_duck'
 alias ??='lynx_wiki'
-alias fcd='cd $(find -type d | fzf)'
-alias femacs='emacs $(find -type f | fzf)'
-alias fpath='find -type f | fzf | sed 's/^..//g' \
-      	        | tr -d '\n' | xclip -selection primary'
 alias weather='curl -s https://wttr.in/"${TTY_CITY// /+}" | head -n -2'
