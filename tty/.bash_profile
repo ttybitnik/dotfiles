@@ -44,7 +44,10 @@ export TTY_SIGNING="0xB52D1006EFAC93DF"
 #-------------------------------------------------------------------------------
 # System environment
 #-------------------------------------------------------------------------------
-export HISTCONTROL="ignoreboth"
+shopt -s histappend
+export HISTCONTROL="ignoreboth:erasedups"
+export HISTSIZE=10000
+export HISTFILESIZE=10000
 export EDITOR="/usr/bin/emacsclient -nw"
 unset SSH_AGENT_PID
 SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
