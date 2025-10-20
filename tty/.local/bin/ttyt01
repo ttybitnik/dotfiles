@@ -6,4 +6,4 @@ tmux split-window
 # OPT(journalctl): f=follow
 journalctl -f
 # OPT(tmux): t=target-pane
-tmux select-pane -t 1
+tmux select-pane -t 2

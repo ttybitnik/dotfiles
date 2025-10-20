@@ -5,5 +5,5 @@
 # Preamble for calling the script in a non-verbose fashion
 tmux split-window
 # OPT(tmux): t=target-pane
-tmux select-pane -t 0
+tmux select-pane -t 1
 tmux kill-pane
