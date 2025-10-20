@@ -52,8 +52,8 @@ printf "** ROOT_CMD_ALIVE_PID: %d **\n" "$ROOT_CMD_ALIVE_PID"
 print_align_asterisk_box "Running cronaudit..."
 ttylog cronaudit
 
-# print_align_asterisk_box "Running cronaide..."
-# ttylog cronaide
+print_align_asterisk_box "Running cronaide..."
+ttylog cronaide
 
 print_align_asterisk_box "Running omni..."
 ttylog omni
@@ -64,5 +64,5 @@ ttylog cronbib
 print_align_asterisk_box "Running crongit..."
 ttylog crongit
 
-print_align_asterisk_box "Running crondrive..."
-ttylog crondrive_local
+# print_align_asterisk_box "Running crondrive..."
+# ttylog crondrive_local
