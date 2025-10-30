@@ -7,6 +7,9 @@
 [transfer]
 	fsckObjects = true
 
+[rebase]
+    updateRefs = true
+
 [core]
 	editor = emacsclient -c -a emacs
 	pager = less -iXFR
