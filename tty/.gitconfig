@@ -13,6 +13,7 @@
 [core]
 	editor = emacsclient -c -a emacs
 	pager = less -iXFR
+    hooksPath = /home/ttybitnik/.local/share/git/hooks
 
 [color]
 	ui = always

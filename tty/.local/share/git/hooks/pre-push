@@ -1,0 +1,57 @@
+#!/bin/sh
+
+# Scan for potential secrets, vulnerabilities and misconfigurations before push.
+#   Dependencies:
+#     /usr/local/lib/tty.sh
+
+. /usr/local/lib/tty.sh
+
+readonly SCRIPT="${0##*/}"
+readonly SCAN_BIN="trivy"
+readonly SCAN_OPTS="fs --ignore-unfixed"
+
+run_scan()
+{
+    # shellcheck disable=SC2086
+    tty_run_print "$SCAN_BIN" $SCAN_OPTS \
+                  --scanners "$SCAN_SCANNERS" \
+                  --severity "$SCAN_SEVERITY" \
+                  --exit-code "$SCAN_EXIT_CODE" \
+                  .
+}
+
+if ! command -v "$SCAN_BIN" >/dev/null 2>&1; then
+    tty_notify_fatal "%s: cannot find command: '%s'" "$SCRIPT" "$SCAN_BIN"
+fi
+
+repo_remote=$(git remote get-url origin)
+REPO_NAME="${repo_remote##*:}"
+
+tty_info "%s: %s: running '%s'" "$SCRIPT" "$REPO_NAME" "$SCAN_BIN"
+
+SCAN_SCANNERS="secret"
+SCAN_SEVERITY="UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
+SCAN_EXIT_CODE=1
+if ! run_scan; then
+    tty_notify_fatal "%s: %s: %s found '%s' issues" \
+                     "$SCRIPT" "$REPO_NAME" "$SCAN_BIN" "$SCAN_SCANNERS"
+fi
+
+SCAN_SCANNERS="vuln,misconfig"
+SCAN_SEVERITY="HIGH,CRITICAL"
+SCAN_EXIT_CODE=1
+if ! run_scan; then
+    tty_notify_fatal "%s: %s: %s found '%s' issues" \
+                     "$SCRIPT" "$REPO_NAME" "$SCAN_BIN" "$SCAN_SCANNERS"
+fi
+
+SCAN_SCANNERS="vuln,misconfig"
+SCAN_SEVERITY="MEDIUM"
+SCAN_EXIT_CODE=0
+if ! run_scan; then
+    tty_notify_warn "%s: %s: %s found '%s' '%s' non-blocking issues" \
+                    "$SCRIPT" "$REPO_NAME" "$SCAN_BIN" "$SCAN_SCANNERS" \
+                    "$SCAN_SEVERITY"
+fi
+
+tty_info "%s: %s security scans completed successfully" "$SCRIPT" "$SCAN_BIN"
