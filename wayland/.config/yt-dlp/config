@@ -1,1 +1,8 @@
 -f bestvideo[height<=?1080]+bestaudio/best
+--write-subs
+--write-auto-subs
+--sub-lang "en-.*"
+--sub-format "srt/best"
+--min-sleep-interval 5
+--max-sleep-interval 15
+#--write-info-json
