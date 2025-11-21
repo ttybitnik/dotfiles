@@ -25,10 +25,9 @@ else
     expiration=24
 fi
 
-# OPT(curl): A=user-agent i=show-headers F=form
+# OPT(curl): i=show-headers F=form
 cmd=(
     "curl"
-    "-A" "curl"
     "-i"
     "-F" "file=@${1}"
     "-F" "expires=$expiration"
