@@ -29,6 +29,15 @@ REPO_NAME="${repo_remote##*:}"
 
 tty_info "%s: %s: running '%s'" "$SCRIPT" "$REPO_NAME" "$SCAN_BIN"
 
+SCAN_SCANNERS="vuln,misconfig"
+SCAN_SEVERITY="HIGH,CRITICAL"
+# SCAN_SEVERITY="MEDIUM,HIGH,CRITICAL"
+SCAN_EXIT_CODE=1
+if ! run_scan; then
+    tty_notify_fatal "%s: %s: %s found '%s' issues" \
+                     "$SCRIPT" "$REPO_NAME" "$SCAN_BIN" "$SCAN_SCANNERS"
+fi
+
 SCAN_SCANNERS="secret"
 SCAN_SEVERITY="UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
 SCAN_EXIT_CODE=1
@@ -36,22 +45,3 @@ if ! run_scan; then
     tty_notify_fatal "%s: %s: %s found '%s' issues" \
                      "$SCRIPT" "$REPO_NAME" "$SCAN_BIN" "$SCAN_SCANNERS"
 fi
-
-SCAN_SCANNERS="vuln,misconfig"
-SCAN_SEVERITY="HIGH,CRITICAL"
-SCAN_EXIT_CODE=1
-if ! run_scan; then
-    tty_notify_fatal "%s: %s: %s found '%s' issues" \
-                     "$SCRIPT" "$REPO_NAME" "$SCAN_BIN" "$SCAN_SCANNERS"
-fi
-
-SCAN_SCANNERS="vuln,misconfig"
-SCAN_SEVERITY="MEDIUM"
-SCAN_EXIT_CODE=0
-if ! run_scan; then
-    tty_notify_warn "%s: %s: %s found '%s' '%s' non-blocking issues" \
-                    "$SCRIPT" "$REPO_NAME" "$SCAN_BIN" "$SCAN_SCANNERS" \
-                    "$SCAN_SEVERITY"
-fi
-
-tty_info "%s: %s security scans completed successfully" "$SCRIPT" "$SCAN_BIN"
