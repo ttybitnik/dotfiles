@@ -1,6 +1,9 @@
 [commit]
 	gpgsign = true
 
+[tag]
+	gpgsign = true
+
 [mergetool]
 	keepBackup = true
 
