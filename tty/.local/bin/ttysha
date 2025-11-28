@@ -10,31 +10,36 @@
 
 readonly DEFAULT_LENGTH=16
 readonly DEFAULT_SEPARATOR="-"
+readonly DEFAULT_PAIR="none"
 readonly DEFAULT_PRINT=0
 readonly SCRIPT="${0##*/}"
 
 print_help()
 {
     cat <<EOF
-Usage: $SCRIPT [-l length] [-s separator] [-p] <file>
+Usage: $SCRIPT [-l length] [-s separator] [-r pair] [-p] <file>
 
 Rename file appending its SHA256 digest.
 
 Options:
   -l <length>      Length of hash characters (default "$DEFAULT_LENGTH").
   -s <separator>   Separator character (default "$DEFAULT_SEPARATOR").
+  -r <pair>        Pair file extension (default "$DEFAULT_PAIR").
   -p               Print hash file name to stdout instead of renaming.
   -h               Display this help.
 EOF
 }
 
-while getopts ":l:s:ph" opt; do
+while getopts ":l:s:r:ph" opt; do
     case $opt in
         l)
             OPT_LENGTH="$OPTARG"
             ;;
         s)
             OPT_SEPARATOR="$OPTARG"
+            ;;
+        r)
+            OPT_PAIR="$OPTARG"
             ;;
         p)
             OPT_PRINT=1
@@ -78,6 +83,13 @@ if [ "${#separator}" -ne 1 ]; then
               "$SCRIPT" "$separator"
 fi
 
+pair="${OPT_PAIR:-$DEFAULT_PAIR}"
+regexp_pair="[a-zA-Z0-9]\+$"
+if ! expr "$pair" : "$regexp_pair" >/dev/null; then
+    tty_fatal "%s: invalid pair file extension '%s': must be alphanumeric" \
+              "$SCRIPT" "$pair"
+fi
+
 print="${OPT_PRINT:-$DEFAULT_PRINT}"
 
 # OPT(cut): c=characters
@@ -113,4 +125,15 @@ if mv -- "$filename" "$new_filename"; then
              "$SCRIPT" "$filename" "$new_filename"
 else
     tty_notify_fatal "%s: mv failed with exit code %d" "$SCRIPT" "$?"
+fi
+
+[ "$pair" = "none" ] && exit 0
+
+pair_filename="${file_basename_noext}.${pair}"
+new_pair_filename="${file_basename_noext}${separator}${file_sha}.${pair}"
+if mv -- "$pair_filename" "$new_pair_filename"; then
+    tty_info "%s: new pair file name: '%s' -> '%s'" \
+             "$SCRIPT" "$pair_filename" "$new_pair_filename"
+else
+    tty_notify_fatal "%s: mv(1) failed with exit code %d" "$SCRIPT" "$?"
 fi
