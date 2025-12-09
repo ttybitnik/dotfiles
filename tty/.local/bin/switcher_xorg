@@ -22,8 +22,8 @@ switcher_changes()
             "${HOME}/.config/xsettingsd/xsettingsd.conf"
         ln -sf "${TTY_DOTFILES}/xorg/.Xresources-light" \
             "${HOME}/.Xresources"
-        ln -sf "${HOME}/.emacs.d/local/switcher-day.el" \
-            "${HOME}/.emacs.d/local/switcher.el"
+        ln -sf "${HOME}/.emacs.d/assets/switcher-day.el" \
+            "${HOME}/.emacs.d/assets/switcher.el"
 
     elif [[ "$filename" == *"light"* ]]; then
         printf "%s\n" \
@@ -37,8 +37,8 @@ switcher_changes()
             "${HOME}/.config/xsettingsd/xsettingsd.conf"
         ln -sf "${TTY_DOTFILES}/xorg/.Xresources-dark" \
             "${HOME}/.Xresources"
-        ln -sf "${HOME}/.emacs.d/local/switcher-night.el" \
-            "${HOME}/.emacs.d/local/switcher.el"
+        ln -sf "${HOME}/.emacs.d/assets/switcher-night.el" \
+            "${HOME}/.emacs.d/assets/switcher.el"
     else
         tty_fatal "%s: configuration files not found" "$SCRIPT"
     fi

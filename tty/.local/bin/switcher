@@ -78,7 +78,7 @@ switcher_links()
     # Note to future self: you cannot improve this logic dynamically since not
     # all applications have a config include/import directive. Let it be.
     ln -sf "${CURRENT_THEME}/gtk-3.0/switcher-${variant}" "${CONFIG_DIR}/gtk-3.0/settings.ini"
-    ln -sf "${CURRENT_THEME}/emacs/switcher-${variant}"   "${HOME}/.emacs.d/local/switcher.el"
+    ln -sf "${CURRENT_THEME}/emacs/switcher-${variant}"   "${HOME}/.emacs.d/assets/switcher.el"
     ln -sf "${CURRENT_THEME}/foot/switcher-${variant}"    "${CONFIG_DIR}/foot/switcher.ini"
     ln -sf "${CURRENT_THEME}/rofi/switcher-${variant}"    "${CONFIG_DIR}/rofi/switcher.rasi"
     ln -sf "${CURRENT_THEME}/dunst/switcher-${variant}"   "${CONFIG_DIR}/dunst/dunstrc.d/80-switcher.conf"
