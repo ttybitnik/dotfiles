@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Emacs (Gnus)
+GenericName=Email and News Reader
+Comment=GNU Emacs is an extensible, customizable text editor - and more
+MimeType=x-scheme-handler/news;x-scheme-handler/nntp;x-scheme-handler/mid;
+Exec=emacsclient -c -a "emacs" -e '(gnus)'
+Icon=emacs
+Type=Application
+Terminal=false
+Categories=Network;Email;News;RSS
+StartupWMClass=Emacs
