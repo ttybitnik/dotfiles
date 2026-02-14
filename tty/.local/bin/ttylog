@@ -56,15 +56,15 @@ nodename=$(uname -n)
 logfile_r="${TTY_ORPHEUS}/Temp/ttylogs/${nodename}_${timestamp}_"
 logfile_r="${logfile_r}${1}_${err}.log.xz"
 
-if [ "$err" != 0 ]; then
-    tty_notify_fatal "%s: %s failed with exit code %d: '%s'" \
-                     "$SCRIPT" "$1" "$err" "${logfile_r##*/}"
-fi
-
 xz -- "$logfile_tmp"
 mv -- "${logfile_tmp}.xz" "$logfile_r"
 chmod 400 -- "$logfile_r"
 chcon unconfined_u:object_r:user_home_t:s0 -- "$logfile_r"
+
+if [ "$err" != 0 ]; then
+    tty_notify_fatal "%s: %s failed with exit code %d: '%s'" \
+                     "$SCRIPT" "$1" "$err" "${logfile_r##*/}"
+fi
 
 tty_notify_info "%s: %s execution complete: '%s'" \
                 "$SCRIPT" "$1" "${logfile_r##*/}"
