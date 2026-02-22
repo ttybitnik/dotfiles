@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Emacs (Org-Protocol)
+Comment=Org Mode protocol for automations
+MimeType=x-scheme-handler/org-protocol;
+Exec=emacsclient -- %u
+NoDisplay=true
+Type=Application
+Terminal=false
+Categories=TextEditor;Utility;
+StartupWMClass=Emacs
