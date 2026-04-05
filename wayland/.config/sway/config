@@ -117,6 +117,10 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+# Screenshots
+bindsym Ctrl+Shift+Print exec grim -g "$(slurp)" - | wl-copy
+bindsym Shift+Print exec grim - | wl-copy
+
 # Launchers
 bindsym $mod+Control+e exec emacsclient -c -n
 bindsym $mod+g exec firefox
