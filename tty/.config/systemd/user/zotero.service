@@ -1,0 +1,22 @@
+#WIP
+[Unit]
+Description=Zotero Reference Manager (Flatpak)
+Documentation=https://www.zotero.org/support/
+PartOf=graphical-session.target
+After=graphical-session.target
+Requisite=graphical-session.target
+
+[Service]
+Type=exec
+# Zotero doesn't use environment files like emacs, but keeping structure
+# EnvironmentFile=%h/.config/systemd/envs/zotero.env (optional)
+ExecStart=flatpak run org.zotero.Zotero
+ExecStop=flatpak kill org.zotero.Zotero
+# TimeoutStartSec=180
+# RestartSec=10s
+# StartLimitInterval=60s
+# StartLimitBurst=3
+# Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target
