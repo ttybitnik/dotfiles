@@ -172,6 +172,7 @@ assign [class="discord"] workspace 5
 assign [app_id="thunar"] workspace 6
 assign [class="Gimp"] workspace 7
 assign [class="calibre"] workspace 8
+assign [app_id="org.zotero.Zotero"] workspace 8
 assign [app_id="org.qbittorrent.qBittorrent"] workspace 9
 
 ### Include ###
