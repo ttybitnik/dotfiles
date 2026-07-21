@@ -99,7 +99,7 @@ bindsym $mod+Control+b exec killall -SIGUSR1 waybar
 
 # Scratchpad:
 bindsym $mod+Control+s move scratchpad
-bindsym $mod+s [app_id=org.mozilla.firefox floating] scratchpad show
+bindsym $mod+s [app_id=app.zen_browser.zen floating] scratchpad show
 bindsym $mod+Shift+s scratchpad show
 
 # Resizing containers:
@@ -123,7 +123,7 @@ bindsym Shift+Print exec grim - | wl-copy
 
 # Launchers
 bindsym $mod+Control+e exec emacsclient -c -n
-bindsym $mod+g exec firefox
+bindsym $mod+g exec flatpak run app.zen_browser.zen
 bindsym $mod+Control+g exec google-chrome
 bindsym $mod+y exec spotify
 bindsym $mod+d exec flatpak run com.discordapp.Discord
