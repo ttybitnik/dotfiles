@@ -1,9 +1,3 @@
-* {
-    /* `otf-font-awesome` is required to be installed for icons */
-    font-family: "Iosevka Medium Extended", "Font Awesome 5 Free Regular";
-    font-size: 13px;
-}
-
 #window {
     font-weight: bold;
     color: #000000;
@@ -96,7 +90,7 @@ button:hover {
 
 
 
-/* Modules rounded corners */ 
+/* Modules rounded corners */
 .modules-left {
     /* background: #cab9b2; */
     color: #000000;
