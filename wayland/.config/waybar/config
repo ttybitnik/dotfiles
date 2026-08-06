@@ -138,7 +138,7 @@
 	"format-icons": {
 	    "spotify": "<span foreground='#1DB954'></span>",
 	    "firefox": "<span foreground='#FF7139'></span>",
-	    "default": ""
+	    "default": ""
 	},
 	"escape": true,
 	"exec": "$HOME/.local/bin/media_bar 2> /dev/null",
