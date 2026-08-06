@@ -20,6 +20,7 @@
     ],
     "modules-right": [
 	"custom/vpn",
+	"custom/vpn-city",
 	"custom/wlan",
 	"custom/lan",
 	"custom/net",
@@ -156,6 +157,11 @@
     "custom/vpn": {
 	"interval": 1,
 	"exec": "$HOME/.local/bin/vpn_bar"
+    },
+    "custom/vpn-city": {
+	"interval": 120,
+	"exec": "curl -s ifconfig.co/city",
+    "format": "({})"
     },
     "custom/net": {
 	"min-length": 15,
