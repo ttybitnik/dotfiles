@@ -33,6 +33,7 @@ alias emt='emacsclient -nw'
 alias yt='ytfzf --detach -f'
 alias mol='molecule'
 alias ff='fastfetch'
+alias db='distrobox'
 #===============================================================================
 #				 Functionality
 #===============================================================================
